@@ -1,0 +1,6 @@
+node_modules/
+.DS_Store
+*.log
+vigil-spec.docx
+Thumbs.db
+.env

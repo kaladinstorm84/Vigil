@@ -1,0 +1,33 @@
+{
+  "name": "vigil",
+  "version": "0.3.0",
+  "description": "Zero-dependency live monitoring dashboard framework for CI/CD, test automation, and GitLab monitoring",
+  "main": "vigil.js",
+  "style": "vigil.css",
+  "files": [
+    "vigil.js",
+    "vigil.css"
+  ],
+  "scripts": {
+    "dev": "npx serve . -p 3000",
+    "lint:css": "npx stylelint vigil.css",
+    "lint:js": "npx eslint vigil.js"
+  },
+  "keywords": [
+    "dashboard",
+    "monitoring",
+    "ci-cd",
+    "test-automation",
+    "live-polling",
+    "websocket",
+    "sparkline",
+    "gitlab"
+  ],
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "homepage": "",
+  "author": "QMate",
+  "license": "MIT"
+}

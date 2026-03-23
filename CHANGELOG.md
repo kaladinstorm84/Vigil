@@ -1,0 +1,42 @@
+# Changelog
+
+All notable changes to Vigil are documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/), and this project adheres to [Semantic Versioning](https://semver.org/).
+
+## [0.3.0] — 2026-03-23
+
+### Added
+- **WebSocket panels** — `data-ws` attribute for push-based live updates with automatic reconnection (exponential backoff, 1s–30s)
+- **WebSocket event filtering** — `data-ws-event` to filter incoming messages by event type
+- **CSS container queries** on `.vg-panel` for self-responsive layouts (compact at <320px, spacious at >600px)
+- Deployment Feed demo panel showcasing WebSocket integration with a `MockWebSocket` shim
+
+### Changed
+- Version strings bumped to 0.3.0 across `vigil.js`, `vigil.css`, `package.json`
+
+## [0.2.0] — 2026-03-23
+
+### Added
+- **Filter groups** — `data-vg-filter-group` and `data-vg-src-param` for shared filter state across panels
+- **Sparklines** — `vg-sparkline` SVG component with `line`/`area` types, colour customisation, and size classes (`--sm`, `--md`, `--lg`, `--xl`)
+- `Vigil.sparkline()` public API for programmatic sparkline rendering
+
+## [0.1.0] — 2026-03-23
+
+### Added
+- Core declarative polling engine (`data-src`, `data-poll`)
+- Data binding (`data-bind`, `data-each`, `data-if`, `data-if-not`)
+- Seven-status system (`pass`, `fail`, `running`, `warn`, `skipped`, `cancelled`, `unknown`)
+- Built-in formatters: `duration`, `relative`, `number`, `percent`, `passrate`, `date`, `short_date`, `uppercase`, `lowercase`
+- Custom formatter and transform registration API
+- `data-transform` attribute for pre-format value transforms
+- App shell layout (sidebar, topbar, main grid)
+- Responsive 12-column grid with `vg-col-md-*` / `vg-col-lg-*` breakpoints
+- Dark/light theme toggle via `data-vg-theme`
+- Data density modes (`compact` / `comfortable`)
+- Table column sorting
+- Sidebar collapse toggle
+- Pause/resume/refresh global actions
+- Refresh indicator with pulse animation
+- Reference demo dashboard with mock API layer

@@ -1,0 +1,173 @@
+/* ============================================================
+   DEMO.CSS — Demo-specific styles for the QMate dashboard
+   Not part of the Vigil framework; used only by demo.html.
+   ============================================================ */
+
+.runner-row {
+  display: flex;
+  align-items: center;
+  gap: var(--vg-s3);
+  padding: var(--vg-s2) 0;
+  border-bottom: 1px solid var(--vg-border-subtle);
+}
+.runner-row:last-child { border-bottom: none; }
+.runner-row__name  { flex: 1; font-size: 13px; font-weight: 500; }
+.runner-row__meta  { font-size: var(--vg-font-size-sm); font-family: var(--vg-font-data); color: var(--vg-text-muted); }
+.runner-row__load  { width: 80px; display: flex; flex-direction: column; gap: 3px; }
+.runner-row__load-label {
+  text-align: right;
+  font-size: 9px;
+  font-family: var(--vg-font-data);
+  color: var(--vg-text-subtle);
+}
+
+.chart-bar-group { display: flex; align-items: flex-end; gap: 3px; height: 60px; }
+.chart-bar {
+  flex: 1;
+  border-radius: 2px 2px 0 0;
+  transition: height 0.4s ease;
+  cursor: pointer;
+  position: relative;
+}
+.chart-bar:hover::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: 100%; left: 50%;
+  transform: translateX(-50%);
+  background: var(--vg-surface-3);
+  border: 1px solid var(--vg-border);
+  color: var(--vg-text);
+  font-size: 10px;
+  font-family: var(--vg-font-data);
+  padding: 2px 6px;
+  border-radius: 3px;
+  white-space: nowrap;
+  pointer-events: none;
+  margin-bottom: 4px;
+}
+
+.timeline-labels {
+  display: flex;
+  gap: 3px;
+  margin-top: 3px;
+}
+.timeline-labels span {
+  flex: 1;
+  text-align: center;
+  font-size: 9px;
+  font-family: var(--vg-font-data);
+  color: var(--vg-text-subtle);
+}
+
+.pass-rate-ring {
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+}
+.pass-rate-ring circle { transition: stroke-dasharray 0.6s ease; }
+
+.feature-name {
+  font-size: 12px;
+  font-family: var(--vg-font-data);
+  color: var(--vg-text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 260px;
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--vg-s4);
+  margin-bottom: var(--vg-s4);
+}
+
+@media (max-width: 1199px) {
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 767px) {
+  .kpi-grid { grid-template-columns: 1fr; }
+}
+
+.vg-sidebar__brand-toggle {
+  display: none;
+}
+
+/* Filter select styling */
+select.vg-btn {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%238b949e'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 6px center;
+  padding-right: 20px;
+}
+
+/* Sparkline inside KPI cards */
+.vg-kpi .vg-sparkline {
+  margin-top: var(--vg-s1);
+  width: 100%;
+  max-width: 140px;
+  height: 24px;
+}
+
+/* ── Inline style replacements ──────────────────────────────── */
+
+/* Topbar divider between action buttons */
+.topbar-divider {
+  width: 1px;
+  height: 16px;
+  background: var(--vg-border);
+  margin: 0 4px;
+}
+
+/* Badge pushed to right side of panel header */
+.panel-header__badge-right { margin-left: auto; }
+
+/* Summary ring layout */
+.summary-ring-row {
+  display: flex;
+  align-items: center;
+  gap: var(--vg-s4);
+  margin-bottom: var(--vg-s4);
+}
+.summary-breakdown { flex: 1; }
+.summary-breakdown__row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+.summary-breakdown__row--last { margin-bottom: 0; }
+
+/* Flaky features list */
+.flaky-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.flaky-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.flaky-item__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.flaky-item__name { max-width: 180px; }
+
+/* Sidebar spacing utility (vg-mt-4 is not in vigil.css, demo only) */
+.vg-mt-4 { margin-top: var(--vg-s4); }
+.vg-mb-2 { margin-bottom: 6px; }
+
+/* ── Deployment Feed (WebSocket demo) ──────────────────────── */
+
+.deploy-feed__dot { margin-right: 4px; }
+
+.deploy-feed { max-height: 320px; overflow: hidden; }
+.deploy-feed .vg-panel__body { overflow-y: auto; }
+
+/* Live log panel */
+.live-log-panel { max-height: 320px; overflow: hidden; }
+.live-log-body  { overflow-y: auto; }
