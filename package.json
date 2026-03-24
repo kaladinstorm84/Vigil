@@ -1,5 +1,5 @@
 {
-  "name": "vigil",
+  "name": "vigilui",
   "version": "0.3.0",
   "description": "Zero-dependency live monitoring dashboard framework for CI/CD, test automation, and GitLab monitoring",
   "main": "vigil.js",
