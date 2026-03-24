@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vigil — Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../vigil.css">
+<link rel="stylesheet" href="demo.css">
+</head>
+<body>
+
+<div class="vg-shell" id="shell">
+
+  <!-- ── Sidebar ───────────────────────────────────────────── -->
+  <aside class="vg-sidebar">
+    <div class="vg-sidebar__brand">
+      <div class="vg-sidebar__brand-icon">⚡</div>
+      <span>Vigil</span>
+    </div>
+
+    <div class="vg-sidebar__body">
+      <div class="vg-nav-section">Monitoring</div>
+      <a class="vg-nav-item is-active" href="index.html">
+        <span class="vg-nav-item__icon">◉</span>
+        <span class="vg-nav-item__label">Overview</span>
+      </a>
+      <a class="vg-nav-item" href="pipelines.html">
+        <span class="vg-nav-item__icon">⧗</span>
+        <span class="vg-nav-item__label">Pipelines</span>
+        <span class="vg-nav-item__badge" id="nav-running-count">3</span>
+      </a>
+      <a class="vg-nav-item" href="testruns.html">
+        <span class="vg-nav-item__icon">✓</span>
+        <span class="vg-nav-item__label">Test Runs</span>
+      </a>
+      <a class="vg-nav-item" href="runners.html">
+        <span class="vg-nav-item__icon">⬡</span>
+        <span class="vg-nav-item__label">Runners</span>
+      </a>
+
+      <div class="vg-nav-section vg-mt-4">Reports</div>
+      <a class="vg-nav-item" href="#">
+        <span class="vg-nav-item__icon">↗</span>
+        <span class="vg-nav-item__label">Trends</span>
+      </a>
+      <a class="vg-nav-item" href="#">
+        <span class="vg-nav-item__icon">△</span>
+        <span class="vg-nav-item__label">Failures</span>
+      </a>
+
+      <div class="vg-nav-section vg-mt-4">Config</div>
+      <a class="vg-nav-item" href="#">
+        <span class="vg-nav-item__icon">⚙</span>
+        <span class="vg-nav-item__label">Settings</span>
+      </a>
+    </div>
+
+    <div class="vg-sidebar__footer">
+      <div class="vg-nav-item" id="user-menu">
+        <span class="vg-nav-item__icon">○</span>
+        <span class="vg-nav-item__label">matt@qmate.dev</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── Topbar ────────────────────────────────────────────── -->
+  <header class="vg-topbar">
+    <div class="vg-topbar__left">
+      <button class="vg-btn vg-btn--ghost vg-btn--icon" data-vg-toggle="sidebar" title="Toggle sidebar">☰</button>
+      <span class="vg-topbar__title">QMate</span>
+      <span class="vg-topbar__breadcrumb">/ main / Overview</span>
+    </div>
+    <div class="vg-topbar__right">
+      <div class="vg-topbar__refresh-indicator" data-vg-role="refresh-indicator">
+        <span class="vg-topbar__refresh-dot" title="Live"></span>
+        <span class="vg-topbar__refresh-text vg-hidden">—</span>
+      </div>
+      <button class="vg-btn vg-btn--ghost vg-btn--icon vg-btn--sm" data-vg-action="pause" title="Pause">⏸</button>
+      <button class="vg-btn vg-btn--ghost vg-btn--icon vg-btn--sm" data-vg-action="refresh" title="Refresh now">↻</button>
+      <div class="topbar-divider"></div>
+      <button class="vg-btn vg-btn--sm" onclick="toggleTheme()">◑ Theme</button>
+    </div>
+  </header>
+
+  <!-- ── Main Content ──────────────────────────────────────── -->
+  <main class="vg-main">
+
+    <div class="vg-page-header">
+      <h1 class="vg-page-title">Overview</h1>
+      <span class="vg-page-subtitle">Live · polling every 5s</span>
+    </div>
+
+    <!-- KPI Row -->
+    <div class="kpi-grid">
+
+      <div class="vg-kpi vg-kpi--pass" data-src="/api/kpi/runs" data-poll="6000">
+        <div class="vg-kpi__label">Runs Today</div>
+        <div class="vg-kpi__value" data-bind="total">—</div>
+        <svg class="vg-sparkline vg-sparkline--lg" data-bind="trend"
+             data-sparkline-color="var(--vg-pass)" data-sparkline-type="area"
+             width="120" height="24"></svg>
+        <div class="vg-kpi__delta vg-kpi__delta--up" data-bind="delta_label">—</div>
+      </div>
+
+      <div class="vg-kpi" data-src="/api/kpi/passrate" data-poll="6000">
+        <div class="vg-kpi__label">Pass Rate</div>
+        <div class="vg-kpi__value" data-bind="rate" data-format="passrate">—</div>
+        <svg class="vg-sparkline vg-sparkline--lg" data-bind="trend"
+             data-sparkline-color="var(--vg-accent)" data-sparkline-type="line"
+             width="120" height="24"></svg>
+        <div class="vg-kpi__sub" data-bind="period">—</div>
+      </div>
+
+      <div class="vg-kpi vg-kpi--fail" data-src="/api/kpi/failures" data-poll="6000">
+        <div class="vg-kpi__label">Failures (1h)</div>
+        <div class="vg-kpi__value" data-bind="count">—</div>
+        <svg class="vg-sparkline vg-sparkline--lg" data-bind="trend"
+             data-sparkline-color="var(--vg-fail)" data-sparkline-type="area"
+             width="120" height="24"></svg>
+        <div class="vg-kpi__sub" data-bind="most_common">—</div>
+      </div>
+
+      <div class="vg-kpi vg-kpi--running" data-src="/api/kpi/runners" data-poll="5000">
+        <div class="vg-kpi__label">Active Runners</div>
+        <div class="vg-kpi__value" data-bind="active">—</div>
+        <svg class="vg-sparkline vg-sparkline--lg" data-bind="trend"
+             data-sparkline-color="var(--vg-running)" data-sparkline-type="line"
+             width="120" height="24"></svg>
+        <div class="vg-kpi__sub" data-bind="status_label">—</div>
+      </div>
+
+    </div>
+
+    <!-- Row 2: Pipelines + Runners -->
+    <div class="vg-grid">
+
+      <!-- Active Pipelines -->
+      <div class="vg-panel vg-col-8" data-src="/api/pipelines" data-poll="5000">
+        <div class="vg-panel__header">
+          <h2 class="vg-panel__title">Pipeline Status</h2>
+          <span class="vg-panel__meta" data-role="updated"></span>
+          <div class="vg-panel__actions">
+            <button class="vg-btn vg-btn--ghost vg-btn--icon vg-btn--sm" title="Refresh" onclick="Vigil.refresh()">↻</button>
+          </div>
+        </div>
+        <div class="vg-panel__body">
+          <div class="vg-pipeline" data-each="items">
+            <template>
+              <div class="vg-pipeline-run">
+                <div class="vg-pipeline-run__status">
+                  <span class="vg-dot"
+                    data-bind="status"
+                    data-status-map='{"passed":"pass","failed":"fail","running":"running","cancelled":"cancelled","skipped":"skipped"}'
+                  ></span>
+                </div>
+                <div class="vg-pipeline-run__info vg-min-w-0">
+                  <div class="vg-pipeline-run__name" data-bind="name"></div>
+                  <div class="vg-pipeline-run__meta">
+                    <span data-bind="branch"></span>
+                    <span data-bind="triggered_by"></span>
+                    <span data-bind="started" data-format="relative"></span>
+                  </div>
+                </div>
+                <div class="vg-pipeline-run__stages" data-bind="stages_html"></div>
+                <span class="vg-badge"
+                  data-bind="status"
+                  data-status-map='{"passed":"pass","failed":"fail","running":"running","cancelled":"cancelled"}'
+                ></span>
+                <span class="vg-text-subtle vg-font-data vg-font-sm" data-bind="duration" data-format="duration"></span>
+              </div>
+            </template>
+          </div>
+        </div>
+        <div class="vg-panel__footer">
+          <span>Showing 6 most recent</span>
+          <a href="pipelines.html" class="vg-text-subtle vg-font-sm">View all →</a>
+        </div>
+        <div class="vg-panel__loading"><span class="vg-spinner"></span></div>
+      </div>
+
+      <!-- Runners -->
+      <div class="vg-panel vg-col-4" data-src="/api/runners" data-poll="8000">
+        <div class="vg-panel__header">
+          <h2 class="vg-panel__title">Runner Health</h2>
+          <span class="vg-badge vg-badge--pass panel-header__badge-right" data-bind="healthy_count"></span>
+        </div>
+        <div class="vg-panel__body vg-panel__body--padded">
+          <div data-each="runners">
+            <template>
+              <div class="runner-row">
+                <span class="vg-dot"
+                  data-bind="status"
+                  data-status-map='{"online":"pass","busy":"running","offline":"unknown","error":"fail"}'
+                ></span>
+                <div class="runner-row__name vg-min-w-0 vg-truncate" data-bind="name"></div>
+                <div class="runner-row__meta" data-bind="job_count"></div>
+                <div class="runner-row__load">
+                  <div class="vg-progress">
+                    <div class="vg-progress__bar vg-progress__bar--running" data-bind="load_pct"></div>
+                  </div>
+                  <span class="runner-row__load-label" data-bind="load_pct" data-format="percent"></span>
+                </div>
+              </div>
+            </template>
+          </div>
+        </div>
+        <div class="vg-panel__footer">
+          <span>&nbsp;</span>
+          <a href="runners.html" class="vg-text-subtle vg-font-sm">Details →</a>
+        </div>
+        <div class="vg-panel__loading"><span class="vg-spinner"></span></div>
+      </div>
+
+    </div>
+
+    <!-- Row 3: Live Event Log -->
+    <div class="vg-grid">
+      <div class="vg-panel vg-col-12 live-log-panel">
+        <div class="vg-panel__header">
+          <h2 class="vg-panel__title">Live Event Log</h2>
+          <div class="vg-panel__actions">
+            <span class="vg-dot vg-dot--running deploy-feed__dot"></span>
+            <span class="vg-font-sm vg-text-subtle">Streaming</span>
+          </div>
+        </div>
+        <div class="vg-panel__body live-log-body">
+          <div class="vg-log" id="log-entries"></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="../vigil.js"></script>
+<script src="demo-mock.js"></script>
+</body>
+</html>

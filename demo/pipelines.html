@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vigil — Pipelines</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../vigil.css">
+<link rel="stylesheet" href="demo.css">
+</head>
+<body>
+
+<div class="vg-shell" id="shell">
+
+  <!-- ── Sidebar ───────────────────────────────────────────── -->
+  <aside class="vg-sidebar">
+    <div class="vg-sidebar__brand">
+      <div class="vg-sidebar__brand-icon">⚡</div>
+      <span>Vigil</span>
+    </div>
+
+    <div class="vg-sidebar__body">
+      <div class="vg-nav-section">Monitoring</div>
+      <a class="vg-nav-item" href="index.html">
+        <span class="vg-nav-item__icon">◉</span>
+        <span class="vg-nav-item__label">Overview</span>
+      </a>
+      <a class="vg-nav-item is-active" href="pipelines.html">
+        <span class="vg-nav-item__icon">⧗</span>
+        <span class="vg-nav-item__label">Pipelines</span>
+        <span class="vg-nav-item__badge" id="nav-running-count">3</span>
+      </a>
+      <a class="vg-nav-item" href="testruns.html">
+        <span class="vg-nav-item__icon">✓</span>
+        <span class="vg-nav-item__label">Test Runs</span>
+      </a>
+      <a class="vg-nav-item" href="runners.html">
+        <span class="vg-nav-item__icon">⬡</span>
+        <span class="vg-nav-item__label">Runners</span>
+      </a>
+
+      <div class="vg-nav-section vg-mt-4">Reports</div>
+      <a class="vg-nav-item" href="#">
+        <span class="vg-nav-item__icon">↗</span>
+        <span class="vg-nav-item__label">Trends</span>
+      </a>
+      <a class="vg-nav-item" href="#">
+        <span class="vg-nav-item__icon">△</span>
+        <span class="vg-nav-item__label">Failures</span>
+      </a>
+
+      <div class="vg-nav-section vg-mt-4">Config</div>
+      <a class="vg-nav-item" href="#">
+        <span class="vg-nav-item__icon">⚙</span>
+        <span class="vg-nav-item__label">Settings</span>
+      </a>
+    </div>
+
+    <div class="vg-sidebar__footer">
+      <div class="vg-nav-item" id="user-menu">
+        <span class="vg-nav-item__icon">○</span>
+        <span class="vg-nav-item__label">matt@qmate.dev</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── Topbar ────────────────────────────────────────────── -->
+  <header class="vg-topbar">
+    <div class="vg-topbar__left">
+      <button class="vg-btn vg-btn--ghost vg-btn--icon" data-vg-toggle="sidebar" title="Toggle sidebar">☰</button>
+      <span class="vg-topbar__title">QMate</span>
+      <span class="vg-topbar__breadcrumb">/ main / Pipelines</span>
+    </div>
+    <div class="vg-topbar__right">
+      <div class="vg-topbar__refresh-indicator" data-vg-role="refresh-indicator">
+        <span class="vg-topbar__refresh-dot" title="Live"></span>
+        <span class="vg-topbar__refresh-text vg-hidden">—</span>
+      </div>
+      <button class="vg-btn vg-btn--ghost vg-btn--icon vg-btn--sm" data-vg-action="pause" title="Pause">⏸</button>
+      <button class="vg-btn vg-btn--ghost vg-btn--icon vg-btn--sm" data-vg-action="refresh" title="Refresh now">↻</button>
+      <div class="topbar-divider"></div>
+      <button class="vg-btn vg-btn--sm" onclick="toggleTheme()">◑ Theme</button>
+    </div>
+  </header>
+
+  <!-- ── Main Content ──────────────────────────────────────── -->
+  <main class="vg-main">
+
+    <div class="vg-page-header">
+      <h1 class="vg-page-title">Pipelines</h1>
+      <span class="vg-page-subtitle">CI/CD pipeline monitoring · live updates</span>
+    </div>
+
+    <!-- Full-width Pipeline List -->
+    <div class="vg-grid">
+      <div class="vg-panel vg-col-12" data-src="/api/pipelines" data-poll="5000">
+        <div class="vg-panel__header">
+          <h2 class="vg-panel__title">All Pipelines</h2>
+          <span class="vg-panel__meta" data-role="updated"></span>
+          <div class="vg-panel__actions">
+            <button class="vg-btn vg-btn--ghost vg-btn--icon vg-btn--sm" title="Refresh" onclick="Vigil.refresh()">↻</button>
+          </div>
+        </div>
+        <div class="vg-panel__body">
+          <div class="vg-pipeline" data-each="items">
+            <template>
+              <div class="vg-pipeline-run">
+                <div class="vg-pipeline-run__status">
+                  <span class="vg-dot"
+                    data-bind="status"
+                    data-status-map='{"passed":"pass","failed":"fail","running":"running","cancelled":"cancelled","skipped":"skipped"}'
+                  ></span>
+                </div>
+                <div class="vg-pipeline-run__info vg-min-w-0">
+                  <div class="vg-pipeline-run__name" data-bind="name"></div>
+                  <div class="vg-pipeline-run__meta">
+                    <span data-bind="branch"></span>
+                    <span data-bind="triggered_by"></span>
+                    <span data-bind="started" data-format="relative"></span>
+                  </div>
+                </div>
+                <div class="vg-pipeline-run__stages" data-bind="stages_html"></div>
+                <span class="vg-badge"
+                  data-bind="status"
+                  data-status-map='{"passed":"pass","failed":"fail","running":"running","cancelled":"cancelled"}'
+                ></span>
+                <span class="vg-text-subtle vg-font-data vg-font-sm" data-bind="duration" data-format="duration"></span>
+              </div>
+            </template>
+          </div>
+        </div>
+        <div class="vg-panel__footer">
+          <span>6 pipelines</span>
+        </div>
+        <div class="vg-panel__loading"><span class="vg-spinner"></span></div>
+      </div>
+    </div>
+
+    <!-- Deployment Feed (WebSocket) -->
+    <div class="vg-grid">
+      <div class="vg-panel vg-col-12 deploy-feed" data-ws="wss://mock.vigil.dev/deployments" data-ws-event="deploy.update">
+        <div class="vg-panel__header">
+          <h2 class="vg-panel__title">Deployment Feed</h2>
+          <span class="vg-panel__meta" data-role="updated"></span>
+          <div class="vg-panel__actions">
+            <span class="vg-dot vg-dot--running deploy-feed__dot"></span>
+            <span class="vg-font-sm vg-text-subtle">WebSocket</span>
+          </div>
+        </div>
+        <div class="vg-panel__body">
+          <table class="vg-table vg-table--dense">
+            <thead>
+              <tr>
+                <th>Service</th>
+                <th>Action</th>
+                <th>Env</th>
+                <th>Version</th>
+                <th>By</th>
+              </tr>
+            </thead>
+            <tbody data-each="items">
+              <template>
+                <tr>
+                  <td class="vg-col-mono" data-bind="service"></td>
+                  <td data-bind="action"></td>
+                  <td><span class="vg-tag" data-bind="env"></span></td>
+                  <td class="vg-col-mono vg-col-muted" data-bind="version"></td>
+                  <td class="vg-col-subtle vg-col-mono" data-bind="actor"></td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+        </div>
+        <div class="vg-panel__loading"><span class="vg-spinner"></span></div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="../vigil.js"></script>
+<script src="demo-mock.js"></script>
+</body>
+</html>

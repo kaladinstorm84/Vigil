@@ -1,6 +1,6 @@
 /* ============================================================
-   DEMO.CSS — Demo-specific styles for the QMate dashboard
-   Not part of the Vigil framework; used only by demo.html.
+   DEMO.CSS — Demo-specific styles for the QMate dashboard.
+   Not part of the Vigil framework; shared across all demo pages.
    ============================================================ */
 
 .runner-row {
@@ -171,3 +171,56 @@ select.vg-btn {
 /* Live log panel */
 .live-log-panel { max-height: 320px; overflow: hidden; }
 .live-log-body  { overflow-y: auto; }
+
+/* ── KPI grid variants ─────────────────────────────────────── */
+
+.kpi-grid--2col { grid-template-columns: repeat(2, 1fr); }
+.kpi-grid--3col { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 767px) {
+  .kpi-grid--2col,
+  .kpi-grid--3col { grid-template-columns: 1fr; }
+}
+
+/* ── Runner card grid (runners.html) ──────────────────────── */
+
+.runner-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--vg-s4);
+}
+.runner-card {
+  background: var(--vg-surface-2);
+  border: 1px solid var(--vg-border-subtle);
+  border-radius: var(--vg-radius);
+  padding: var(--vg-s4);
+}
+.runner-card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--vg-s2);
+  margin-bottom: var(--vg-s3);
+}
+.runner-card__name {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+}
+.runner-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vg-s3);
+}
+.runner-card__stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 13px;
+}
+.runner-card__load {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.runner-card__load .vg-font-sm {
+  margin-bottom: 2px;
+}

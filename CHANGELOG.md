@@ -4,15 +4,18 @@ All notable changes to Vigil are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
-## [0.3.0] — 2026-03-23
+## [0.3.0] — 2026-03-24
 
 ### Added
 - **WebSocket panels** — `data-ws` attribute for push-based live updates with automatic reconnection (exponential backoff, 1s–30s)
 - **WebSocket event filtering** — `data-ws-event` to filter incoming messages by event type
 - **CSS container queries** on `.vg-panel` for self-responsive layouts (compact at <320px, spacious at >600px)
+- **Multi-page demo** — Overview, Pipelines, Test Runs, and Runners pages under `demo/`
 - Deployment Feed demo panel showcasing WebSocket integration with a `MockWebSocket` shim
+- Runner card grid layout on the dedicated Runners page
 
 ### Changed
+- Demo files moved to `demo/` subfolder to separate framework source from demo
 - Version strings bumped to 0.3.0 across `vigil.js`, `vigil.css`, `package.json`
 
 ## [0.2.0] — 2026-03-23

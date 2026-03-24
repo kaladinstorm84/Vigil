@@ -1,7 +1,10 @@
 /**
  * DEMO-MOCK.JS — Mock data layer for the Vigil QMate demo.
- * Patches window.fetch() to intercept API URLs and return
- * randomised test/pipeline/runner data.
+ * Patches window.fetch() and WebSocket to intercept API URLs and
+ * return randomised test/pipeline/runner data.
+ *
+ * Every element query is guarded so this single file works across
+ * all demo pages regardless of which panels are present.
  *
  * In production, remove this file and point data-src attributes
  * at real API endpoints.
@@ -188,41 +191,49 @@ window.fetch = (url, opts) => {
   return _origFetch(url, opts);
 };
 
-// ── Pipeline stages renderer ─────────────────────────────────
-document.querySelector('[data-src="/api/pipelines"]').addEventListener('vigil:update', e => {
-  const items = e.detail.items;
-  const rows  = document.querySelectorAll('.vg-pipeline-run');
-  rows.forEach((row, i) => {
-    const pipeline = items[i];
-    if (!pipeline) return;
-    const stagesEl = row.querySelector('.vg-pipeline-run__stages');
-    if (!stagesEl || !pipeline._stages) return;
+// ── Pipeline stages renderer (guarded) ───────────────────────
+const _pipelinePanel = document.querySelector('[data-src="/api/pipelines"]');
+if (_pipelinePanel) {
+  _pipelinePanel.addEventListener('vigil:update', e => {
+    const items = e.detail.items;
+    const rows  = document.querySelectorAll('.vg-pipeline-run');
+    rows.forEach((row, i) => {
+      const pipeline = items[i];
+      if (!pipeline) return;
+      const stagesEl = row.querySelector('.vg-pipeline-run__stages');
+      if (!stagesEl || !pipeline._stages) return;
 
-    stagesEl.innerHTML = pipeline._stages.map((s, si) =>
-      `<div class="vg-stage vg-stage--${s.status}">
-        <div class="vg-stage__bar" title="${s.name}: ${s.status}"></div>
-        <div class="vg-stage__label">${s.name.slice(0,4)}</div>
-      </div>` +
-      (si < pipeline._stages.length - 1 ? '<div class="vg-stage-connector"></div>' : '')
-    ).join('');
+      stagesEl.innerHTML = pipeline._stages.map((s, si) =>
+        `<div class="vg-stage vg-stage--${s.status}">
+          <div class="vg-stage__bar" title="${s.name}: ${s.status}"></div>
+          <div class="vg-stage__label">${s.name.slice(0,4)}</div>
+        </div>` +
+        (si < pipeline._stages.length - 1 ? '<div class="vg-stage-connector"></div>' : '')
+      ).join('');
+    });
   });
-});
+}
 
-// ── Runner load bar fix ──────────────────────────────────────
-document.querySelector('[data-src="/api/runners"]').addEventListener('vigil:update', e => {
-  const rows = document.querySelectorAll('#runners-body .runner-row');
-  e.detail.runners.forEach((r, i) => {
-    const row = rows[i];
-    if (!row) return;
-    const bar = row.querySelector('.vg-progress__bar');
-    if (bar) bar.style.width = r.load_pct.toFixed(0) + '%';
+// ── Runner load bar fix (guarded) ────────────────────────────
+const _runnerPanel = document.querySelector('[data-src="/api/runners"]');
+if (_runnerPanel) {
+  _runnerPanel.addEventListener('vigil:update', e => {
+    const rows = document.querySelectorAll('.runner-row');
+    if (!e.detail.runners) return;
+    e.detail.runners.forEach((r, i) => {
+      const row = rows[i];
+      if (!row) return;
+      const bar = row.querySelector('.vg-progress__bar');
+      if (bar) bar.style.width = r.load_pct.toFixed(0) + '%';
+    });
   });
-});
+}
 
-// ── Summary ring + trend chart ───────────────────────────────
+// ── Summary ring + trend chart (guarded) ─────────────────────
 let _summaryData = { passed: 0, failed: 0, skipped: 0, running: 0 };
 
 function updateSummary() {
+  if (!document.getElementById('rate-arc')) return;
   const total   = randInt(130, 165);
   const running = randInt(2, 8);
   const failed  = randInt(6, 22);
@@ -232,21 +243,25 @@ function updateSummary() {
 
   _summaryData = { passed, failed, skipped, running, rate };
 
-  document.getElementById('sum-passed').textContent  = passed;
-  document.getElementById('sum-failed').textContent  = failed;
-  document.getElementById('sum-skipped').textContent = skipped;
-  document.getElementById('sum-running').textContent = running;
+  const el = (id) => document.getElementById(id);
+  if (el('sum-passed'))  el('sum-passed').textContent  = passed;
+  if (el('sum-failed'))  el('sum-failed').textContent  = failed;
+  if (el('sum-skipped')) el('sum-skipped').textContent = skipped;
+  if (el('sum-running')) el('sum-running').textContent = running;
 
-  const arc  = document.getElementById('rate-arc');
-  const text = document.getElementById('rate-text');
-  arc.setAttribute('stroke-dasharray', rate.toFixed(1) + ' 100');
-  arc.setAttribute('stroke', rate > 90 ? '#3fb950' : rate > 75 ? '#d29922' : '#f85149');
-  text.textContent = rate.toFixed(0) + '%';
+  const arc  = el('rate-arc');
+  const text = el('rate-text');
+  if (arc) {
+    arc.setAttribute('stroke-dasharray', rate.toFixed(1) + ' 100');
+    arc.setAttribute('stroke', rate > 90 ? '#3fb950' : rate > 75 ? '#d29922' : '#f85149');
+  }
+  if (text) text.textContent = rate.toFixed(0) + '%';
 }
 
 function buildTrendChart() {
   const chart  = document.getElementById('trend-chart');
   const labels = document.getElementById('trend-labels');
+  if (!chart || !labels) return;
   chart.innerHTML = '';
   labels.innerHTML = '';
 
@@ -270,6 +285,7 @@ function buildTrendChart() {
 
 function buildFlakyList() {
   const container = document.getElementById('flaky-list');
+  if (!container) return;
   container.innerHTML = '';
   const flaky = FEATURES.slice(0, 4).map(f => ({
     name: f,
@@ -292,7 +308,7 @@ function buildFlakyList() {
   });
 }
 
-// ── Live log ─────────────────────────────────────────────────
+// ── Live log (guarded) ───────────────────────────────────────
 const LOG_EVENTS = [
   ['pass', 'PASS', f => `[${rand(SUITES)}] ${f} \u2713`],
   ['fail', 'FAIL', f => `[${rand(SUITES)}] ${f} \u2014 assertion failed`],
@@ -303,7 +319,8 @@ const LOG_EVENTS = [
 ];
 
 function addLogEntry() {
-  const logEl   = document.getElementById('log-entries');
+  const logEl = document.getElementById('log-entries');
+  if (!logEl) return;
   const [cls, level, msg] = rand(LOG_EVENTS);
   const text    = msg(rand(FEATURES));
   const now     = new Date();
@@ -321,11 +338,12 @@ function addLogEntry() {
   while (logEl.children.length > 40) logEl.lastChild.remove();
 }
 
-// ── Sidebar nav badge update ─────────────────────────────────
+// ── Sidebar nav badge update (guarded) ───────────────────────
 function updateNavBadge() {
-  const running = _pipelines.filter(p => p.status === 'running').length;
   const badge = document.getElementById('nav-running-count');
-  if (badge) badge.textContent = running;
+  if (!badge) return;
+  const running = _pipelines.filter(p => p.status === 'running').length;
+  badge.textContent = running;
 }
 
 // ── Theme toggle ─────────────────────────────────────────────

@@ -55,10 +55,19 @@ Open the page — `Vigil.init()` fires on `DOMContentLoaded` and starts polling 
 
 ```bash
 npx serve . -p 3000
-# Open http://localhost:3000/demo.html
+# Open http://localhost:3000/demo/
 ```
 
-The demo showcases every feature: KPI cards with sparklines, pipeline status with stage bars, a filterable test runs table, runner health with progress bars, a WebSocket-powered deployment feed, a live event log, a pass-rate ring chart with 24h trend, and dark/light theme toggling — all powered by a mock API layer (`demo-mock.js`) that patches `fetch()` and `WebSocket` in-browser.
+The demo is a multi-page dashboard showcasing every Vigil feature:
+
+| Page | URL | Features demonstrated |
+|------|-----|----------------------|
+| **Overview** | `demo/index.html` | KPI cards, sparklines, pipeline summary, runner summary, live log |
+| **Pipelines** | `demo/pipelines.html` | Full pipeline list with stage bars, WebSocket deployment feed |
+| **Test Runs** | `demo/testruns.html` | Filterable table, filter groups, pass-rate ring, 24h trend chart, flaky features |
+| **Runners** | `demo/runners.html` | Runner card grid, progress bars, container queries, activity log |
+
+All pages share a mock API layer (`demo/demo-mock.js`) that patches `fetch()` and `WebSocket` in-browser. Sidebar navigation links work across all pages.
 
 ## Architecture
 
@@ -66,9 +75,9 @@ The demo showcases every feature: KPI cards with sparklines, pipeline status wit
 |------|-------------|
 | `vigil.css` | Design tokens, component styles, animations, light/dark themes, container queries |
 | `vigil.js` | Runtime engine: polling, data binding, formatters, WebSocket, sparklines, filter groups |
-| `demo.html` | Reference dashboard demonstrating all features |
-| `demo.css` | Demo-specific styles (runner rows, chart bars, KPI grid, deployment feed) |
-| `demo-mock.js` | Mock API + WebSocket layer that patches `fetch()` and `WebSocket` for the demo |
+| `demo/` | Multi-page reference dashboard with all components demonstrated |
+| `demo/demo.css` | Demo-specific styles (runner rows, chart bars, KPI grid, runner cards) |
+| `demo/demo-mock.js` | Mock API + WebSocket layer that patches `fetch()` and `WebSocket` for the demo |
 
 ### Design Principles
 
