@@ -68,8 +68,9 @@ The demo is a multi-page dashboard showcasing every Vigil feature:
 | **Runners** | `demo/runners.html` | Runner card grid, progress bars, container queries, activity log |
 | **Trends** | `demo/trends.html` | 7-day run volume chart, daily breakdown table, pass rate by suite with sparklines |
 | **Failures** | `demo/failures.html` | Failure type breakdown, recent failures table, flakiest features analysis |
+| **Settings** | `demo/settings.html` | Text inputs, selects, toggles, radio groups, range slider, number inputs, textareas, form layout |
 
-All pages share a mock API layer (`demo/demo-mock.js`) that patches `fetch()` and `WebSocket` in-browser. Sidebar navigation links work across all six pages.
+All pages share a mock API layer (`demo/demo-mock.js`) that patches `fetch()` and `WebSocket` in-browser. Sidebar navigation links work across all seven pages.
 
 ## Architecture
 

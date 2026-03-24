@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 - Runner card grid layout on the dedicated Runners page
 - **Trends report page** — 7-day run volume chart, daily breakdown table, pass rate by suite with sparklines
 - **Failures report page** — failure type breakdown with progress bars, recent failures table, flakiest features analysis
+- **Settings page** — comprehensive form controls demo (text inputs, selects, toggles, radio groups, range slider, number inputs, textareas, danger zone)
 
 ### Changed
 - Demo files moved to `demo/` subfolder to separate framework source from demo
