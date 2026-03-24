@@ -25,9 +25,9 @@
   ],
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/kaladinstorm84/Vigil.git"
   },
-  "homepage": "",
-  "author": "QMate",
+  "homepage": "https://github.com/kaladinstorm84/Vigil",
+  "author": "KaladinStorm84",
   "license": "MIT"
 }
