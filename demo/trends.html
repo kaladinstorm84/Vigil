@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vigil — Pipelines</title>
+<title>Vigil — Trends</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
@@ -27,7 +27,7 @@
         <span class="vg-nav-item__icon">◉</span>
         <span class="vg-nav-item__label">Overview</span>
       </a>
-      <a class="vg-nav-item is-active" href="pipelines.html">
+      <a class="vg-nav-item" href="pipelines.html">
         <span class="vg-nav-item__icon">⧗</span>
         <span class="vg-nav-item__label">Pipelines</span>
         <span class="vg-nav-item__badge" id="nav-running-count">3</span>
@@ -42,7 +42,7 @@
       </a>
 
       <div class="vg-nav-section vg-mt-4">Reports</div>
-      <a class="vg-nav-item" href="trends.html">
+      <a class="vg-nav-item is-active" href="trends.html">
         <span class="vg-nav-item__icon">↗</span>
         <span class="vg-nav-item__label">Trends</span>
       </a>
@@ -71,7 +71,7 @@
     <div class="vg-topbar__left">
       <button class="vg-btn vg-btn--ghost vg-btn--icon" data-vg-toggle="sidebar" title="Toggle sidebar">☰</button>
       <span class="vg-topbar__title">QMate</span>
-      <span class="vg-topbar__breadcrumb">/ main / Pipelines</span>
+      <span class="vg-topbar__breadcrumb">/ Reports / Trends</span>
     </div>
     <div class="vg-topbar__right">
       <div class="vg-topbar__refresh-indicator" data-vg-role="refresh-indicator">
@@ -89,85 +89,74 @@
   <main class="vg-main">
 
     <div class="vg-page-header">
-      <h1 class="vg-page-title">Pipelines</h1>
-      <span class="vg-page-subtitle">CI/CD pipeline monitoring · live updates</span>
+      <h1 class="vg-page-title">Trends</h1>
+      <span class="vg-page-subtitle">7-day pass rate & volume trends</span>
     </div>
 
-    <!-- Full-width Pipeline List -->
-    <div class="vg-grid">
-      <div class="vg-panel vg-col-12" data-src="/api/pipelines" data-poll="5000">
+    <!-- The outer panel fetches report data; inner elements are rendered by JS -->
+    <div class="vg-grid" id="trends-data" data-src="/api/reports/trends" data-poll="15000">
+
+      <!-- KPI Row -->
+      <div class="vg-panel vg-col-4">
+        <div class="vg-panel__body vg-panel__body--padded report-kpi">
+          <div class="vg-font-sm vg-text-subtle">Total Runs (7d)</div>
+          <div class="report-kpi__value" data-bind="total_7d">—</div>
+        </div>
+      </div>
+      <div class="vg-panel vg-col-4">
+        <div class="vg-panel__body vg-panel__body--padded report-kpi">
+          <div class="vg-font-sm vg-text-subtle">Avg Pass Rate (7d)</div>
+          <div class="report-kpi__value" data-bind="avg_rate" data-format="passrate">—</div>
+        </div>
+      </div>
+      <div class="vg-panel vg-col-4">
+        <div class="vg-panel__body vg-panel__body--padded report-kpi">
+          <div class="vg-font-sm vg-text-subtle">Avg Duration</div>
+          <div class="report-kpi__value" data-bind="avg_duration">—</div>
+        </div>
+      </div>
+
+      <!-- 7-Day Volume Chart -->
+      <div class="vg-panel vg-col-12">
         <div class="vg-panel__header">
-          <h2 class="vg-panel__title">All Pipelines</h2>
+          <h2 class="vg-panel__title">7-Day Run Volume</h2>
           <span class="vg-panel__meta" data-role="updated"></span>
-          <div class="vg-panel__actions">
-            <button class="vg-btn vg-btn--ghost vg-btn--icon vg-btn--sm" title="Refresh" onclick="Vigil.refresh()">↻</button>
-          </div>
         </div>
-        <div class="vg-panel__body">
-          <div class="vg-pipeline" data-each="items">
-            <template>
-              <div class="vg-pipeline-run">
-                <div class="vg-pipeline-run__status">
-                  <span class="vg-dot"
-                    data-bind="status"
-                    data-status-map='{"passed":"pass","failed":"fail","running":"running","cancelled":"cancelled","skipped":"skipped"}'
-                  ></span>
-                </div>
-                <div class="vg-pipeline-run__info vg-min-w-0">
-                  <div class="vg-pipeline-run__name" data-bind="name"></div>
-                  <div class="vg-pipeline-run__meta">
-                    <span data-bind="branch"></span>
-                    <span data-bind="triggered_by"></span>
-                    <span data-bind="started" data-format="relative"></span>
-                  </div>
-                </div>
-                <div class="vg-pipeline-run__stages" data-bind="stages_html"></div>
-                <span class="vg-badge"
-                  data-bind="status"
-                  data-status-map='{"passed":"pass","failed":"fail","running":"running","cancelled":"cancelled"}'
-                ></span>
-                <span class="vg-text-subtle vg-font-data vg-font-sm" data-bind="duration" data-format="duration"></span>
-              </div>
-            </template>
-          </div>
-        </div>
-        <div class="vg-panel__footer">
-          <span>6 pipelines</span>
+        <div class="vg-panel__body vg-panel__body--padded">
+          <div class="chart-bar-group chart-bar-group--tall" id="trend-7d-chart"></div>
+          <div class="timeline-labels" id="trend-7d-labels"></div>
         </div>
         <div class="vg-panel__loading"><span class="vg-spinner"></span></div>
       </div>
-    </div>
 
-    <!-- Deployment Feed (WebSocket) -->
-    <div class="vg-grid">
-      <div class="vg-panel vg-col-12 deploy-feed" data-ws="wss://mock.vigil.dev/deployments" data-ws-event="deploy.update">
+      <!-- Daily Breakdown Table -->
+      <div class="vg-panel vg-col-7">
         <div class="vg-panel__header">
-          <h2 class="vg-panel__title">Deployment Feed</h2>
-          <span class="vg-panel__meta" data-role="updated"></span>
-          <div class="vg-panel__actions">
-            <span class="vg-dot vg-dot--running deploy-feed__dot"></span>
-            <span class="vg-font-sm vg-text-subtle">WebSocket</span>
-          </div>
+          <h2 class="vg-panel__title">Daily Breakdown</h2>
         </div>
         <div class="vg-panel__body">
-          <table class="vg-table vg-table--dense">
+          <table class="vg-table">
             <thead>
               <tr>
-                <th>Service</th>
-                <th>Action</th>
-                <th>Env</th>
-                <th>Version</th>
-                <th>By</th>
+                <th>Day</th>
+                <th class="vg-col-num">Total</th>
+                <th class="vg-col-num">Passed</th>
+                <th class="vg-col-num">Failed</th>
+                <th class="vg-col-num">Skipped</th>
+                <th class="vg-col-num">Pass Rate</th>
+                <th class="vg-col-num">Avg Duration</th>
               </tr>
             </thead>
-            <tbody data-each="items">
+            <tbody data-each="days">
               <template>
                 <tr>
-                  <td class="vg-col-mono" data-bind="service"></td>
-                  <td data-bind="action"></td>
-                  <td><span class="vg-tag" data-bind="env"></span></td>
-                  <td class="vg-col-mono vg-col-muted" data-bind="version"></td>
-                  <td class="vg-col-subtle vg-col-mono" data-bind="actor"></td>
+                  <td class="vg-col-mono" data-bind="label"></td>
+                  <td class="vg-col-num vg-col-mono" data-bind="total"></td>
+                  <td class="vg-col-num vg-col-mono vg-text-pass" data-bind="passed"></td>
+                  <td class="vg-col-num vg-col-mono vg-text-fail" data-bind="failed"></td>
+                  <td class="vg-col-num vg-col-mono vg-text-subtle" data-bind="skipped"></td>
+                  <td class="vg-col-num vg-col-mono" data-bind="rate" data-format="passrate"></td>
+                  <td class="vg-col-num vg-col-mono" data-bind="avg_duration"></td>
                 </tr>
               </template>
             </tbody>
@@ -175,6 +164,41 @@
         </div>
         <div class="vg-panel__loading"><span class="vg-spinner"></span></div>
       </div>
+
+      <!-- Pass Rate by Suite -->
+      <div class="vg-panel vg-col-5">
+        <div class="vg-panel__header">
+          <h2 class="vg-panel__title">Pass Rate by Suite</h2>
+        </div>
+        <div class="vg-panel__body">
+          <table class="vg-table">
+            <thead>
+              <tr>
+                <th>Suite</th>
+                <th class="vg-col-num">Runs</th>
+                <th class="vg-col-num">Pass Rate</th>
+                <th>Trend (7d)</th>
+              </tr>
+            </thead>
+            <tbody data-each="suites">
+              <template>
+                <tr>
+                  <td class="vg-col-mono" data-bind="suite"></td>
+                  <td class="vg-col-num vg-col-mono" data-bind="runs"></td>
+                  <td class="vg-col-num vg-col-mono" data-bind="rate" data-format="passrate"></td>
+                  <td>
+                    <svg class="vg-sparkline vg-sparkline--md" data-bind="trend"
+                         data-sparkline-color="var(--vg-accent)" data-sparkline-type="line"
+                         width="80" height="20"></svg>
+                  </td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+        </div>
+        <div class="vg-panel__loading"><span class="vg-spinner"></span></div>
+      </div>
+
     </div>
 
   </main>

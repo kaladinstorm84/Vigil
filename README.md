@@ -66,8 +66,10 @@ The demo is a multi-page dashboard showcasing every Vigil feature:
 | **Pipelines** | `demo/pipelines.html` | Full pipeline list with stage bars, WebSocket deployment feed |
 | **Test Runs** | `demo/testruns.html` | Filterable table, filter groups, pass-rate ring, 24h trend chart, flaky features |
 | **Runners** | `demo/runners.html` | Runner card grid, progress bars, container queries, activity log |
+| **Trends** | `demo/trends.html` | 7-day run volume chart, daily breakdown table, pass rate by suite with sparklines |
+| **Failures** | `demo/failures.html` | Failure type breakdown, recent failures table, flakiest features analysis |
 
-All pages share a mock API layer (`demo/demo-mock.js`) that patches `fetch()` and `WebSocket` in-browser. Sidebar navigation links work across all pages.
+All pages share a mock API layer (`demo/demo-mock.js`) that patches `fetch()` and `WebSocket` in-browser. Sidebar navigation links work across all six pages.
 
 ## Architecture
 

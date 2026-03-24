@@ -160,6 +160,77 @@ const MOCK_API = {
       total: _testruns.length + 103 + ' runs today',
     };
   },
+  '/api/reports/trends': () => {
+    const days = [];
+    const now = new Date();
+    for (let d = 6; d >= 0; d--) {
+      const dt = new Date(now.getTime() - d * 86400000);
+      const label = dt.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+      const total = randInt(120, 180);
+      const passed = total - randInt(8, 30);
+      const failed = total - passed - randInt(0, 8);
+      const skipped = total - passed - Math.max(0, failed);
+      days.push({
+        label,
+        total,
+        passed: Math.max(0, passed),
+        failed: Math.max(0, Math.min(failed, total - passed)),
+        skipped: Math.max(0, skipped),
+        rate: Math.round((passed / total) * 1000) / 10,
+        avg_duration: randInt(8, 28) + 's',
+      });
+    }
+    const suiteRates = SUITES.map(s => ({
+      suite: s,
+      rate: randFloat(72, 98),
+      runs: randInt(40, 120),
+      trend: makeTrend(randFloat(80, 95), 3, 7),
+    }));
+    return {
+      days,
+      total_7d: days.reduce((s, d) => s + d.total, 0),
+      avg_rate: Math.round(days.reduce((s, d) => s + d.rate, 0) / days.length * 10) / 10,
+      avg_duration: randInt(12, 22) + 's',
+      suites: suiteRates,
+    };
+  },
+  '/api/reports/failures': () => {
+    const types = [
+      { type: 'Assertion failed', count: randInt(15, 40), pct: 0 },
+      { type: 'Element not found', count: randInt(8, 25), pct: 0 },
+      { type: 'Timeout exceeded', count: randInt(5, 18), pct: 0 },
+      { type: 'Network error', count: randInt(2, 10), pct: 0 },
+      { type: 'Script error', count: randInt(1, 6), pct: 0 },
+    ];
+    const totalFail = types.reduce((s, t) => s + t.count, 0);
+    types.forEach(t => { t.pct = Math.round((t.count / totalFail) * 1000) / 10; });
+    types.sort((a, b) => b.count - a.count);
+
+    const recentFailures = Array.from({ length: 8 }, () => {
+      const r = makeTestRun();
+      r.status = 'failed';
+      r.error_type = rand(['assertion', 'timeout', 'element not found', 'network', 'script']);
+      return r;
+    });
+
+    const flaky = FEATURES.map(f => ({
+      name: f,
+      total_runs: randInt(20, 60),
+      fail_count: randInt(3, 15),
+      rate: 0,
+    }));
+    flaky.forEach(f => { f.rate = Math.round(((f.total_runs - f.fail_count) / f.total_runs) * 1000) / 10; });
+    flaky.sort((a, b) => a.rate - b.rate);
+
+    return {
+      total_failures: totalFail,
+      most_common: types[0].type,
+      mttr: randInt(4, 45) + 'm',
+      types,
+      items: recentFailures,
+      flaky: flaky.slice(0, 6),
+    };
+  },
 };
 
 // ── Patch fetch ──────────────────────────────────────────────
@@ -413,6 +484,83 @@ window.WebSocket = function(url) {
   if (url.includes('mock')) return new MockWebSocket(url);
   return new _OrigWebSocket(url);
 };
+
+// ── Report: 7-day trend chart builder (guarded) ─────────────
+function build7DayChart(days) {
+  const chart  = document.getElementById('trend-7d-chart');
+  const labels = document.getElementById('trend-7d-labels');
+  if (!chart || !labels || !days) return;
+  chart.innerHTML = '';
+  labels.innerHTML = '';
+
+  const maxTotal = Math.max(...days.map(d => d.total));
+  days.forEach(d => {
+    const pct = d.rate / 100;
+    const bar = document.createElement('div');
+    bar.className = 'chart-bar chart-bar--wide';
+    bar.style.height = Math.round((d.total / maxTotal) * 80) + 'px';
+    bar.style.background = pct > 0.9 ? 'var(--vg-pass)' : pct > 0.75 ? 'var(--vg-warn)' : 'var(--vg-fail)';
+    bar.setAttribute('data-tip', d.label + ' \u2014 ' + d.total + ' runs, ' + d.rate + '% pass');
+    chart.appendChild(bar);
+
+    const lbl = document.createElement('span');
+    lbl.textContent = d.label.split(' ')[0];
+    labels.appendChild(lbl);
+  });
+}
+
+function buildFailureBreakdown(types) {
+  const container = document.getElementById('failure-breakdown');
+  if (!container || !types) return;
+  container.innerHTML = '';
+  types.forEach(t => {
+    const div = document.createElement('div');
+    div.className = 'failure-type-row';
+    div.innerHTML = `
+      <div class="failure-type-row__header">
+        <span class="vg-font-sm">${t.type}</span>
+        <span class="vg-font-sm vg-font-data">${t.count} <span class="vg-text-subtle">(${t.pct}%)</span></span>
+      </div>
+      <div class="vg-progress">
+        <div class="vg-progress__bar vg-progress__bar--fail" style="width:${t.pct}%"></div>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function buildFlakyTable(features) {
+  const container = document.getElementById('flaky-table-body');
+  if (!container || !features) return;
+  container.innerHTML = '';
+  features.forEach(f => {
+    const cls = f.rate > 90 ? 'pass' : f.rate > 75 ? 'warn' : 'fail';
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><div class="feature-name">${f.name}</div></td>
+      <td class="vg-col-num vg-col-mono">${f.total_runs}</td>
+      <td class="vg-col-num vg-col-mono vg-text-fail">${f.fail_count}</td>
+      <td class="vg-col-num vg-col-mono vg-text-${cls}">${f.rate}%</td>
+    `;
+    container.appendChild(tr);
+  });
+}
+
+// ── Report data listeners (guarded) ─────────────────────────
+const _trendsPanel = document.querySelector('[data-src="/api/reports/trends"]');
+if (_trendsPanel) {
+  _trendsPanel.addEventListener('vigil:update', e => {
+    build7DayChart(e.detail.days);
+  });
+}
+
+const _failuresPanel = document.querySelector('[data-src="/api/reports/failures"]');
+if (_failuresPanel) {
+  _failuresPanel.addEventListener('vigil:update', e => {
+    buildFailureBreakdown(e.detail.types);
+    buildFlakyTable(e.detail.flaky);
+  });
+}
 
 // ── Bootstrap demo ───────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {

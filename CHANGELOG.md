@@ -10,9 +10,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 - **WebSocket panels** — `data-ws` attribute for push-based live updates with automatic reconnection (exponential backoff, 1s–30s)
 - **WebSocket event filtering** — `data-ws-event` to filter incoming messages by event type
 - **CSS container queries** on `.vg-panel` for self-responsive layouts (compact at <320px, spacious at >600px)
-- **Multi-page demo** — Overview, Pipelines, Test Runs, and Runners pages under `demo/`
+- **Multi-page demo** — Overview, Pipelines, Test Runs, Runners, Trends, and Failures pages under `demo/`
 - Deployment Feed demo panel showcasing WebSocket integration with a `MockWebSocket` shim
 - Runner card grid layout on the dedicated Runners page
+- **Trends report page** — 7-day run volume chart, daily breakdown table, pass rate by suite with sparklines
+- **Failures report page** — failure type breakdown with progress bars, recent failures table, flakiest features analysis
 
 ### Changed
 - Demo files moved to `demo/` subfolder to separate framework source from demo

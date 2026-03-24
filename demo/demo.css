@@ -224,3 +224,40 @@ select.vg-btn {
 .runner-card__load .vg-font-sm {
   margin-bottom: 2px;
 }
+
+/* ── Report pages ─────────────────────────────────────────── */
+
+.report-kpi {
+  text-align: center;
+  padding-top: var(--vg-s4);
+  padding-bottom: var(--vg-s4);
+}
+.report-kpi__value {
+  font-size: 32px;
+  font-weight: 700;
+  font-family: var(--vg-font-data);
+  margin-top: var(--vg-s2);
+  color: var(--vg-text);
+}
+.report-kpi__value--sm { font-size: 20px; }
+.report-kpi--fail .report-kpi__value { color: var(--vg-fail); }
+
+.chart-bar-group--tall { height: 100px; }
+.chart-bar--wide { min-width: 24px; }
+
+/* Failure breakdown rows */
+.failure-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vg-s3);
+}
+.failure-type-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.failure-type-row__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
