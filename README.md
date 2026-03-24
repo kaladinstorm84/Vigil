@@ -282,4 +282,4 @@ Vigil targets modern evergreen browsers (Chrome, Firefox, Safari, Edge). Interne
 
 ## License
 
-[MIT](LICENSE) — QMate 2026
+[MIT](LICENSE) — KaladinStorm84 2026

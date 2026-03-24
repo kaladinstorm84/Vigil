@@ -1,5 +1,5 @@
 /**
- * DEMO-MOCK.JS — Mock data layer for the Vigil QMate demo.
+ * DEMO-MOCK.JS — Mock data layer for the Vigil demo dashboard.
  * Patches window.fetch() and WebSocket to intercept API URLs and
  * return randomised test/pipeline/runner data.
  *
@@ -67,7 +67,7 @@ function makePipeline(i) {
 
   return {
     id: i,
-    name: 'QMate \u00b7 ' + rand(BRANCHES) + ' #' + randInt(100, 999),
+    name: 'Acme \u00b7 ' + rand(BRANCHES) + ' #' + randInt(100, 999),
     branch: rand(BRANCHES),
     triggered_by: '@' + rand(['matt','alice','ci-bot','scheduler']),
     status: overall,
@@ -464,7 +464,7 @@ class MockWebSocket {
           items: Array.from({ length: randInt(2, 5) }, () => ({
             env:     rand(DEPLOY_ENVS),
             action:  rand(DEPLOY_ACTIONS),
-            service: 'qmate-' + rand(['api', 'web', 'worker', 'gateway']),
+            service: 'acme-' + rand(['api', 'web', 'worker', 'gateway']),
             version: 'v' + randInt(2, 4) + '.' + randInt(0, 9) + '.' + randInt(0, 20),
             status:  rand(['pass', 'running', 'fail', 'pass', 'pass']),
             time:    new Date().toISOString(),
