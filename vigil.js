@@ -16,7 +16,19 @@
   const ATTR_FORMAT     = 'data-format';
   const ATTR_STATUS_MAP = 'data-status-map';
   const ATTR_ROW_STATUS = 'data-row-status';
-  const ATTR_TRANSFORM  = 'data-transform';
+  const ATTR_TRANSFORM    = 'data-transform';
+  const ATTR_HEADERS      = 'data-headers';
+  const ATTR_RESPONSE_MAP = 'data-response-map';
+  const ATTR_PROXY        = 'data-proxy';
+
+  // ── Global configuration ─────────────────────────────────
+  const _config = {
+    headers: {},
+    proxy: null,
+  };
+
+  // ── Response maps (panel-level response transforms) ──────
+  const responseMaps = {};
 
   const STATUS_CLASSES = [
     'vg-dot--pass','vg-dot--fail','vg-dot--running','vg-dot--warn',
@@ -213,6 +225,37 @@
     });
   }
 
+  // ── Fetch helpers (headers, proxy, response map) ────────────
+
+  function buildFetchHeaders(el) {
+    const merged = Object.assign(
+      { 'Accept': 'application/json', 'X-Vigil-Poll': '1' },
+      _config.headers
+    );
+    const perPanel = el.getAttribute(ATTR_HEADERS);
+    if (perPanel) {
+      try { Object.assign(merged, JSON.parse(perPanel)); }
+      catch (e) { console.warn('[Vigil] Invalid data-headers JSON', e); }
+    }
+    return merged;
+  }
+
+  function buildFetchUrl(src, el) {
+    const proxy = el.getAttribute(ATTR_PROXY) || _config.proxy;
+    if (!proxy) return src;
+    const sep = proxy.endsWith('/') ? '' : '/';
+    return proxy + sep + src.replace(/^\/+/, '');
+  }
+
+  function applyResponseMap(el, data) {
+    const mapName = el.getAttribute(ATTR_RESPONSE_MAP);
+    if (mapName && responseMaps[mapName]) {
+      try { return responseMaps[mapName](data); }
+      catch (e) { console.warn('[Vigil] Response map "' + mapName + '" error', e); }
+    }
+    return data;
+  }
+
   // ── PanelController ─────────────────────────────────────────
   class PanelController {
     constructor(el, options) {
@@ -260,11 +303,12 @@
       if (isInitial) this._setLoading(true);
 
       try {
-        const res = await fetch(this.src, {
-          headers: { 'Accept': 'application/json', 'X-Vigil-Poll': '1' }
-        });
+        const url     = buildFetchUrl(this.src, this.el);
+        const headers = buildFetchHeaders(this.el);
+        const res     = await fetch(url, { headers });
         if (!res.ok) throw new Error('HTTP ' + res.status);
-        const data = await res.json();
+        let data = await res.json();
+        data = applyResponseMap(this.el, data);
 
         this._consecutive_errors = 0;
         this._lastUpdated = new Date();
@@ -361,8 +405,11 @@
 
     async _fetch() {
       try {
-        const res  = await fetch(this.src, { headers: { 'Accept': 'application/json' } });
-        const data = await res.json();
+        const url     = buildFetchUrl(this.src, this.el);
+        const headers = buildFetchHeaders(this.el);
+        const res     = await fetch(url, { headers });
+        let data = await res.json();
+        data = applyResponseMap(this.el, data);
         this._render(data);
         this.el.dispatchEvent(new CustomEvent('vigil:update', { detail: data, bubbles: true }));
       } catch (err) {
@@ -704,6 +751,19 @@
   const Vigil = {
     formatters,
     transforms,
+    responseMaps,
+
+    /**
+     * Set global configuration.
+     * Vigil.configure({
+     *   headers: { Authorization: 'Bearer xxx' },
+     *   proxy: 'https://cors-proxy.example.com/'
+     * })
+     */
+    configure(opts) {
+      if (opts.headers) Object.assign(_config.headers, opts.headers);
+      if (opts.proxy !== undefined) _config.proxy = opts.proxy;
+    },
 
     /**
      * Register a custom formatter.
@@ -720,6 +780,15 @@
      */
     registerTransform(name, fn) {
       transforms[name] = fn;
+    },
+
+    /**
+     * Register a response map — a panel-level transform that reshapes
+     * the entire fetched JSON before Vigil renders it.
+     * Vigil.registerResponseMap('mapLaunches', raw => ({ items: raw.content }))
+     */
+    registerResponseMap(name, fn) {
+      responseMaps[name] = fn;
     },
 
     /**

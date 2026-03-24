@@ -37,6 +37,13 @@
 - [x] CSS: `.vg-input`, `.vg-toggle`, `.radio-group`, `.form-row`, `.settings-section`
 - [x] All 7 sidebar nav links updated
 
+### Phase 4 — API Integration Features
+- [x] `Vigil.configure()` for global headers and proxy settings
+- [x] `data-headers` attribute for per-panel fetch headers
+- [x] `data-response-map` + `Vigil.registerResponseMap()` for panel-level response transforms
+- [x] `data-proxy` attribute and global proxy config for CORS workaround
+- [x] README updated with "Connecting to Real APIs" section and examples
+
 ## Current State
 - Version: **0.3.0**
 - Demo: 7 pages (Overview, Pipelines, Test Runs, Runners, Trends, Failures, Settings)

@@ -7,6 +7,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 ## [0.3.0] — 2026-03-24
 
 ### Added
+- **Global fetch headers** — `Vigil.configure({ headers: { Authorization: 'Bearer xxx' } })` sets headers on all fetches
+- **Per-panel fetch headers** — `data-headers` attribute for panel-specific HTTP headers (merged with global)
+- **Response maps** — `data-response-map` + `Vigil.registerResponseMap(name, fn)` to reshape raw API JSON before rendering
+- **CORS proxy** — `data-proxy` attribute and `Vigil.configure({ proxy: '...' })` to route fetches through a CORS proxy
 - **WebSocket panels** — `data-ws` attribute for push-based live updates with automatic reconnection (exponential backoff, 1s–30s)
 - **WebSocket event filtering** — `data-ws-event` to filter incoming messages by event type
 - **CSS container queries** on `.vg-panel` for self-responsive layouts (compact at <320px, spacious at >600px)

@@ -110,6 +110,9 @@ All pages share a mock API layer (`demo/demo-mock.js`) that patches `fetch()` an
 | `data-ws-event` | Filter WebSocket messages by event type (checks `event`, `type`, or `_event` fields). |
 | `data-sparkline-color` | CSS colour for sparkline stroke/fill. Default: `var(--vg-accent)`. |
 | `data-sparkline-type` | `line` (default) or `area`. Area adds a filled polygon beneath the line. |
+| `data-headers` | JSON object of extra HTTP headers to send with this panel's fetch. Merged with global headers. |
+| `data-response-map` | Name of a registered response map function that reshapes the raw JSON before rendering. |
+| `data-proxy` | CORS proxy URL prefix. The `data-src` path is appended to this URL. Overrides global proxy for this panel. |
 
 ## Built-in Formatters
 
@@ -138,6 +141,7 @@ Vigil.registerFormatter("mb",  v => (v / 1048576).toFixed(1) + " MB");
 
 | Method | Description |
 |--------|-------------|
+| `Vigil.configure(opts)` | Set global config: `headers`, `proxy`. See [Connecting to Real APIs](#connecting-to-real-apis). |
 | `Vigil.refresh()` | Force all polled components to fetch immediately |
 | `Vigil.pause()` | Pause all polling |
 | `Vigil.resume()` | Resume all polling and immediately fetch |
@@ -146,6 +150,7 @@ Vigil.registerFormatter("mb",  v => (v / 1048576).toFixed(1) + " MB");
 | `Vigil.format(name, value)` | Apply a named formatter and return the result |
 | `Vigil.registerFormatter(name, fn)` | Register a custom formatter |
 | `Vigil.registerTransform(name, fn)` | Register a custom transform function |
+| `Vigil.registerResponseMap(name, fn)` | Register a response map that reshapes raw JSON before rendering |
 | `Vigil.sparkline(svgEl, values, opts)` | Render a sparkline into an SVG element programmatically |
 
 ### Controller API
@@ -215,6 +220,97 @@ Use `data-ws` instead of `data-src` for push-based updates:
 ```
 
 Optionally filter by event type with `data-ws-event="build.updated"`. Reconnects automatically with exponential backoff (1s → 30s).
+
+## Connecting to Real APIs
+
+Vigil can hit external APIs directly from the browser — no server.js needed. Three features work together to make this possible:
+
+### Global Headers (auth tokens)
+
+Set headers once and they apply to every `data-src` fetch:
+
+```js
+Vigil.configure({
+  headers: { Authorization: 'Bearer eyJhbG...' }
+});
+```
+
+### Per-Panel Headers
+
+Override or add headers on individual panels via `data-headers`:
+
+```html
+<div class="vg-panel"
+     data-src="https://rp.example.com/api/v1/project/launches"
+     data-headers='{"Authorization":"Bearer xxx","X-Project":"my-project"}'>
+  ...
+</div>
+```
+
+Per-panel headers are merged with global headers (panel wins on conflict).
+
+### Response Maps (reshape API responses)
+
+External APIs rarely return the exact shape your template expects. Register a response map to transform the raw JSON before Vigil renders it:
+
+```js
+Vigil.registerResponseMap('mapLaunches', raw => ({
+  items: raw.content.map(launch => ({
+    name:   launch.name,
+    status: launch.status.toLowerCase(),
+    total:  launch.statistics.executions.total,
+    passed: launch.statistics.executions.passed,
+    failed: launch.statistics.executions.failed,
+    date:   launch.startTime,
+  }))
+}));
+```
+
+Then reference it on the panel:
+
+```html
+<div class="vg-panel"
+     data-src="https://rp.example.com/api/v1/project/launch"
+     data-response-map="mapLaunches"
+     data-poll="30000">
+  <table class="vg-table">
+    <tbody data-each="items">
+      <template>
+        <tr>
+          <td data-bind="name"></td>
+          <td data-bind="status"></td>
+          <td data-bind="passed"></td>
+          <td data-bind="failed"></td>
+        </tr>
+      </template>
+    </tbody>
+  </table>
+</div>
+```
+
+### CORS Proxy
+
+If the target API doesn't send `Access-Control-Allow-Origin` headers, route requests through a CORS proxy:
+
+```js
+// Global — applies to all panels
+Vigil.configure({
+  proxy: 'https://cors-proxy.example.com/'
+});
+```
+
+```html
+<!-- Per-panel override -->
+<div class="vg-panel"
+     data-src="/api/v1/launches"
+     data-proxy="https://my-proxy.example.com/">
+  ...
+</div>
+```
+
+With proxy set, a `data-src="/api/v1/launches"` becomes `fetch('https://cors-proxy.example.com/api/v1/launches')`.
+
+Alternatively, enable CORS on your API server by adding `Access-Control-Allow-Origin` and `Access-Control-Allow-Headers` response headers.
 
 ## Container Queries
 
