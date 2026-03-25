@@ -2,7 +2,7 @@
 
 **Declarative live dashboards from plain HTML — zero dependencies, one script tag.**
 
-A lightweight framework for building live monitoring dashboards, purpose-built for CI/CD pipelines, test automation results, and infrastructure health. Drop in two files, add `data-` attributes, and your dashboard is live.
+A lightweight framework for building live dashboards from plain HTML. Drop in two files, add `data-` attributes, and any JSON API becomes a real-time dashboard — no build step, no framework lock-in. Works for ops monitoring, CI/CD, IoT, analytics, support queues, or anything with an API.
 
 ## Features
 
@@ -96,7 +96,7 @@ All pages share a mock API layer (`demo/demo-mock.js`) that patches `fetch()` an
 |-----------|-------------|
 | `data-src` | URL to fetch (JSON). Polled via `fetch()` with `Accept: application/json`. |
 | `data-poll` | Polling interval in milliseconds. Omit to fetch once on load. |
-| `data-bind` | Dot-path into JSON response to bind to element text. e.g. `data-bind="pipeline.name"` |
+| `data-bind` | Dot-path into JSON response to bind to element text. e.g. `data-bind="item.name"` |
 | `data-each` | Dot-path to a JSON array. Repeats child `<template>` for each item. |
 | `data-if` | Hides element if the named field is falsy. |
 | `data-if-not` | Hides element if the named field is truthy. |
@@ -314,7 +314,7 @@ Alternatively, enable CORS on your API server by adding `Access-Control-Allow-Or
 
 ## Container Queries
 
-Panels use CSS container queries for self-responsive layout. A narrow panel (<320px) automatically compacts its header, table cells, and wraps pipeline stages. Wide panels (>600px) gain extra padding.
+Panels use CSS container queries for self-responsive layout. A narrow panel (<320px) automatically compacts its header and table cells. Wide panels (>600px) gain extra padding. Panels respond to their own width, not the viewport.
 
 ## Theming
 
@@ -366,10 +366,10 @@ Seven semantic statuses with consistent colours across all components:
 |--------|--------|----------|
 | `pass` | `#3FB950` | Successful build, passing test, healthy runner |
 | `fail` | `#F85149` | Failed build, failing test, runner error |
-| `running` | `#388BFD` | In-progress pipeline, active test, busy runner |
+| `running` | `#388BFD` | In-progress task, active job, busy state |
 | `warn` | `#D29922` | Stale data, high load, degraded state |
 | `skipped` | `#6E7681` | Deliberately skipped step or scenario |
-| `cancelled` | `#8957E5` | Manually cancelled pipeline or run |
+| `cancelled` | `#8957E5` | Manually cancelled task or job |
 | `unknown` | `#484F58` | No data, pending first fetch |
 
 ## Browser Support

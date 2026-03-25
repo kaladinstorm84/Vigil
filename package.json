@@ -1,7 +1,7 @@
 {
   "name": "vigilui",
   "version": "0.3.0",
-  "description": "Zero-dependency live monitoring dashboard framework for CI/CD, test automation, and GitLab monitoring",
+  "description": "Zero-dependency declarative dashboard framework — turn any JSON API into a live dashboard with HTML attributes",
   "main": "vigil.js",
   "style": "vigil.css",
   "files": [
@@ -16,12 +16,13 @@
   "keywords": [
     "dashboard",
     "monitoring",
-    "ci-cd",
-    "test-automation",
     "live-polling",
+    "data-binding",
     "websocket",
     "sparkline",
-    "gitlab"
+    "declarative",
+    "real-time",
+    "no-build"
   ],
   "repository": {
     "type": "git",
