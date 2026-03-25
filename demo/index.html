@@ -96,11 +96,11 @@
     <!-- KPI Row -->
     <div class="kpi-grid">
 
-      <div class="vg-kpi vg-kpi--pass" data-src="/api/kpi/runs" data-poll="6000">
+      <div class="vg-kpi vg-kpi--success" data-src="/api/kpi/runs" data-poll="6000">
         <div class="vg-kpi__label">Runs Today</div>
         <div class="vg-kpi__value" data-bind="total">—</div>
         <svg class="vg-sparkline vg-sparkline--lg" data-bind="trend"
-             data-sparkline-color="var(--vg-pass)" data-sparkline-type="area"
+             data-sparkline-color="var(--vg-success)" data-sparkline-type="area"
              width="120" height="24"></svg>
         <div class="vg-kpi__delta vg-kpi__delta--up" data-bind="delta_label">—</div>
       </div>
@@ -153,7 +153,7 @@
                 <div class="vg-pipeline-run__status">
                   <span class="vg-dot"
                     data-bind="status"
-                    data-status-map='{"passed":"pass","failed":"fail","running":"running","cancelled":"cancelled","skipped":"skipped"}'
+                    data-status-map='{"passed":"success","failed":"fail","running":"running","cancelled":"cancelled","skipped":"skipped"}'
                   ></span>
                 </div>
                 <div class="vg-pipeline-run__info vg-min-w-0">
@@ -167,7 +167,7 @@
                 <div class="vg-pipeline-run__stages" data-bind="stages_html"></div>
                 <span class="vg-badge"
                   data-bind="status"
-                  data-status-map='{"passed":"pass","failed":"fail","running":"running","cancelled":"cancelled"}'
+                  data-status-map='{"success":"success","failed":"fail","running":"running","cancelled":"cancelled"}'
                 ></span>
                 <span class="vg-text-subtle vg-font-data vg-font-sm" data-bind="duration" data-format="duration"></span>
               </div>
@@ -185,7 +185,7 @@
       <div class="vg-panel vg-col-4" data-src="/api/runners" data-poll="8000">
         <div class="vg-panel__header">
           <h2 class="vg-panel__title">Runner Health</h2>
-          <span class="vg-badge vg-badge--pass panel-header__badge-right" data-bind="healthy_count"></span>
+          <span class="vg-badge vg-badge--success panel-header__badge-right" data-bind="healthy_count"></span>
         </div>
         <div class="vg-panel__body vg-panel__body--padded">
           <div data-each="runners">
@@ -193,7 +193,7 @@
               <div class="runner-row">
                 <span class="vg-dot"
                   data-bind="status"
-                  data-status-map='{"online":"pass","busy":"running","offline":"unknown","error":"fail"}'
+                  data-status-map='{"online":"success","busy":"running","offline":"unknown","error":"fail"}'
                 ></span>
                 <div class="runner-row__name vg-min-w-0 vg-truncate" data-bind="name"></div>
                 <div class="runner-row__meta" data-bind="job_count"></div>

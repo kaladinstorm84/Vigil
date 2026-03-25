@@ -31,11 +31,11 @@
   const responseMaps = {};
 
   const STATUS_CLASSES = [
-    'vg-dot--pass','vg-dot--fail','vg-dot--running','vg-dot--warn',
+    'vg-dot--success','vg-dot--fail','vg-dot--running','vg-dot--warn',
     'vg-dot--skipped','vg-dot--cancelled','vg-dot--unknown',
-    'vg-badge--pass','vg-badge--fail','vg-badge--running','vg-badge--warn',
+    'vg-badge--success','vg-badge--fail','vg-badge--running','vg-badge--warn',
     'vg-badge--skipped','vg-badge--cancelled',
-    'vg-row--pass','vg-row--fail','vg-row--running','vg-row--warn',
+    'vg-row--success','vg-row--fail','vg-row--running','vg-row--warn',
     'vg-row--cancelled',
   ];
 
@@ -74,10 +74,11 @@
       const d = new Date(v);
       return isNaN(d) ? v : d.toLocaleDateString();
     },
-    passrate(v) {
+    successrate(v) {
       const n = Number(v);
       return isNaN(n) ? v : n.toFixed(1) + '%';
     },
+    passrate(v) { return formatters.successrate(v); },
     uppercase(v) { return String(v).toUpperCase(); },
     lowercase(v) { return String(v).toLowerCase(); },
   };
@@ -422,9 +423,9 @@
       // Update accent colour from data
       const status = deepGet(data, 'status');
       if (status) {
-        ['vg-kpi--pass','vg-kpi--fail','vg-kpi--warn','vg-kpi--running'].forEach(c =>
+        ['vg-kpi--success','vg-kpi--fail','vg-kpi--warn','vg-kpi--running'].forEach(c =>
           this.el.classList.remove(c));
-        if (['pass','fail','warn','running'].includes(status)) {
+        if (['success','fail','warn','running'].includes(status)) {
           this.el.classList.add('vg-kpi--' + status);
         }
       }

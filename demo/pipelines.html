@@ -110,7 +110,7 @@
                 <div class="vg-pipeline-run__status">
                   <span class="vg-dot"
                     data-bind="status"
-                    data-status-map='{"passed":"pass","failed":"fail","running":"running","cancelled":"cancelled","skipped":"skipped"}'
+                    data-status-map='{"passed":"success","failed":"fail","running":"running","cancelled":"cancelled","skipped":"skipped"}'
                   ></span>
                 </div>
                 <div class="vg-pipeline-run__info vg-min-w-0">
@@ -124,7 +124,7 @@
                 <div class="vg-pipeline-run__stages" data-bind="stages_html"></div>
                 <span class="vg-badge"
                   data-bind="status"
-                  data-status-map='{"passed":"pass","failed":"fail","running":"running","cancelled":"cancelled"}'
+                  data-status-map='{"success":"success","failed":"fail","running":"running","cancelled":"cancelled"}'
                 ></span>
                 <span class="vg-text-subtle vg-font-data vg-font-sm" data-bind="duration" data-format="duration"></span>
               </div>

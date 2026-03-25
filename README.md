@@ -9,7 +9,7 @@ A lightweight framework for building live dashboards from plain HTML. Drop in tw
 - **Zero dependencies** — two files (`vigil.js` + `vigil.css`), no build step
 - **Declarative polling** — `data-src` + `data-poll` on any element
 - **Data binding** — `data-bind`, `data-each`, `data-if`, `data-if-not`
-- **Seven-status system** — `pass` · `fail` · `running` · `warn` · `skipped` · `cancelled` · `unknown`
+- **Seven-status system** — `success` · `fail` · `running` · `warn` · `skipped` · `cancelled` · `unknown`
 - **WebSocket panels** — `data-ws` for push-based live feeds with auto-reconnect
 - **Filter groups** — shared filter state across panels via `data-vg-filter-group`
 - **Sparklines** — inline SVG trend graphs with `line` and `area` modes
@@ -122,7 +122,8 @@ All pages share a mock API layer (`demo/demo-mock.js`) that patches `fetch()` an
 | `relative` | `3m ago` | ISO date to relative time (auto-refreshes every 10s) |
 | `number` | `12,345` | Locale-formatted integer |
 | `percent` | `94.2%` | Fixed to 1 decimal place |
-| `passrate` | `88.0%` | Alias for percent, semantic for pass rate KPIs |
+| `successrate` | `88.0%` | Alias for percent, semantic for success-rate KPIs |
+| `passrate` | `88.0%` | Alias for `successrate` (backward-compatible) |
 | `date` | `23/01/2025, 14:30` | Full locale date/time |
 | `short_date` | `23/01/2025` | Date only |
 | `uppercase` | `MAIN` | Uppercases string value |
@@ -201,7 +202,7 @@ Bind an array of numbers to an SVG with the `vg-sparkline` class:
 ```html
 <svg class="vg-sparkline vg-sparkline--lg"
      data-bind="trend"
-     data-sparkline-color="var(--vg-pass)"
+     data-sparkline-color="var(--vg-success)"
      data-sparkline-type="area"
      width="120" height="24"></svg>
 ```
@@ -364,7 +365,7 @@ Seven semantic statuses with consistent colours across all components:
 
 | Status | Colour | Use case |
 |--------|--------|----------|
-| `pass` | `#3FB950` | Successful build, passing test, healthy runner |
+| `success` | `#3FB950` | Successful outcome, passing test, healthy runner |
 | `fail` | `#F85149` | Failed build, failing test, runner error |
 | `running` | `#388BFD` | In-progress task, active job, busy state |
 | `warn` | `#D29922` | Stale data, high load, degraded state |

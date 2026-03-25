@@ -24,7 +24,7 @@
   --vg-accent-hover: #58a6ff;
 
   /* Status colours */
-  --vg-pass:      #3fb950;
+  --vg-success:      #3fb950;
   --vg-fail:      #f85149;
   --vg-running:   #388bfd;
   --vg-warn:      #d29922;
@@ -33,7 +33,7 @@
   --vg-unknown:   #484f58;
 
   /* Status bg (for row/badge tints) */
-  --vg-pass-bg:      rgba(63,185,80,0.08);
+  --vg-success-bg:      rgba(63,185,80,0.08);
   --vg-fail-bg:      rgba(248,81,73,0.08);
   --vg-running-bg:   rgba(56,139,253,0.08);
   --vg-warn-bg:      rgba(210,153,34,0.08);
@@ -82,12 +82,12 @@
   --vg-text:          #1f2328;
   --vg-text-muted:    #636c76;
   --vg-text-subtle:   #9198a1;
-  --vg-pass:      #1a7f37;
+  --vg-success:      #1a7f37;
   --vg-fail:      #cf222e;
   --vg-running:   #0969da;
   --vg-warn:      #9a6700;
   --vg-cancelled: #8250df;
-  --vg-pass-bg:   rgba(26,127,55,0.08);
+  --vg-success-bg:   rgba(26,127,55,0.08);
   --vg-fail-bg:   rgba(207,34,46,0.08);
   --vg-running-bg:rgba(9,105,218,0.08);
   --vg-warn-bg:   rgba(154,103,0,0.08);
@@ -300,7 +300,7 @@ a:hover { color: var(--vg-accent-hover); }
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--vg-pass);
+  background: var(--vg-success);
   transition: background var(--vg-transition);
 }
 
@@ -511,7 +511,7 @@ a:hover { color: var(--vg-accent-hover); }
   background: var(--vg-kpi-accent, var(--vg-accent));
 }
 
-.vg-kpi--pass   { --vg-kpi-accent: var(--vg-pass); }
+.vg-kpi--success   { --vg-kpi-accent: var(--vg-success); }
 .vg-kpi--fail   { --vg-kpi-accent: var(--vg-fail); }
 .vg-kpi--warn   { --vg-kpi-accent: var(--vg-warn); }
 .vg-kpi--running{ --vg-kpi-accent: var(--vg-running); }
@@ -541,7 +541,7 @@ a:hover { color: var(--vg-accent-hover); }
   font-family: var(--vg-font-data);
 }
 
-.vg-kpi__delta--up   { color: var(--vg-pass); }
+.vg-kpi__delta--up   { color: var(--vg-success); }
 .vg-kpi__delta--down { color: var(--vg-fail); }
 .vg-kpi__delta--flat { color: var(--vg-text-subtle); }
 
@@ -562,7 +562,7 @@ a:hover { color: var(--vg-accent-hover); }
   flex-shrink: 0;
 }
 
-.vg-dot--pass      { background: var(--vg-pass); }
+.vg-dot--success      { background: var(--vg-success); }
 .vg-dot--fail      { background: var(--vg-fail); }
 .vg-dot--running   { background: var(--vg-running); animation: vg-pulse-dot 1.2s ease-in-out infinite; }
 .vg-dot--warn      { background: var(--vg-warn); }
@@ -585,7 +585,7 @@ a:hover { color: var(--vg-accent-hover); }
   color: var(--vg-text-muted);
 }
 
-.vg-badge--pass      { background: var(--vg-pass-bg);      color: var(--vg-pass); }
+.vg-badge--success      { background: var(--vg-success-bg);      color: var(--vg-success); }
 .vg-badge--fail      { background: var(--vg-fail-bg);      color: var(--vg-fail); }
 .vg-badge--running   { background: var(--vg-running-bg);   color: var(--vg-running); }
 .vg-badge--warn      { background: var(--vg-warn-bg);      color: var(--vg-warn); }
@@ -603,7 +603,7 @@ a:hover { color: var(--vg-accent-hover); }
   flex-shrink: 0;
 }
 
-.vg-status-icon--pass      { background: var(--vg-pass-bg);    color: var(--vg-pass); }
+.vg-status-icon--success      { background: var(--vg-success-bg);    color: var(--vg-success); }
 .vg-status-icon--fail      { background: var(--vg-fail-bg);    color: var(--vg-fail); }
 .vg-status-icon--running   { background: var(--vg-running-bg); color: var(--vg-running); }
 .vg-status-icon--warn      { background: var(--vg-warn-bg);    color: var(--vg-warn); }
@@ -611,7 +611,7 @@ a:hover { color: var(--vg-accent-hover); }
 .vg-status-icon--cancelled { background: var(--vg-cancelled-bg); color: var(--vg-cancelled); }
 
 /* Row status tints */
-tr.vg-row--pass      { background: var(--vg-pass-bg); }
+tr.vg-row--success      { background: var(--vg-success-bg); }
 tr.vg-row--fail      { background: var(--vg-fail-bg); }
 tr.vg-row--running   { background: var(--vg-running-bg); }
 tr.vg-row--warn      { background: var(--vg-warn-bg); }
@@ -692,7 +692,7 @@ tr.vg-row--cancelled { background: var(--vg-cancelled-bg); }
   letter-spacing: 0.04em;
 }
 
-.vg-stage--pass      .vg-stage__bar { background: var(--vg-pass); }
+.vg-stage--success      .vg-stage__bar { background: var(--vg-success); }
 .vg-stage--fail      .vg-stage__bar { background: var(--vg-fail); }
 .vg-stage--running   .vg-stage__bar { background: var(--vg-running); animation: vg-shimmer 1.5s ease-in-out infinite; }
 .vg-stage--warn      .vg-stage__bar { background: var(--vg-warn); }
@@ -843,12 +843,12 @@ tr.vg-row--cancelled { background: var(--vg-cancelled-bg); }
   transition: width var(--vg-transition-slow);
 }
 
-.vg-progress__bar--pass      { background: var(--vg-pass); }
+.vg-progress__bar--success      { background: var(--vg-success); }
 .vg-progress__bar--fail      { background: var(--vg-fail); }
 .vg-progress__bar--warn      { background: var(--vg-warn); }
 .vg-progress__bar--running   { background: var(--vg-running); animation: vg-shimmer 1.5s ease-in-out infinite; }
 
-/* Segmented progress (pass/fail/skip split) */
+/* Segmented progress (success/fail/skip split) */
 .vg-progress-split {
   height: 6px;
   display: flex;
@@ -906,7 +906,7 @@ tr.vg-row--cancelled { background: var(--vg-cancelled-bg); }
   font-weight: 700;
 }
 
-.vg-log-entry--pass   .vg-log-entry__level { color: var(--vg-pass); }
+.vg-log-entry--success   .vg-log-entry__level { color: var(--vg-success); }
 .vg-log-entry--fail   .vg-log-entry__level { color: var(--vg-fail); }
 .vg-log-entry--warn   .vg-log-entry__level { color: var(--vg-warn); }
 .vg-log-entry--info   .vg-log-entry__level { color: var(--vg-accent); }
@@ -959,7 +959,7 @@ tr.vg-row--cancelled { background: var(--vg-cancelled-bg); }
 .vg-min-w-0      { min-width: 0; }
 .vg-truncate     { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-.vg-text-pass      { color: var(--vg-pass) !important; }
+.vg-text-success      { color: var(--vg-success) !important; }
 .vg-text-fail      { color: var(--vg-fail) !important; }
 .vg-text-warn      { color: var(--vg-warn) !important; }
 .vg-text-running   { color: var(--vg-running) !important; }

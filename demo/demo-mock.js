@@ -309,8 +309,8 @@ function updateSummary() {
   const running = randInt(2, 8);
   const failed  = randInt(6, 22);
   const skipped = randInt(8, 18);
-  const passed  = total - failed - skipped - running;
-  const rate    = (passed / (passed + failed)) * 100;
+  const passed = total - failed - skipped - running;
+  const rate   = (passed / (passed + failed)) * 100;
 
   _summaryData = { passed, failed, skipped, running, rate };
 
@@ -343,7 +343,7 @@ function buildTrendChart() {
     bar.className = 'chart-bar';
     const height = randInt(20, 58);
     bar.style.height = height + 'px';
-    bar.style.background = pct > 0.9 ? 'var(--vg-pass)' : pct > 0.75 ? 'var(--vg-warn)' : 'var(--vg-fail)';
+    bar.style.background = pct > 0.9 ? 'var(--vg-success)' : pct > 0.75 ? 'var(--vg-warn)' : 'var(--vg-fail)';
     const hr = new Date(now.getTime() - h * 3600000).getHours();
     bar.setAttribute('data-tip', hr + ':00 \u2014 ' + (pct*100).toFixed(0) + '% pass');
     chart.appendChild(bar);
@@ -381,12 +381,12 @@ function buildFlakyList() {
 
 // ── Live log (guarded) ───────────────────────────────────────
 const LOG_EVENTS = [
-  ['pass', 'PASS', f => `[${rand(SUITES)}] ${f} \u2713`],
+  ['success', 'PASS', f => `[${rand(SUITES)}] ${f} \u2713`],
   ['fail', 'FAIL', f => `[${rand(SUITES)}] ${f} \u2014 assertion failed`],
   ['info', 'INFO', _  => `Pipeline #${randInt(100,999)} started on ${rand(BRANCHES)}`],
   ['warn', 'WARN', _  => `Runner ${rand(RUNNERS)} CPU at ${randInt(85,98)}%`],
   ['info', 'INFO', _  => `Deployment to staging completed in ${randInt(12,60)}s`],
-  ['pass', 'PASS', _  => `Scenario: ${rand(FEATURES)}`],
+  ['success', 'PASS', _  => `Scenario: ${rand(FEATURES)}`],
 ];
 
 function addLogEntry() {
@@ -466,7 +466,7 @@ class MockWebSocket {
             action:  rand(DEPLOY_ACTIONS),
             service: 'acme-' + rand(['api', 'web', 'worker', 'gateway']),
             version: 'v' + randInt(2, 4) + '.' + randInt(0, 9) + '.' + randInt(0, 20),
-            status:  rand(['pass', 'running', 'fail', 'pass', 'pass']),
+            status:  rand(['success', 'running', 'fail', 'success', 'success']),
             time:    new Date().toISOString(),
             actor:   '@' + rand(['matt', 'alice', 'ci-bot', 'scheduler']),
           })),
@@ -499,7 +499,7 @@ function build7DayChart(days) {
     const bar = document.createElement('div');
     bar.className = 'chart-bar chart-bar--wide';
     bar.style.height = Math.round((d.total / maxTotal) * 80) + 'px';
-    bar.style.background = pct > 0.9 ? 'var(--vg-pass)' : pct > 0.75 ? 'var(--vg-warn)' : 'var(--vg-fail)';
+    bar.style.background = pct > 0.9 ? 'var(--vg-success)' : pct > 0.75 ? 'var(--vg-warn)' : 'var(--vg-fail)';
     bar.setAttribute('data-tip', d.label + ' \u2014 ' + d.total + ' runs, ' + d.rate + '% pass');
     chart.appendChild(bar);
 
@@ -534,7 +534,7 @@ function buildFlakyTable(features) {
   if (!container || !features) return;
   container.innerHTML = '';
   features.forEach(f => {
-    const cls = f.rate > 90 ? 'pass' : f.rate > 75 ? 'warn' : 'fail';
+    const cls = f.rate > 90 ? 'success' : f.rate > 75 ? 'warn' : 'fail';
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td><div class="feature-name">${f.name}</div></td>

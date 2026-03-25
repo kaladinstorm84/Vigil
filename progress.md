@@ -44,6 +44,12 @@
 - [x] `data-proxy` attribute and global proxy config for CORS workaround
 - [x] README updated with "Connecting to Real APIs" section and examples
 
+### Phase 4.1 — Status Rename (pass → success)
+- [x] Core CSS: `--vg-pass` → `--vg-success`, all `*--pass` classes → `*--success`
+- [x] Core JS: STATUS_CLASSES updated, `successrate` formatter (with `passrate` alias)
+- [x] Demo keeps test-domain language ("Pass Rate", "Passed") — status maps translate `"passed"` → `"success"`
+- [x] README, CHANGELOG updated to reflect `success` as the framework status name
+
 ## Current State
 - Version: **0.3.0**
 - Demo: 7 pages (Overview, Pipelines, Test Runs, Runners, Trends, Failures, Settings)

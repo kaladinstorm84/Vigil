@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 - **Settings page** — comprehensive form controls demo (text inputs, selects, toggles, radio groups, range slider, number inputs, textareas, danger zone)
 
 ### Changed
+- **Status rename** — `pass` → `success` in core CSS/JS (CSS variable `--vg-success`, classes `vg-*--success`, formatter `successrate`). `passrate` retained as backward-compatible alias.
 - Demo files moved to `demo/` subfolder to separate framework source from demo
 - Version strings bumped to 0.3.0 across `vigil.js`, `vigil.css`, `package.json`
 
@@ -37,8 +38,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 ### Added
 - Core declarative polling engine (`data-src`, `data-poll`)
 - Data binding (`data-bind`, `data-each`, `data-if`, `data-if-not`)
-- Seven-status system (`pass`, `fail`, `running`, `warn`, `skipped`, `cancelled`, `unknown`)
-- Built-in formatters: `duration`, `relative`, `number`, `percent`, `passrate`, `date`, `short_date`, `uppercase`, `lowercase`
+- Seven-status system (`success`, `fail`, `running`, `warn`, `skipped`, `cancelled`, `unknown`)
+- Built-in formatters: `duration`, `relative`, `number`, `percent`, `successrate`, `passrate` (alias), `date`, `short_date`, `uppercase`, `lowercase`
 - Custom formatter and transform registration API
 - `data-transform` attribute for pre-format value transforms
 - App shell layout (sidebar, topbar, main grid)

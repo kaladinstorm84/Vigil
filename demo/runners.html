@@ -105,11 +105,11 @@
         <div class="vg-kpi__sub" data-bind="status_label">—</div>
       </div>
 
-      <div class="vg-kpi vg-kpi--pass" data-src="/api/kpi/runs" data-poll="6000">
+      <div class="vg-kpi vg-kpi--success" data-src="/api/kpi/runs" data-poll="6000">
         <div class="vg-kpi__label">Total Runs Today</div>
         <div class="vg-kpi__value" data-bind="total">—</div>
         <svg class="vg-sparkline vg-sparkline--lg" data-bind="trend"
-             data-sparkline-color="var(--vg-pass)" data-sparkline-type="area"
+             data-sparkline-color="var(--vg-success)" data-sparkline-type="area"
              width="120" height="24"></svg>
         <div class="vg-kpi__delta vg-kpi__delta--up" data-bind="delta_label">—</div>
       </div>
@@ -121,7 +121,7 @@
       <div class="vg-panel vg-col-12" data-src="/api/runners" data-poll="8000">
         <div class="vg-panel__header">
           <h2 class="vg-panel__title">Runner Health</h2>
-          <span class="vg-badge vg-badge--pass panel-header__badge-right" data-bind="healthy_count"></span>
+          <span class="vg-badge vg-badge--success panel-header__badge-right" data-bind="healthy_count"></span>
         </div>
         <div class="vg-panel__body vg-panel__body--padded">
           <div class="runner-grid" data-each="runners">
@@ -130,12 +130,12 @@
                 <div class="runner-card__header">
                   <span class="vg-dot"
                     data-bind="status"
-                    data-status-map='{"online":"pass","busy":"running","offline":"unknown","error":"fail"}'
+                    data-status-map='{"online":"success","busy":"running","offline":"unknown","error":"fail"}'
                   ></span>
                   <div class="runner-card__name vg-truncate" data-bind="name"></div>
                   <span class="vg-badge"
                     data-bind="status"
-                    data-status-map='{"online":"pass","busy":"running","offline":"unknown","error":"fail"}'
+                    data-status-map='{"online":"success","busy":"running","offline":"unknown","error":"fail"}'
                   ></span>
                 </div>
                 <div class="runner-card__body">
