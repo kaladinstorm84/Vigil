@@ -16,7 +16,17 @@ A lightweight framework for building live dashboards from plain HTML. Drop in tw
 - **Container queries** — panels self-adapt to their width, not the viewport
 - **Dark & light themes** — dark-first with a toggle; data-density modes
 - **Responsive grid** — 12-column with `md` / `lg` breakpoints
-- **~8 KB JS · ~15 KB CSS** (ungzipped)
+- **Form system** — `vg-form`, `vg-field`, `vg-label`, `vg-input`, `vg-checkbox`, `vg-toggle`, `vg-radio-group`, `vg-field-grid`, `vg-action-row`
+- **Card primitives** — `vg-card` with `--muted`, `--accent`, `--tinted`, and status-accented variants
+- **Banner / alert** — `vg-banner` with `--success`, `--fail`, `--warn`, `--info` semantic variants
+- **Nested surfaces** — `vg-surface` layers (`--muted`, `--accent`, `--hero`, `--glass`) for sub-panel interiors
+- **Hero / masthead** — `vg-hero` with title, subtitle, and toolbar alignment
+- **Auto-fit grids** — `vg-card-grid`, `vg-metric-grid` with `repeat(auto-fit, ...)` sizing
+- **Chips & metadata** — `vg-chip`, `vg-meta-row`, `vg-toolbar`, `vg-cluster` inline layout primitives
+- **Section blocks** — `vg-section` with `__title` and `__meta` for reusable headings
+- **Empty state** — `vg-empty` with icon, title, text, and action slot
+- **Brand block** — `vg-brand` + `vg-brand__mark` identity row
+- **~8 KB JS · ~20 KB CSS** (ungzipped)
 
 ## Quick Start
 
@@ -69,8 +79,9 @@ The demo is a multi-page dashboard showcasing every Vigil feature:
 | **Trends** | `demo/trends.html` | 7-day run volume chart, daily breakdown table, pass rate by suite with sparklines |
 | **Failures** | `demo/failures.html` | Failure type breakdown, recent failures table, flakiest features analysis |
 | **Settings** | `demo/settings.html` | Text inputs, selects, toggles, radio groups, range slider, number inputs, textareas, form layout |
+| **Components** | `demo/components.html` | Full component library: hero, banners, cards, chips, surfaces, sections, brand, empty state, metric grid, form system |
 
-All pages share a mock API layer (`demo/demo-mock.js`) that patches `fetch()` and `WebSocket` in-browser. Sidebar navigation links work across all seven pages.
+All pages share a mock API layer (`demo/demo-mock.js`) that patches `fetch()` and `WebSocket` in-browser. Sidebar navigation links work across all eight pages.
 
 ## Architecture
 
@@ -372,6 +383,103 @@ Seven semantic statuses with consistent colours across all components:
 | `skipped` | `#6E7681` | Deliberately skipped step or scenario |
 | `cancelled` | `#8957E5` | Manually cancelled task or job |
 | `unknown` | `#484F58` | No data, pending first fetch |
+
+## Component Primitives
+
+### Cards
+
+```html
+<div class="vg-card vg-card--accent">
+  <div class="vg-card__header"><span class="vg-card__title">Title</span></div>
+  <div class="vg-card__body">Content</div>
+  <div class="vg-card__footer">Footer</div>
+</div>
+```
+
+Variants: `--muted`, `--accent`, `--tinted`, `--flat`, `--success`, `--fail`, `--warn`, `--info`.
+
+### Banners
+
+```html
+<div class="vg-banner vg-banner--warn">
+  <span class="vg-banner__icon">⚠</span>
+  <div class="vg-banner__body">
+    <div class="vg-banner__title">Heading</div>
+    <div class="vg-banner__text">Detail text.</div>
+  </div>
+</div>
+```
+
+Variants: `--success`, `--fail`, `--warn`, `--info`, `--compact`.
+
+### Surfaces
+
+Nested backgrounds inside panels: `vg-surface`, `vg-surface--muted`, `vg-surface--accent`, `vg-surface--hero`, `vg-surface--glass`.
+
+### Chips & Clusters
+
+```html
+<div class="vg-cluster">
+  <span class="vg-chip vg-chip--success">passed</span>
+  <span class="vg-chip vg-chip--fail vg-chip--removable">failed</span>
+</div>
+```
+
+### Form System
+
+```html
+<div class="vg-form">
+  <div class="vg-field">
+    <div class="vg-label">
+      <div class="vg-label__text">Name</div>
+      <div class="vg-label__hint">Optional help text</div>
+    </div>
+    <div class="vg-field__control">
+      <input type="text" class="vg-input">
+    </div>
+  </div>
+  <div class="vg-action-row">
+    <button class="vg-btn vg-btn--primary">Save</button>
+  </div>
+</div>
+```
+
+Also includes `vg-checkbox`, `vg-toggle`, `vg-radio-group`, `vg-input-group`, and `vg-field-grid` for multi-column layouts.
+
+### Hero
+
+```html
+<div class="vg-hero">
+  <div class="vg-hero__row">
+    <div class="vg-hero__content">
+      <div class="vg-hero__title">Dashboard</div>
+      <div class="vg-hero__subtitle">Description text</div>
+    </div>
+    <div class="vg-hero__toolbar">
+      <button class="vg-btn vg-btn--primary">Action</button>
+    </div>
+  </div>
+</div>
+```
+
+### Auto-fit Grids
+
+```html
+<div class="vg-card-grid">...</div>      <!-- auto-fill, 240px min -->
+<div class="vg-metric-grid--4">...</div>  <!-- fixed 4-column for KPIs -->
+```
+
+Variants: `vg-card-grid--sm` (180px), `vg-card-grid--lg` (320px), `vg-metric-grid--2`, `--3`, `--4`.
+
+### Other Primitives
+
+| Component | Description |
+|-----------|-------------|
+| `vg-section` | Grouped block with `__title` and `__meta` sub-elements |
+| `vg-meta-row` | Inline key-value metadata pairs |
+| `vg-toolbar` | Horizontal action strip with `__separator` and `__spacer` |
+| `vg-empty` | Empty/no-data state with icon, title, text, and action slot |
+| `vg-brand` | Identity row with `vg-brand__mark` and `vg-brand__name` |
 
 ## Browser Support
 

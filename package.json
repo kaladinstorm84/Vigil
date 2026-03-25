@@ -1,6 +1,6 @@
 {
   "name": "vigilui",
-  "version": "0.3.0",
+  "version": "0.5.0",
   "description": "Zero-dependency declarative dashboard framework — turn any JSON API into a live dashboard with HTML attributes",
   "main": "vigil.js",
   "style": "vigil.css",

@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vigil — Components</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../vigil.css">
+<link rel="stylesheet" href="demo.css">
+</head>
+<body>
+
+<div class="vg-shell" id="shell">
+
+  <!-- ── Sidebar ───────────────────────────────────────────── -->
+  <aside class="vg-sidebar">
+    <div class="vg-sidebar__brand">
+      <div class="vg-sidebar__brand-icon">⚡</div>
+      <span>Vigil</span>
+    </div>
+
+    <div class="vg-sidebar__body">
+      <div class="vg-nav-section">Monitoring</div>
+      <a class="vg-nav-item" href="index.html">
+        <span class="vg-nav-item__icon">◉</span>
+        <span class="vg-nav-item__label">Overview</span>
+      </a>
+      <a class="vg-nav-item" href="pipelines.html">
+        <span class="vg-nav-item__icon">⧗</span>
+        <span class="vg-nav-item__label">Pipelines</span>
+        <span class="vg-nav-item__badge">3</span>
+      </a>
+      <a class="vg-nav-item" href="testruns.html">
+        <span class="vg-nav-item__icon">✓</span>
+        <span class="vg-nav-item__label">Test Runs</span>
+      </a>
+      <a class="vg-nav-item" href="runners.html">
+        <span class="vg-nav-item__icon">⬡</span>
+        <span class="vg-nav-item__label">Runners</span>
+      </a>
+
+      <div class="vg-nav-section vg-mt-4">Reports</div>
+      <a class="vg-nav-item" href="trends.html">
+        <span class="vg-nav-item__icon">↗</span>
+        <span class="vg-nav-item__label">Trends</span>
+      </a>
+      <a class="vg-nav-item" href="failures.html">
+        <span class="vg-nav-item__icon">△</span>
+        <span class="vg-nav-item__label">Failures</span>
+      </a>
+
+      <div class="vg-nav-section vg-mt-4">Config</div>
+      <a class="vg-nav-item" href="settings.html">
+        <span class="vg-nav-item__icon">⚙</span>
+        <span class="vg-nav-item__label">Settings</span>
+      </a>
+      <a class="vg-nav-item is-active" href="components.html">
+        <span class="vg-nav-item__icon">◫</span>
+        <span class="vg-nav-item__label">Components</span>
+      </a>
+    </div>
+
+    <div class="vg-sidebar__footer">
+      <div class="vg-nav-item">
+        <span class="vg-nav-item__icon">○</span>
+        <span class="vg-nav-item__label">user@example.com</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── Topbar ────────────────────────────────────────────── -->
+  <header class="vg-topbar">
+    <div class="vg-topbar__left">
+      <button class="vg-btn vg-btn--ghost vg-btn--icon" data-vg-toggle="sidebar" title="Toggle sidebar">☰</button>
+      <span class="vg-topbar__title">Acme CI</span>
+      <span class="vg-topbar__breadcrumb">/ Components</span>
+    </div>
+    <div class="vg-topbar__right">
+      <button class="vg-btn vg-btn--sm" onclick="toggleTheme()">◑ Theme</button>
+    </div>
+  </header>
+
+  <!-- ── Main Content ──────────────────────────────────────── -->
+  <main class="vg-main">
+
+    <!-- Hero -->
+    <div class="vg-hero">
+      <div class="vg-hero__row">
+        <div class="vg-hero__content">
+          <div class="vg-hero__title">Component Library</div>
+          <div class="vg-hero__subtitle">Every Vigil primitive on one page — cards, banners, chips, forms, surfaces, grids, and more.</div>
+        </div>
+        <div class="vg-hero__toolbar">
+          <button class="vg-btn vg-btn--primary">View Docs</button>
+          <button class="vg-btn">GitHub</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="vg-grid">
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!--  BANNERS                                           -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="vg-panel vg-col-12">
+        <div class="vg-panel__header">
+          <h2 class="vg-panel__title">Banners / Alerts</h2>
+          <span class="vg-panel__meta">vg-banner · vg-banner--{success,fail,warn,info}</span>
+        </div>
+        <div class="vg-panel__body vg-panel__body--padded" style="display:flex;flex-direction:column;gap:var(--vg-s3);">
+
+          <div class="vg-banner vg-banner--success">
+            <span class="vg-banner__icon">✓</span>
+            <div class="vg-banner__body">
+              <div class="vg-banner__title">Pipeline passed</div>
+              <div class="vg-banner__text">All 248 tests completed in 4m 12s. No regressions detected.</div>
+            </div>
+          </div>
+
+          <div class="vg-banner vg-banner--fail">
+            <span class="vg-banner__icon">✕</span>
+            <div class="vg-banner__body">
+              <div class="vg-banner__title">3 failures detected</div>
+              <div class="vg-banner__text">auth/login, checkout/payment, and search/filter scenarios failed on the latest run.</div>
+            </div>
+          </div>
+
+          <div class="vg-banner vg-banner--warn">
+            <span class="vg-banner__icon">⚠</span>
+            <div class="vg-banner__body">
+              <div class="vg-banner__title">Runner CPU threshold exceeded</div>
+              <div class="vg-banner__text">runner-03 has been above 90% CPU for the last 15 minutes.</div>
+            </div>
+          </div>
+
+          <div class="vg-banner vg-banner--info">
+            <span class="vg-banner__icon">ℹ</span>
+            <div class="vg-banner__body">
+              <div class="vg-banner__title">Maintenance window scheduled</div>
+              <div class="vg-banner__text">Runners will restart tonight at 02:00 UTC for security patches.</div>
+            </div>
+          </div>
+
+          <div class="vg-banner vg-banner--info vg-banner--compact">
+            <span class="vg-banner__icon">ℹ</span>
+            <div class="vg-banner__body">
+              <div class="vg-banner__text">Compact variant — use <code>vg-banner--compact</code> for inline notices.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!--  CARDS                                              -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="vg-panel vg-col-12">
+        <div class="vg-panel__header">
+          <h2 class="vg-panel__title">Cards</h2>
+          <span class="vg-panel__meta">vg-card · vg-card--{muted,accent,tinted,flat} · vg-card--{success,fail,warn,info}</span>
+        </div>
+        <div class="vg-panel__body vg-panel__body--padded">
+
+          <div class="vg-card-grid">
+            <div class="vg-card">
+              <div class="vg-card__header">
+                <span class="vg-card__title">Default Card</span>
+                <span class="vg-badge vg-badge--success">Healthy</span>
+              </div>
+              <div class="vg-card__body">
+                <div class="vg-meta-row">
+                  <span><span class="vg-meta-row__key">Runs:</span> <span class="vg-meta-row__value">1,248</span></span>
+                  <span><span class="vg-meta-row__key">Uptime:</span> <span class="vg-meta-row__value">99.7%</span></span>
+                </div>
+              </div>
+              <div class="vg-card__footer">Last updated 2m ago</div>
+            </div>
+
+            <div class="vg-card vg-card--muted">
+              <div class="vg-card__header"><span class="vg-card__title">Muted Card</span></div>
+              <div class="vg-card__body">
+                <span class="vg-text-subtle">Soft background surface for secondary content.</span>
+              </div>
+            </div>
+
+            <div class="vg-card vg-card--accent">
+              <div class="vg-card__header"><span class="vg-card__title">Accent Card</span></div>
+              <div class="vg-card__body">
+                <span class="vg-text-muted">Accent-tinted surface for highlighted content.</span>
+              </div>
+            </div>
+
+            <div class="vg-card vg-card--tinted">
+              <div class="vg-card__header"><span class="vg-card__title">Tinted Card</span></div>
+              <div class="vg-card__body">
+                <span class="vg-text-muted">Hero-surface background for featured items.</span>
+              </div>
+            </div>
+
+            <div class="vg-card vg-card--success">
+              <div class="vg-card__body">
+                <div class="vg-card__title">Success accent</div>
+                <span class="vg-text-muted vg-font-sm">Left-border status indicator</span>
+              </div>
+            </div>
+
+            <div class="vg-card vg-card--fail">
+              <div class="vg-card__body">
+                <div class="vg-card__title">Fail accent</div>
+                <span class="vg-text-muted vg-font-sm">Left-border status indicator</span>
+              </div>
+            </div>
+
+            <div class="vg-card vg-card--warn">
+              <div class="vg-card__body">
+                <div class="vg-card__title">Warn accent</div>
+                <span class="vg-text-muted vg-font-sm">Left-border status indicator</span>
+              </div>
+            </div>
+
+            <div class="vg-card vg-card--info">
+              <div class="vg-card__body">
+                <div class="vg-card__title">Info accent</div>
+                <span class="vg-text-muted vg-font-sm">Left-border status indicator</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!--  CHIPS & METADATA                                   -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="vg-panel vg-col-12 vg-col-lg-6">
+        <div class="vg-panel__header">
+          <h2 class="vg-panel__title">Chips</h2>
+          <span class="vg-panel__meta">vg-chip · vg-chip--{success,fail,warn,info,accent}</span>
+        </div>
+        <div class="vg-panel__body vg-panel__body--padded">
+
+          <div class="vg-cluster" style="margin-bottom: var(--vg-s4);">
+            <span class="vg-chip">default</span>
+            <span class="vg-chip vg-chip--success">success</span>
+            <span class="vg-chip vg-chip--fail">fail</span>
+            <span class="vg-chip vg-chip--warn">warn</span>
+            <span class="vg-chip vg-chip--info">info</span>
+            <span class="vg-chip vg-chip--accent">accent</span>
+          </div>
+
+          <div class="vg-cluster">
+            <span class="vg-chip vg-chip--removable">removable</span>
+            <span class="vg-chip vg-chip--success vg-chip--removable">e2e</span>
+            <span class="vg-chip vg-chip--accent vg-chip--removable">playwright</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!--  META ROW & TOOLBAR                                 -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="vg-panel vg-col-12 vg-col-lg-6">
+        <div class="vg-panel__header">
+          <h2 class="vg-panel__title">Meta Row & Toolbar</h2>
+          <span class="vg-panel__meta">vg-meta-row · vg-toolbar</span>
+        </div>
+        <div class="vg-panel__body vg-panel__body--padded">
+
+          <div class="vg-section">
+            <div class="vg-section__title">Meta Row</div>
+            <div class="vg-meta-row">
+              <span><span class="vg-meta-row__key">Branch:</span> <span class="vg-meta-row__value">main</span></span>
+              <span><span class="vg-meta-row__key">Commit:</span> <span class="vg-meta-row__value">a3f7d2b</span></span>
+              <span><span class="vg-meta-row__key">Duration:</span> <span class="vg-meta-row__value">4m 12s</span></span>
+              <span><span class="vg-meta-row__key">Runner:</span> <span class="vg-meta-row__value">runner-01</span></span>
+            </div>
+          </div>
+
+          <div class="vg-section">
+            <div class="vg-section__title">Toolbar</div>
+            <div class="vg-toolbar vg-toolbar--bordered">
+              <button class="vg-btn vg-btn--sm">↻ Refresh</button>
+              <button class="vg-btn vg-btn--sm">⏸ Pause</button>
+              <span class="vg-toolbar__separator"></span>
+              <span class="vg-chip vg-chip--success">Live</span>
+              <span class="vg-toolbar__spacer"></span>
+              <span class="vg-font-sm vg-text-subtle">Last: 3s ago</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!--  SURFACES                                           -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="vg-panel vg-col-12 vg-col-lg-6">
+        <div class="vg-panel__header">
+          <h2 class="vg-panel__title">Nested Surfaces</h2>
+          <span class="vg-panel__meta">vg-surface · vg-surface--{muted,accent,hero,glass}</span>
+        </div>
+        <div class="vg-panel__body vg-panel__body--padded" style="display:flex;flex-direction:column;gap:var(--vg-s3);">
+
+          <div class="vg-surface">
+            <strong>Default surface</strong>
+            <div class="vg-font-sm vg-text-muted vg-mt-1">Sub-panel interior with border and background.</div>
+          </div>
+
+          <div class="vg-surface vg-surface--muted">
+            <strong>Muted surface</strong>
+            <div class="vg-font-sm vg-text-muted vg-mt-1">Softer background for secondary grouping.</div>
+          </div>
+
+          <div class="vg-surface vg-surface--accent">
+            <strong>Accent surface</strong>
+            <div class="vg-font-sm vg-text-muted vg-mt-1">Accent-tinted for highlighted regions.</div>
+          </div>
+
+          <div class="vg-surface vg-surface--hero">
+            <strong>Hero surface</strong>
+            <div class="vg-font-sm vg-text-muted vg-mt-1">Stronger tint for featured blocks.</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!--  SECTIONS & BRAND & EMPTY                           -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="vg-panel vg-col-12 vg-col-lg-6">
+        <div class="vg-panel__header">
+          <h2 class="vg-panel__title">Sections, Brand & Empty State</h2>
+          <span class="vg-panel__meta">vg-section · vg-brand · vg-empty</span>
+        </div>
+        <div class="vg-panel__body vg-panel__body--padded">
+
+          <div class="vg-section">
+            <div class="vg-section__title">Section Heading</div>
+            <div class="vg-section__meta">Optional meta/description text below the heading.</div>
+            <p class="vg-text-muted vg-font-sm">Section content goes here. Reusable in sidebars, settings panels, or any grouped block.</p>
+          </div>
+
+          <div class="vg-section">
+            <div class="vg-section__title">Brand Block</div>
+            <div style="display:flex;flex-direction:column;gap:var(--vg-s3);">
+              <div class="vg-brand">
+                <div class="vg-brand__mark">⚡</div>
+                <div>
+                  <div class="vg-brand__name">Vigil</div>
+                  <div class="vg-brand__meta">v0.3.0 · MIT License</div>
+                </div>
+              </div>
+              <div class="vg-brand">
+                <div class="vg-brand__mark vg-brand__mark--lg" style="background: var(--vg-success);">A</div>
+                <div>
+                  <div class="vg-brand__name">Acme CI</div>
+                  <div class="vg-brand__meta">Production Environment</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="vg-section">
+            <div class="vg-section__title">Empty State</div>
+            <div class="vg-surface vg-surface--muted">
+              <div class="vg-empty">
+                <div class="vg-empty__icon">📭</div>
+                <div class="vg-empty__title">No data yet</div>
+                <div class="vg-empty__text">Run your first pipeline to see results appear here.</div>
+                <div class="vg-empty__action">
+                  <button class="vg-btn vg-btn--primary vg-btn--sm">Run Pipeline</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!--  KPI / METRIC GRID                                  -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="vg-panel vg-col-12">
+        <div class="vg-panel__header">
+          <h2 class="vg-panel__title">Metric Grid</h2>
+          <span class="vg-panel__meta">vg-metric-grid · vg-kpi · vg-kpi--alert</span>
+        </div>
+        <div class="vg-panel__body vg-panel__body--padded">
+
+          <div class="vg-metric-grid--4">
+            <div class="vg-kpi vg-kpi--success">
+              <div class="vg-kpi__label">Total Runs</div>
+              <div class="vg-kpi__value">1,248</div>
+              <div class="vg-kpi__delta vg-kpi__delta--up">↑ 12% from last week</div>
+              <div class="vg-kpi__sub">Across all branches</div>
+            </div>
+            <div class="vg-kpi vg-kpi--running">
+              <div class="vg-kpi__label">Pass Rate</div>
+              <div class="vg-kpi__value">94.2%</div>
+              <div class="vg-kpi__delta vg-kpi__delta--up">↑ 1.8%</div>
+              <div class="vg-kpi__sub">7-day average</div>
+            </div>
+            <div class="vg-kpi vg-kpi--warn">
+              <div class="vg-kpi__label">Avg Duration</div>
+              <div class="vg-kpi__value">4m 12s</div>
+              <div class="vg-kpi__delta vg-kpi__delta--down">↓ 8s slower</div>
+            </div>
+            <div class="vg-kpi vg-kpi--alert">
+              <div class="vg-kpi__label">Active Failures</div>
+              <div class="vg-kpi__value" style="color: var(--vg-fail);">7</div>
+              <div class="vg-kpi__delta vg-kpi__delta--down">↑ 3 since yesterday</div>
+              <div class="vg-kpi__sub">Threshold: 5</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!--  FORM SYSTEM                                        -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="vg-panel vg-col-12">
+        <div class="vg-panel__header">
+          <h2 class="vg-panel__title">Form System</h2>
+          <span class="vg-panel__meta">vg-form · vg-field · vg-label · vg-input · vg-checkbox · vg-toggle · vg-radio-group · vg-field-grid · vg-action-row</span>
+        </div>
+        <div class="vg-panel__body vg-panel__body--padded">
+
+          <div class="vg-form">
+            <div class="vg-section">
+              <div class="vg-section__title">Standard Fields</div>
+
+              <div class="vg-field">
+                <div class="vg-label">
+                  <div class="vg-label__text">Text input</div>
+                  <div class="vg-label__hint">Standard single-line input</div>
+                </div>
+                <div class="vg-field__control">
+                  <input type="text" class="vg-input" value="Hello world" placeholder="Type here...">
+                </div>
+              </div>
+
+              <div class="vg-field">
+                <div class="vg-label">
+                  <div class="vg-label__text">Error state</div>
+                  <div class="vg-label__hint">vg-input--error variant</div>
+                </div>
+                <div class="vg-field__control">
+                  <input type="text" class="vg-input vg-input--error" value="invalid-value">
+                </div>
+              </div>
+
+              <div class="vg-field">
+                <div class="vg-label">
+                  <div class="vg-label__text">Select</div>
+                </div>
+                <div class="vg-field__control">
+                  <select class="vg-input">
+                    <option>Option A</option>
+                    <option selected>Option B</option>
+                    <option>Option C</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="vg-field">
+                <div class="vg-label">
+                  <div class="vg-label__text">Textarea</div>
+                </div>
+                <div class="vg-field__control">
+                  <textarea class="vg-input" placeholder="Multi-line text...">Line one
+Line two</textarea>
+                </div>
+              </div>
+
+              <div class="vg-field">
+                <div class="vg-label">
+                  <div class="vg-label__text">Input group</div>
+                  <div class="vg-label__hint">Input with suffix text</div>
+                </div>
+                <div class="vg-field__control">
+                  <div class="vg-input-group">
+                    <input type="number" class="vg-input vg-input--sm vg-input--mono" value="5000">
+                    <span class="vg-input-group__suffix">ms</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="vg-section">
+              <div class="vg-section__title">Checkbox, Toggle & Radio</div>
+
+              <div class="vg-field">
+                <div class="vg-label">
+                  <div class="vg-label__text">Checkbox</div>
+                </div>
+                <div class="vg-field__control" style="display:flex;flex-direction:column;gap:var(--vg-s2);">
+                  <label class="vg-checkbox"><input type="checkbox" checked> Enable feature A</label>
+                  <label class="vg-checkbox"><input type="checkbox"> Enable feature B</label>
+                  <label class="vg-checkbox vg-checkbox--disabled"><input type="checkbox" disabled> Disabled option</label>
+                </div>
+              </div>
+
+              <div class="vg-field">
+                <div class="vg-label">
+                  <div class="vg-label__text">Toggle</div>
+                </div>
+                <div class="vg-field__control">
+                  <div class="vg-toggle-row">
+                    <label class="vg-toggle">
+                      <input type="checkbox" checked>
+                      <span class="vg-toggle__track"></span>
+                    </label>
+                    <span class="vg-toggle-row__text">Auto-refresh enabled</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="vg-field">
+                <div class="vg-label">
+                  <div class="vg-label__text">Radio group</div>
+                  <div class="vg-label__hint">Segmented button style</div>
+                </div>
+                <div class="vg-field__control">
+                  <div class="vg-radio-group">
+                    <div class="vg-radio-group__option">
+                      <input type="radio" name="demo-radio" id="r-a" value="a" checked>
+                      <label for="r-a">Option A</label>
+                    </div>
+                    <div class="vg-radio-group__option">
+                      <input type="radio" name="demo-radio" id="r-b" value="b">
+                      <label for="r-b">Option B</label>
+                    </div>
+                    <div class="vg-radio-group__option">
+                      <input type="radio" name="demo-radio" id="r-c" value="c">
+                      <label for="r-c">Option C</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="vg-section">
+              <div class="vg-section__title">Field Grid (multi-column)</div>
+              <div class="vg-section__meta">Responsive grid layout with vg-field-grid</div>
+
+              <div class="vg-field-grid">
+                <div class="vg-field">
+                  <div class="vg-label"><div class="vg-label__text">First name</div></div>
+                  <div class="vg-field__control"><input type="text" class="vg-input vg-input--full" value="Jane"></div>
+                </div>
+                <div class="vg-field">
+                  <div class="vg-label"><div class="vg-label__text">Last name</div></div>
+                  <div class="vg-field__control"><input type="text" class="vg-input vg-input--full" value="Smith"></div>
+                </div>
+                <div class="vg-field">
+                  <div class="vg-label"><div class="vg-label__text">Email</div></div>
+                  <div class="vg-field__control"><input type="email" class="vg-input vg-input--full" value="jane@example.com"></div>
+                </div>
+                <div class="vg-field">
+                  <div class="vg-label"><div class="vg-label__text">Role</div></div>
+                  <div class="vg-field__control">
+                    <select class="vg-input vg-input--full">
+                      <option>Viewer</option>
+                      <option selected>Editor</option>
+                      <option>Admin</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="vg-action-row">
+              <button class="vg-btn vg-btn--primary" onclick="showSaved(this)">Save changes</button>
+              <button class="vg-btn">Cancel</button>
+              <span class="vg-action-row__feedback" id="saved-msg-form">Saved</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!--  EXISTING PRIMITIVES (quick reference)              -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="vg-panel vg-col-12 vg-col-lg-6">
+        <div class="vg-panel__header">
+          <h2 class="vg-panel__title">Status System</h2>
+          <span class="vg-panel__meta">vg-dot · vg-badge · vg-tag · vg-progress</span>
+        </div>
+        <div class="vg-panel__body vg-panel__body--padded">
+
+          <div class="vg-section">
+            <div class="vg-section__title">Dots</div>
+            <div class="vg-cluster vg-cluster--loose">
+              <span class="vg-flex vg-items-center vg-gap-1"><span class="vg-dot vg-dot--success"></span> success</span>
+              <span class="vg-flex vg-items-center vg-gap-1"><span class="vg-dot vg-dot--fail"></span> fail</span>
+              <span class="vg-flex vg-items-center vg-gap-1"><span class="vg-dot vg-dot--running"></span> running</span>
+              <span class="vg-flex vg-items-center vg-gap-1"><span class="vg-dot vg-dot--warn"></span> warn</span>
+              <span class="vg-flex vg-items-center vg-gap-1"><span class="vg-dot vg-dot--skipped"></span> skipped</span>
+              <span class="vg-flex vg-items-center vg-gap-1"><span class="vg-dot vg-dot--cancelled"></span> cancelled</span>
+            </div>
+          </div>
+
+          <div class="vg-section">
+            <div class="vg-section__title">Badges</div>
+            <div class="vg-cluster vg-cluster--loose">
+              <span class="vg-badge vg-badge--success">passed</span>
+              <span class="vg-badge vg-badge--fail">failed</span>
+              <span class="vg-badge vg-badge--running">running</span>
+              <span class="vg-badge vg-badge--warn">flaky</span>
+              <span class="vg-badge vg-badge--cancelled">cancelled</span>
+              <span class="vg-badge vg-badge--skipped">skipped</span>
+              <span class="vg-badge">default</span>
+            </div>
+          </div>
+
+          <div class="vg-section">
+            <div class="vg-section__title">Progress Bars</div>
+            <div style="display:flex;flex-direction:column;gap:var(--vg-s3);">
+              <div class="vg-progress" style="height:6px;"><div class="vg-progress__bar vg-progress__bar--success" style="width:88%;"></div></div>
+              <div class="vg-progress" style="height:6px;"><div class="vg-progress__bar vg-progress__bar--fail" style="width:34%;"></div></div>
+              <div class="vg-progress" style="height:6px;"><div class="vg-progress__bar vg-progress__bar--running" style="width:60%;"></div></div>
+              <div class="vg-progress-split" style="width:100%;">
+                <div class="vg-progress-split__segment" style="width:70%;background:var(--vg-success);"></div>
+                <div class="vg-progress-split__segment" style="width:10%;background:var(--vg-fail);"></div>
+                <div class="vg-progress-split__segment" style="width:20%;background:var(--vg-skipped);"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="vg-panel vg-col-12 vg-col-lg-6">
+        <div class="vg-panel__header">
+          <h2 class="vg-panel__title">Buttons & Tags</h2>
+          <span class="vg-panel__meta">vg-btn · vg-tag · vg-spinner</span>
+        </div>
+        <div class="vg-panel__body vg-panel__body--padded">
+
+          <div class="vg-section">
+            <div class="vg-section__title">Buttons</div>
+            <div class="vg-cluster vg-cluster--loose">
+              <button class="vg-btn vg-btn--primary">Primary</button>
+              <button class="vg-btn">Default</button>
+              <button class="vg-btn vg-btn--ghost">Ghost</button>
+              <button class="vg-btn vg-btn--sm">Small</button>
+              <button class="vg-btn vg-btn--icon">↻</button>
+              <button class="vg-btn" disabled>Disabled</button>
+            </div>
+          </div>
+
+          <div class="vg-section">
+            <div class="vg-section__title">Tags</div>
+            <div class="vg-cluster">
+              <span class="vg-tag">default</span>
+              <span class="vg-tag">main</span>
+              <span class="vg-tag">v2.4.1</span>
+              <span class="vg-tag">selenium</span>
+            </div>
+          </div>
+
+          <div class="vg-section">
+            <div class="vg-section__title">Spinners</div>
+            <div class="vg-cluster vg-cluster--loose vg-items-center">
+              <span class="vg-spinner vg-spinner--sm"></span>
+              <span class="vg-spinner"></span>
+              <span class="vg-spinner vg-spinner--lg"></span>
+              <span class="vg-skeleton" style="width:100px;height:14px;display:inline-block;"></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+</div>
+
+<script src="../vigil.js"></script>
+<script src="demo-mock.js"></script>
+<script>
+function showSaved(btn) {
+  const msg = btn.parentElement.querySelector('.vg-action-row__feedback');
+  if (!msg) return;
+  msg.classList.add('is-visible');
+  setTimeout(() => msg.classList.remove('is-visible'), 2000);
+}
+</script>
+</body>
+</html>

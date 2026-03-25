@@ -50,7 +50,27 @@
 - [x] Demo keeps test-domain language ("Pass Rate", "Passed") — status maps translate `"passed"` → `"success"`
 - [x] README, CHANGELOG updated to reflect `success` as the framework status name
 
+### Phase 5 — Component Primitives
+- [x] Semantic surface tokens: `--vg-surface-hero`, `--vg-surface-soft`, `--vg-surface-tinted`, `--vg-surface-glass`
+- [x] `--vg-info` / `--vg-info-bg` status colour for info-level banners
+- [x] Section blocks: `vg-section`, `vg-section__title`, `vg-section__meta`
+- [x] Card primitives: `vg-card` with header/body/footer and variants (muted, accent, tinted, flat, status-accented)
+- [x] Surface layers: `vg-surface`, `vg-surface--muted`, `vg-surface--accent`, `vg-surface--hero`, `vg-surface--glass`
+- [x] Form system promoted to core: `vg-form`, `vg-field`, `vg-label`, `vg-input`, `vg-checkbox`, `vg-toggle`, `vg-radio-group`, `vg-field-grid`, `vg-action-row`
+- [x] Banner / alert: `vg-banner` with `--success`, `--fail`, `--warn`, `--info`, `--compact`
+- [x] Hero / masthead: `vg-hero` with title, subtitle, toolbar
+- [x] KPI alert variant: `vg-kpi--alert` with pulsing border
+- [x] Auto-fit grids: `vg-card-grid`, `vg-metric-grid` with sizing variants
+- [x] Chips: `vg-chip` with status variants and `--removable`
+- [x] Inline metadata: `vg-meta-row`, `vg-toolbar`, `vg-cluster`
+- [x] Empty state: `vg-empty` with icon, title, text, action
+- [x] Brand block: `vg-brand`, `vg-brand__mark`
+- [x] Components showcase demo page (`demo/components.html`)
+- [x] Settings page migrated to framework classes
+- [x] Form controls removed from demo.css, now in vigil.css
+- [x] README, CHANGELOG updated with all new components
+
 ## Current State
 - Version: **0.3.0**
-- Demo: 7 pages (Overview, Pipelines, Test Runs, Runners, Trends, Failures, Settings)
+- Demo: 8 pages (Overview, Pipelines, Test Runs, Runners, Trends, Failures, Settings, Components)
 - All features functional with mock data layer

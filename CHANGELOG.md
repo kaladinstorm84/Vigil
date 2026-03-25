@@ -21,8 +21,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 - **Failures report page** — failure type breakdown with progress bars, recent failures table, flakiest features analysis
 - **Settings page** — comprehensive form controls demo (text inputs, selects, toggles, radio groups, range slider, number inputs, textareas, danger zone)
 
+- **Form system** — `vg-form`, `vg-field`, `vg-label`, `vg-input`, `vg-checkbox`, `vg-toggle`, `vg-radio-group`, `vg-field-grid`, `vg-action-row` as first-class framework primitives
+- **Card primitives** — `vg-card` with header/body/footer and variants (`--muted`, `--accent`, `--tinted`, `--flat`, `--success`, `--fail`, `--warn`, `--info`)
+- **Banner / alert** — `vg-banner` component with `--success`, `--fail`, `--warn`, `--info`, `--compact` semantic variants
+- **Nested surfaces** — `vg-surface` with `--muted`, `--accent`, `--hero`, `--glass` for sub-panel interiors
+- **Hero / masthead** — `vg-hero` component with title, subtitle, and toolbar alignment
+- **Auto-fit grids** — `vg-card-grid` and `vg-metric-grid` with `repeat(auto-fit, ...)` sizing
+- **Chips** — `vg-chip` with status variants and `--removable` modifier
+- **Inline metadata** — `vg-meta-row`, `vg-toolbar`, `vg-cluster` layout primitives
+- **Section blocks** — `vg-section` with `__title` and `__meta`
+- **Empty state** — `vg-empty` with icon, title, text, and action slot
+- **Brand block** — `vg-brand` with `vg-brand__mark` identity row
+- **Semantic surface tokens** — `--vg-surface-hero`, `--vg-surface-soft`, `--vg-surface-tinted`, `--vg-surface-glass`, `--vg-info`, `--vg-info-bg`
+- **KPI alert variant** — `vg-kpi--alert` with pulsing border animation
+- **Components demo page** — full component library showcase at `demo/components.html`
+
 ### Changed
 - **Status rename** — `pass` → `success` in core CSS/JS (CSS variable `--vg-success`, classes `vg-*--success`, formatter `successrate`). `passrate` retained as backward-compatible alias.
+- Form controls promoted from demo-only CSS (`demo.css`) to core framework (`vigil.css`)
 - Demo files moved to `demo/` subfolder to separate framework source from demo
 - Version strings bumped to 0.3.0 across `vigil.js`, `vigil.css`, `package.json`
 
