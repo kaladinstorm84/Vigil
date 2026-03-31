@@ -4,6 +4,68 @@ All notable changes to Vigil are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.6.0] — 2026-03-25
+
+### Added — Binding & Rendering
+- **Attribute binding** — `data-bind-attr="href:url, src:image"` sets element attributes from data
+- **HTML binding** — `data-bind-html` for opt-in innerHTML rendering (XSS warning documented)
+- **Conditional class binding** — `data-class="active:is_active, vg-text-fail:has_errors"`
+- **Template expressions** — `data-bind-template="{passed} / {total} tests ({rate|percent})"`
+- **data-each-limit** — `data-each-limit="20"` caps rendered items; container gets `data-each-total`
+- **Nested data-each** — inner `data-each` lists render correctly inside outer templates
+
+### Added — Engine Hardening
+- **Vigil.unmount(el)** — destroy controller and stop polling for dynamically removed panels
+- **Vigil.scan(rootEl)** — scan a subtree for new Vigil elements (avoids re-mounting via `data-vg-mounted` marker)
+- **MutationObserver mode** — `Vigil.configure({ observe: true })` auto-scans inserted DOM nodes
+- **HTTP method/body** — `data-method="POST"` and `data-body` for non-GET requests
+- **Debounced filters** — text inputs in filter groups auto-debounce (300ms default); `data-vg-debounce` overrides
+- **Configurable retry** — `staleThreshold`, `errorThreshold`, `maxBackoff` in global config and per-panel
+- **Auth error hook** — `Vigil.configure({ onAuthError })` intercepts 401/403 responses for token refresh
+- **Version property** — `Vigil.version` returns the current library version
+
+### Added — UI Components
+- **Tabs** — `data-vg-tabs` with `.vg-tabs__list`, `.vg-tabs__tab`, `.vg-tabs__panel`, keyboard arrow navigation, ARIA roles
+- **Toast notifications** — `Vigil.toast(message, { type, duration, dismissible })` with auto-dismiss progress bar and stacking
+- **Modal dialogs** — `Vigil.modal({ title, body, footer, size, onClose })` with focus trap, Escape close, backdrop dismiss
+- **Tooltips** — `data-vg-tooltip` with `data-vg-tooltip-pos` (top/bottom/left/right) and `aria-describedby`
+- **Dropdowns** — `data-vg-dropdown` with click-outside close, Escape dismiss, `aria-expanded`
+- **Avatars** — `vg-avatar` (CSS-only) with `--sm/md/lg`, image support, status dots
+- **Timeline / Stepper** — `vg-timeline` with `is-complete`, `is-active`, `is-pending` states and connector lines
+- **Pagination** — `data-vg-paginate` with `data-vg-page-size`, prev/next/number buttons, `vigil:page-change` event
+
+### Added — Table Enhancements
+- **Client-side search** — `data-vg-table-search` filters rows by text content (debounced 200ms) with empty state
+- **Row selection** — `vg-table--selectable` with select-all header checkbox, row highlight, `vigil:selection-change` event, `Vigil.getSelectedRows()`
+- **Responsive table wrap** — `vg-table-wrap` with horizontal scroll and gradient overflow indicator
+
+### Added — Accessibility
+- ARIA attributes on collapsible panels (`aria-expanded`, `aria-controls`, `role="region"`), tabs (`role="tablist/tab/tabpanel"`, `aria-selected`), modals (`role="dialog"`, `aria-modal`), toasts (`role="alert"`), table sort (`aria-sort`)
+- `:focus-visible` ring styles on buttons, nav items, chips, tabs, dropdowns, pagination, form controls
+- `vg-skip-link` — visible-on-focus skip navigation link
+- `aria-live="polite"` on toast container
+
+### Added — Build & Distribution
+- **Build script** — `npm run build` produces `dist/vigil.min.js`, `dist/vigil.min.css`, `dist/vigil.esm.js`
+- **ESM export** — `dist/vigil.esm.js` with `export default Vigil`
+- **TypeScript declarations** — `vigil.d.ts` with full interface coverage
+- **Test suite** — `npm test` runs unit tests for `deepGet`, formatters, template expressions
+
+### Added — Polish
+- **Print styles** — `@media print` hides sidebar/topbar, removes shadows, full-width panels
+- **Sidebar sub-navigation** — `vg-nav-group` with `vg-nav-group__toggle` and `vg-nav-item--child`
+- **Components demo page** updated with demos for every new feature
+- CDN documentation in README (unpkg + jsDelivr URLs)
+
+### Changed
+- Version bumped to 0.6.0 across vigil.js, vigil.css, package.json
+- `PanelController._render()` and `WsPanelController._render()` now handle all binding types
+- `initCollapsiblePanels`, `initTableSort` accept optional root parameter for scoped scanning
+- Demo sidebar updated to collapsible nav groups across all pages
+- Demo pages include skip-link for accessibility
+
+---
+
 ## [0.3.0] — 2026-03-24
 
 ### Added
@@ -34,6 +96,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 - **Brand block** — `vg-brand` with `vg-brand__mark` identity row
 - **Semantic surface tokens** — `--vg-surface-hero`, `--vg-surface-soft`, `--vg-surface-tinted`, `--vg-surface-glass`, `--vg-info`, `--vg-info-bg`
 - **KPI alert variant** — `vg-kpi--alert` with pulsing border animation
+- **Collapsible panels** — `data-vg-collapsible` attribute for toggle-on-header-click panels, with accordion groups (`data-vg-collapse-group`), start-collapsed (`data-vg-collapsed`), and localStorage persistence (`data-vg-collapse-persist`)
 - **Components demo page** — full component library showcase at `demo/components.html`
 
 ### Changed

@@ -105,7 +105,51 @@ function makeTrend(base, variance, count) {
 }
 
 // ── Mock API responses ───────────────────────────────────────
+var _mockReqCount = 0;
 const MOCK_API = {
+  '/api/binding-demo': () => ({
+    title: 'Dashboard Metrics',
+    url: 'https://example.com/report',
+    avatar: 'https://i.pravatar.cc/40?u=demo',
+    progress_style: 'width:' + randInt(40, 95) + '%',
+    html_content: '<strong>Server uptime</strong> is <code>99.97%</code> — all regions <em>healthy</em>.',
+    is_active: Math.random() > 0.5,
+    has_errors: Math.random() > 0.7,
+    is_healthy: Math.random() > 0.3,
+    passed: randInt(180, 220),
+    total: 248,
+    rate: randFloat(82, 96),
+    items: Array.from({ length: 50 }, (_, i) => ({
+      name: FEATURES[i % FEATURES.length],
+      status: rand(['passed', 'failed', 'running']),
+      duration: randInt(500, 15000),
+    })),
+    suites: SUITES.map(s => ({
+      name: s,
+      tests: Array.from({ length: randInt(2, 5) }, () => ({
+        name: rand(FEATURES),
+        status: rand(['passed', 'passed', 'passed', 'failed']),
+      })),
+    })),
+  }),
+  '/api/post-demo': () => ({ message: 'POST received', echo: { method: 'POST' }, timestamp: new Date().toISOString() }),
+  '/api/retry-demo': () => {
+    _mockReqCount++;
+    if (_mockReqCount % 3 === 0) throw new Error('Simulated 500');
+    return { value: randInt(10, 99), status: 'ok' };
+  },
+  '/api/auth-demo': () => {
+    return { _status: 401 };
+  },
+  '/api/skeleton-demo': () => {
+    return { label: 'Build Queue', value: randInt(3, 18), sub: 'Across ' + randInt(2, 4) + ' runners', _delay: 2000 };
+  },
+  '/api/health-ok': () => {
+    return { status: 'ok', uptime: randInt(1000, 9999) + 's' };
+  },
+  '/api/health-fail': () => {
+    return { _status: 503 };
+  },
   '/api/kpi/runs': () => ({
     total: randInt(140, 165),
     delta_label: '\u2191 ' + randInt(5, 20) + ' vs yesterday',
@@ -240,9 +284,19 @@ window.fetch = (url, opts) => {
   const path   = parsed.pathname;
 
   if (MOCK_API[path]) {
-    return new Promise(res => {
+    return new Promise((res, rej) => {
       setTimeout(() => {
-        let data = MOCK_API[path]();
+        let data;
+        try { data = MOCK_API[path](); }
+        catch (e) {
+          res({ ok: false, status: 500, json: () => Promise.resolve({ error: e.message }) });
+          return;
+        }
+        if (data && data._status) {
+          res({ ok: false, status: data._status, json: () => Promise.resolve({ error: 'HTTP ' + data._status }) });
+          return;
+        }
+        if (data && data._delay) delete data._delay;
 
         if (path === '/api/testruns' && data.items) {
           const branchFilter = parsed.searchParams.get('branch');
@@ -256,7 +310,7 @@ window.fetch = (url, opts) => {
           ok: true,
           json: () => Promise.resolve(data),
         });
-      }, randInt(80, 300));
+      }, path === '/api/skeleton-demo' ? 2000 : randInt(80, 300));
     });
   }
   return _origFetch(url, opts);

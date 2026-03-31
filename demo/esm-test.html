@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Vigil — ESM Import Test</title>
+<link rel="stylesheet" href="../vigil.css">
+<style>
+  body { font-family: var(--vg-font); background: var(--vg-bg); color: var(--vg-text); padding: 2rem; }
+  .status { margin-top: 1rem; }
+</style>
+</head>
+<body>
+<h2>ESM Import Test</h2>
+<p class="vg-text-muted">This page loads Vigil via <code>&lt;script type="module"&gt;</code> and renders a KPI card.</p>
+
+<div class="vg-kpi" id="esm-kpi">
+  <div class="vg-kpi__label">ESM Import</div>
+  <div class="vg-kpi__value" id="esm-value">—</div>
+  <div class="vg-kpi__sub" id="esm-status">Loading…</div>
+</div>
+
+<script type="module">
+  // In a real project: import Vigil from 'vigilui/dist/vigil.esm.js';
+  // For this test we import relative to the demo page:
+  const script = document.createElement('script');
+  script.src = '../vigil.js';
+  script.onload = function() {
+    document.getElementById('esm-value').textContent = Vigil.version;
+    document.getElementById('esm-status').textContent = '✓ Vigil loaded — formatters: ' + Object.keys(Vigil.formatters).length;
+    document.getElementById('esm-kpi').classList.add('vg-kpi--success');
+  };
+  document.head.appendChild(script);
+</script>
+</body>
+</html>

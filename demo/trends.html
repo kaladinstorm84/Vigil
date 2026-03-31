@@ -22,44 +22,56 @@
     </div>
 
     <div class="vg-sidebar__body">
-      <div class="vg-nav-section">Monitoring</div>
-      <a class="vg-nav-item" href="index.html">
-        <span class="vg-nav-item__icon">◉</span>
-        <span class="vg-nav-item__label">Overview</span>
-      </a>
-      <a class="vg-nav-item" href="pipelines.html">
-        <span class="vg-nav-item__icon">⧗</span>
-        <span class="vg-nav-item__label">Pipelines</span>
-        <span class="vg-nav-item__badge" id="nav-running-count">3</span>
-      </a>
-      <a class="vg-nav-item" href="testruns.html">
-        <span class="vg-nav-item__icon">✓</span>
-        <span class="vg-nav-item__label">Test Runs</span>
-      </a>
-      <a class="vg-nav-item" href="runners.html">
-        <span class="vg-nav-item__icon">⬡</span>
-        <span class="vg-nav-item__label">Runners</span>
-      </a>
+      <div class="vg-nav-group">
+        <button class="vg-nav-group__toggle">Monitoring</button>
+        <div class="vg-nav-group__body">
+          <a class="vg-nav-item vg-nav-item--child" href="index.html">
+            <span class="vg-nav-item__icon">◉</span>
+            <span class="vg-nav-item__label">Overview</span>
+          </a>
+          <a class="vg-nav-item vg-nav-item--child" href="pipelines.html">
+            <span class="vg-nav-item__icon">⧗</span>
+            <span class="vg-nav-item__label">Pipelines</span>
+            <span class="vg-nav-item__badge" id="nav-running-count">3</span>
+          </a>
+          <a class="vg-nav-item vg-nav-item--child" href="testruns.html">
+            <span class="vg-nav-item__icon">✓</span>
+            <span class="vg-nav-item__label">Test Runs</span>
+          </a>
+          <a class="vg-nav-item vg-nav-item--child" href="runners.html">
+            <span class="vg-nav-item__icon">⬡</span>
+            <span class="vg-nav-item__label">Runners</span>
+          </a>
+        </div>
+      </div>
 
-      <div class="vg-nav-section vg-mt-4">Reports</div>
-      <a class="vg-nav-item is-active" href="trends.html">
-        <span class="vg-nav-item__icon">↗</span>
-        <span class="vg-nav-item__label">Trends</span>
-      </a>
-      <a class="vg-nav-item" href="failures.html">
-        <span class="vg-nav-item__icon">△</span>
-        <span class="vg-nav-item__label">Failures</span>
-      </a>
+      <div class="vg-nav-group">
+        <button class="vg-nav-group__toggle">Reports</button>
+        <div class="vg-nav-group__body">
+          <a class="vg-nav-item vg-nav-item--child is-active" href="trends.html">
+            <span class="vg-nav-item__icon">↗</span>
+            <span class="vg-nav-item__label">Trends</span>
+          </a>
+          <a class="vg-nav-item vg-nav-item--child" href="failures.html">
+            <span class="vg-nav-item__icon">△</span>
+            <span class="vg-nav-item__label">Failures</span>
+          </a>
+        </div>
+      </div>
 
-      <div class="vg-nav-section vg-mt-4">Config</div>
-      <a class="vg-nav-item" href="settings.html">
-        <span class="vg-nav-item__icon">⚙</span>
-        <span class="vg-nav-item__label">Settings</span>
-      </a>
-      <a class="vg-nav-item" href="components.html">
-        <span class="vg-nav-item__icon">◫</span>
-        <span class="vg-nav-item__label">Components</span>
-      </a>
+      <div class="vg-nav-group">
+        <button class="vg-nav-group__toggle">Config</button>
+        <div class="vg-nav-group__body">
+          <a class="vg-nav-item vg-nav-item--child" href="settings.html">
+            <span class="vg-nav-item__icon">⚙</span>
+            <span class="vg-nav-item__label">Settings</span>
+          </a>
+          <a class="vg-nav-item vg-nav-item--child" href="components.html">
+            <span class="vg-nav-item__icon">◫</span>
+            <span class="vg-nav-item__label">Components</span>
+          </a>
+        </div>
+      </div>
     </div>
 
     <div class="vg-sidebar__footer">
@@ -208,6 +220,7 @@
   </main>
 </div>
 
+<a class="vg-skip-link" href="#shell">Skip to main content</a>
 <script src="../vigil.js"></script>
 <script src="demo-mock.js"></script>
 </body>

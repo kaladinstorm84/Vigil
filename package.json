@@ -1,15 +1,21 @@
 {
   "name": "vigilui",
-  "version": "0.5.0",
+  "version": "1.0.0",
   "description": "Zero-dependency declarative dashboard framework — turn any JSON API into a live dashboard with HTML attributes",
   "main": "vigil.js",
+  "module": "dist/vigil.esm.js",
   "style": "vigil.css",
+  "types": "vigil.d.ts",
   "files": [
     "vigil.js",
-    "vigil.css"
+    "vigil.css",
+    "vigil.d.ts",
+    "dist/"
   ],
   "scripts": {
     "dev": "npx serve . -p 3000",
+    "build": "node build.js",
+    "test": "node tests/run.js",
     "lint:css": "npx stylelint vigil.css",
     "lint:js": "npx eslint vigil.js"
   },

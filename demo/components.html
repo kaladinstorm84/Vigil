@@ -22,44 +22,56 @@
     </div>
 
     <div class="vg-sidebar__body">
-      <div class="vg-nav-section">Monitoring</div>
-      <a class="vg-nav-item" href="index.html">
-        <span class="vg-nav-item__icon">◉</span>
-        <span class="vg-nav-item__label">Overview</span>
-      </a>
-      <a class="vg-nav-item" href="pipelines.html">
-        <span class="vg-nav-item__icon">⧗</span>
-        <span class="vg-nav-item__label">Pipelines</span>
-        <span class="vg-nav-item__badge">3</span>
-      </a>
-      <a class="vg-nav-item" href="testruns.html">
-        <span class="vg-nav-item__icon">✓</span>
-        <span class="vg-nav-item__label">Test Runs</span>
-      </a>
-      <a class="vg-nav-item" href="runners.html">
-        <span class="vg-nav-item__icon">⬡</span>
-        <span class="vg-nav-item__label">Runners</span>
-      </a>
+      <div class="vg-nav-group">
+        <button class="vg-nav-group__toggle">Monitoring</button>
+        <div class="vg-nav-group__body">
+          <a class="vg-nav-item vg-nav-item--child" href="index.html">
+            <span class="vg-nav-item__icon">◉</span>
+            <span class="vg-nav-item__label">Overview</span>
+          </a>
+          <a class="vg-nav-item vg-nav-item--child" href="pipelines.html">
+            <span class="vg-nav-item__icon">⧗</span>
+            <span class="vg-nav-item__label">Pipelines</span>
+            <span class="vg-nav-item__badge" id="nav-running-count">3</span>
+          </a>
+          <a class="vg-nav-item vg-nav-item--child" href="testruns.html">
+            <span class="vg-nav-item__icon">✓</span>
+            <span class="vg-nav-item__label">Test Runs</span>
+          </a>
+          <a class="vg-nav-item vg-nav-item--child" href="runners.html">
+            <span class="vg-nav-item__icon">⬡</span>
+            <span class="vg-nav-item__label">Runners</span>
+          </a>
+        </div>
+      </div>
 
-      <div class="vg-nav-section vg-mt-4">Reports</div>
-      <a class="vg-nav-item" href="trends.html">
-        <span class="vg-nav-item__icon">↗</span>
-        <span class="vg-nav-item__label">Trends</span>
-      </a>
-      <a class="vg-nav-item" href="failures.html">
-        <span class="vg-nav-item__icon">△</span>
-        <span class="vg-nav-item__label">Failures</span>
-      </a>
+      <div class="vg-nav-group">
+        <button class="vg-nav-group__toggle">Reports</button>
+        <div class="vg-nav-group__body">
+          <a class="vg-nav-item vg-nav-item--child" href="trends.html">
+            <span class="vg-nav-item__icon">↗</span>
+            <span class="vg-nav-item__label">Trends</span>
+          </a>
+          <a class="vg-nav-item vg-nav-item--child" href="failures.html">
+            <span class="vg-nav-item__icon">△</span>
+            <span class="vg-nav-item__label">Failures</span>
+          </a>
+        </div>
+      </div>
 
-      <div class="vg-nav-section vg-mt-4">Config</div>
-      <a class="vg-nav-item" href="settings.html">
-        <span class="vg-nav-item__icon">⚙</span>
-        <span class="vg-nav-item__label">Settings</span>
-      </a>
-      <a class="vg-nav-item is-active" href="components.html">
-        <span class="vg-nav-item__icon">◫</span>
-        <span class="vg-nav-item__label">Components</span>
-      </a>
+      <div class="vg-nav-group">
+        <button class="vg-nav-group__toggle">Config</button>
+        <div class="vg-nav-group__body">
+          <a class="vg-nav-item vg-nav-item--child" href="settings.html">
+            <span class="vg-nav-item__icon">⚙</span>
+            <span class="vg-nav-item__label">Settings</span>
+          </a>
+          <a class="vg-nav-item vg-nav-item--child is-active" href="components.html">
+            <span class="vg-nav-item__icon">◫</span>
+            <span class="vg-nav-item__label">Components</span>
+          </a>
+        </div>
+      </div>
     </div>
 
     <div class="vg-sidebar__footer">
@@ -420,6 +432,56 @@
       </div>
 
       <!-- ═══════════════════════════════════════════════════ -->
+      <!--  COLLAPSIBLE PANELS                                 -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="vg-panel vg-col-12 vg-col-lg-6" data-vg-collapsible>
+        <div class="vg-panel__header">
+          <h2 class="vg-panel__title">Collapsible Panel</h2>
+          <span class="vg-panel__meta">data-vg-collapsible</span>
+        </div>
+        <div class="vg-panel__body vg-panel__body--padded">
+          <p class="vg-text-muted">Click the header to collapse or expand this panel. The chevron rotates to indicate state.</p>
+          <div class="vg-banner vg-banner--info vg-banner--compact vg-mt-3">
+            <span class="vg-banner__icon">ℹ</span>
+            <div class="vg-banner__body">
+              <div class="vg-banner__text">Add <code>data-vg-collapse-persist="key"</code> to remember state across page loads.</div>
+            </div>
+          </div>
+        </div>
+        <div class="vg-panel__footer">Panel footer is also hidden when collapsed</div>
+      </div>
+
+      <div class="vg-col-12 vg-col-lg-6" style="display:flex;flex-direction:column;gap:var(--vg-s4);">
+        <div class="vg-panel" data-vg-collapsible data-vg-collapse-group="accordion">
+          <div class="vg-panel__header">
+            <h2 class="vg-panel__title">Accordion A</h2>
+            <span class="vg-panel__meta">data-vg-collapse-group</span>
+          </div>
+          <div class="vg-panel__body vg-panel__body--padded">
+            <span class="vg-text-muted">Panels in the same collapse group act as an accordion — opening one closes the others.</span>
+          </div>
+        </div>
+
+        <div class="vg-panel" data-vg-collapsible data-vg-collapse-group="accordion" data-vg-collapsed>
+          <div class="vg-panel__header">
+            <h2 class="vg-panel__title">Accordion B (starts collapsed)</h2>
+          </div>
+          <div class="vg-panel__body vg-panel__body--padded">
+            <span class="vg-text-muted">This panel started collapsed via <code>data-vg-collapsed</code>.</span>
+          </div>
+        </div>
+
+        <div class="vg-panel" data-vg-collapsible data-vg-collapse-group="accordion" data-vg-collapsed>
+          <div class="vg-panel__header">
+            <h2 class="vg-panel__title">Accordion C (starts collapsed)</h2>
+          </div>
+          <div class="vg-panel__body vg-panel__body--padded">
+            <span class="vg-text-muted">Third panel in the accordion group.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
       <!--  FORM SYSTEM                                        -->
       <!-- ═══════════════════════════════════════════════════ -->
       <div class="vg-panel vg-col-12">
@@ -586,6 +648,526 @@ Line two</textarea>
       </div>
 
       <!-- ═══════════════════════════════════════════════════ -->
+      <!--  BINDING ENHANCEMENTS (Phase 6)                     -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="vg-panel vg-col-12" data-src="/api/binding-demo" data-poll="8000">
+        <div class="vg-panel__header">
+          <h2 class="vg-panel__title">Binding Enhancements</h2>
+          <span class="vg-panel__meta">data-bind-attr · data-bind-html · data-class · data-bind-template · data-each-limit · nested data-each</span>
+        </div>
+        <div class="vg-panel__body vg-panel__body--padded">
+
+          <div class="vg-section">
+            <div class="vg-section__title">Attribute Binding</div>
+            <div class="vg-cluster vg-cluster--loose vg-items-center">
+              <a class="vg-btn vg-btn--sm" data-bind-attr="href:url" data-bind="url">Loading…</a>
+              <img data-bind-attr="src:avatar" style="width:40px;height:40px;border-radius:50%;" alt="Avatar">
+              <div class="vg-progress" style="width:200px;height:8px;"><div class="vg-progress__bar vg-progress__bar--success" data-bind-attr="style:progress_style"></div></div>
+            </div>
+          </div>
+
+          <div class="vg-section">
+            <div class="vg-section__title">HTML Binding</div>
+            <div class="vg-surface vg-surface--muted" data-bind-html="html_content">Loading…</div>
+          </div>
+
+          <div class="vg-section">
+            <div class="vg-section__title">Conditional Classes</div>
+            <div class="vg-cluster">
+              <span class="vg-chip" data-class="vg-chip--success:is_active, vg-chip--fail:has_errors" data-bind-template="Active: {is_active}"></span>
+              <span class="vg-chip" data-class="vg-chip--success:is_healthy, vg-chip--fail:has_errors" data-bind-template="Healthy: {is_healthy}"></span>
+            </div>
+          </div>
+
+          <div class="vg-section">
+            <div class="vg-section__title">Template Expression</div>
+            <div class="vg-kpi">
+              <div class="vg-kpi__label">Test Summary</div>
+              <div class="vg-kpi__value" data-bind-template="{passed} / {total} tests"></div>
+              <div class="vg-kpi__sub" data-bind-template="{rate|percent} pass rate"></div>
+            </div>
+          </div>
+
+          <div class="vg-section">
+            <div class="vg-section__title">data-each-limit (5 of 50)</div>
+            <table class="vg-table">
+              <thead><tr><th>Test</th><th>Status</th><th>Duration</th></tr></thead>
+              <tbody data-each="items" data-each-limit="5">
+                <template>
+                  <tr><td data-bind="name"></td><td><span class="vg-badge" data-bind="status"></span></td><td data-bind="duration" data-format="duration"></td></tr>
+                </template>
+              </tbody>
+            </table>
+            <div class="vg-font-sm vg-text-subtle vg-mt-2">Showing 5 of <span data-bind-template="{total}"></span> items</div>
+          </div>
+
+          <div class="vg-section">
+            <div class="vg-section__title">Nested data-each (suites → tests)</div>
+            <div data-each="suites" style="display:flex;flex-direction:column;gap:var(--vg-s3);">
+              <template>
+                <div class="vg-card">
+                  <div class="vg-card__header"><span class="vg-card__title" data-bind="name"></span></div>
+                  <div class="vg-card__body">
+                    <div class="vg-cluster" data-each="tests">
+                      <template>
+                        <span class="vg-chip" data-class="vg-chip--success:status" data-bind="name"></span>
+                      </template>
+                    </div>
+                  </div>
+                </div>
+              </template>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!--  ENGINE FEATURES (Phase 7)                          -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="vg-panel vg-col-12 vg-col-lg-6">
+        <div class="vg-panel__header">
+          <h2 class="vg-panel__title">Engine Features</h2>
+          <span class="vg-panel__meta">Vigil.unmount · Vigil.scan · data-method</span>
+        </div>
+        <div class="vg-panel__body vg-panel__body--padded">
+          <div class="vg-section">
+            <div class="vg-section__title">Dynamic Mount / Unmount</div>
+            <div class="vg-toolbar">
+              <button class="vg-btn vg-btn--sm vg-btn--primary" id="btn-add-panel">Add Panel</button>
+              <button class="vg-btn vg-btn--sm" id="btn-remove-panel">Remove Panel</button>
+            </div>
+            <div id="dynamic-panel-host" class="vg-mt-3"></div>
+          </div>
+          <div class="vg-section">
+            <div class="vg-section__title">POST Method Panel</div>
+            <div class="vg-surface vg-surface--muted" data-src="/api/post-demo" data-poll="0" data-method="POST" data-body='{"action":"ping"}'>
+              <div class="vg-meta-row">
+                <span><span class="vg-meta-row__key">Message:</span> <span class="vg-meta-row__value" data-bind="message">—</span></span>
+                <span><span class="vg-meta-row__key">Time:</span> <span class="vg-meta-row__value" data-bind="timestamp" data-format="relative">—</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="vg-panel vg-col-12 vg-col-lg-6">
+        <div class="vg-panel__header">
+          <h2 class="vg-panel__title">Retry Config</h2>
+          <span class="vg-panel__meta">data-retry-stale="1" · data-retry-error="2"</span>
+        </div>
+        <div class="vg-panel__body vg-panel__body--padded" data-src="/api/retry-demo" data-poll="4000" data-retry-stale="1" data-retry-error="2">
+          <div class="vg-meta-row">
+            <span><span class="vg-meta-row__key">Value:</span> <span class="vg-meta-row__value" data-bind="value">—</span></span>
+            <span><span class="vg-meta-row__key">Status:</span> <span class="vg-meta-row__value" data-bind="status">—</span></span>
+          </div>
+          <div class="vg-banner vg-banner--warn vg-banner--compact vg-mt-3">
+            <span class="vg-banner__icon">⚠</span>
+            <div class="vg-banner__body"><div class="vg-banner__text">This endpoint randomly fails to demonstrate stale/error border states.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!--  TABS (Phase 8a)                                    -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="vg-panel vg-col-12 vg-col-lg-6" data-vg-tabs>
+        <div class="vg-panel__header">
+          <h2 class="vg-panel__title">Tabs — Standard</h2>
+          <span class="vg-panel__meta">data-vg-tabs · vg-tabs__tab · vg-tabs__panel</span>
+        </div>
+        <div class="vg-panel__body vg-panel__body--padded">
+          <div class="vg-tabs__list">
+            <button class="vg-tabs__tab is-active" data-vg-tab-target="tab-overview">Overview</button>
+            <button class="vg-tabs__tab" data-vg-tab-target="tab-details">Details</button>
+            <button class="vg-tabs__tab" data-vg-tab-target="tab-logs">Logs</button>
+          </div>
+          <div id="tab-overview" class="vg-tabs__panel is-active">
+            <p class="vg-text-muted vg-font-sm">This is the <strong>Overview</strong> tab panel. Click other tabs to switch views. Use keyboard arrow keys when a tab is focused.</p>
+            <div class="vg-metric-grid--3 vg-mt-3">
+              <div class="vg-kpi vg-kpi--success"><div class="vg-kpi__label">Passed</div><div class="vg-kpi__value">214</div></div>
+              <div class="vg-kpi vg-kpi--fail"><div class="vg-kpi__label">Failed</div><div class="vg-kpi__value">12</div></div>
+              <div class="vg-kpi"><div class="vg-kpi__label">Skipped</div><div class="vg-kpi__value">22</div></div>
+            </div>
+          </div>
+          <div id="tab-details" class="vg-tabs__panel">
+            <div class="vg-meta-row"><span><span class="vg-meta-row__key">Branch:</span> <span class="vg-meta-row__value">main</span></span><span><span class="vg-meta-row__key">Commit:</span> <span class="vg-meta-row__value">a3f7d2b</span></span></div>
+            <p class="vg-text-muted vg-font-sm vg-mt-2">Detailed information about the run configuration, environment, and parameters.</p>
+          </div>
+          <div id="tab-logs" class="vg-tabs__panel">
+            <pre class="vg-font-mono" style="font-size:11px;color:var(--vg-text-subtle);white-space:pre-wrap;">
+[12:01:03] Starting test suite...
+[12:01:04] ✓ auth/login (234ms)
+[12:01:05] ✓ checkout/payment (891ms)
+[12:01:06] ✕ search/filter — assertion failed
+[12:01:07] Suite complete: 2 passed, 1 failed</pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lazy Tabs -->
+      <div class="vg-panel vg-col-12 vg-col-lg-6" data-vg-tabs data-vg-tab-lazy>
+        <div class="vg-panel__header">
+          <h2 class="vg-panel__title">Tabs — Lazy Loading</h2>
+          <span class="vg-panel__meta">data-vg-tab-lazy · data-vg-lazy-refresh="false"</span>
+        </div>
+        <div class="vg-panel__body vg-panel__body--padded">
+          <p class="vg-text-muted vg-font-sm vg-mb-3">Inactive tabs are not loaded until clicked. The "Static" tab uses <code>data-vg-lazy-refresh="false"</code> to pause polling when hidden.</p>
+          <div class="vg-tabs__list">
+            <button class="vg-tabs__tab is-active" data-vg-tab-target="lazy-live">Live (polls)</button>
+            <button class="vg-tabs__tab" data-vg-tab-target="lazy-static">Static (no bg refresh)</button>
+            <button class="vg-tabs__tab" data-vg-tab-target="lazy-deferred">Deferred</button>
+          </div>
+          <div id="lazy-live" class="vg-tabs__panel is-active" data-src="/api/binding-demo" data-poll="8">
+            <p class="vg-text-muted vg-font-sm">This panel polls <code>/api/binding-demo</code> every 8 s. Data loads immediately because it's the active tab.</p>
+            <div class="vg-meta-row vg-mt-2"><span class="vg-meta-row__key">Title:</span> <span class="vg-meta-row__value" data-bind="title">—</span></div>
+          </div>
+          <div id="lazy-static" class="vg-tabs__panel" data-src="/api/binding-demo" data-poll="8" data-vg-lazy-refresh="false">
+            <p class="vg-text-muted vg-font-sm">This panel also polls <code>/api/binding-demo</code>, but <strong>pauses</strong> when you switch away. Open the console to verify — no requests fire while this tab is hidden.</p>
+            <div class="vg-meta-row vg-mt-2"><span class="vg-meta-row__key">Title:</span> <span class="vg-meta-row__value" data-bind="title">—</span></div>
+          </div>
+          <div id="lazy-deferred" class="vg-tabs__panel">
+            <p class="vg-text-muted vg-font-sm">This tab has no data source — it's static content that is deferred until first click via lazy loading.</p>
+            <div class="vg-banner vg-banner--info vg-mt-2">This content was not in the DOM render path until you clicked this tab.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!--  DECLARATIVE NAVIGATION                              -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="vg-panel vg-col-12">
+        <div class="vg-panel__header">
+          <h2 class="vg-panel__title">Declarative Navigation</h2>
+          <span class="vg-panel__meta">data-vg-nav · data-vg-nav-container · vg-nav-page · Vigil.navigateTo()</span>
+        </div>
+        <div class="vg-panel__body vg-panel__body--padded">
+          <p class="vg-text-muted vg-font-sm vg-mb-3">Click a nav button to show the matching page. The URL hash updates, and browser back/forward works. Inactive pages are not scanned until first visited.</p>
+          <div class="vg-cluster vg-mb-4">
+            <button class="vg-btn vg-btn--sm is-active" data-vg-nav="demo-nav-overview">Overview</button>
+            <button class="vg-btn vg-btn--sm" data-vg-nav="demo-nav-metrics">Metrics</button>
+            <button class="vg-btn vg-btn--sm" data-vg-nav="demo-nav-logs">Logs</button>
+            <button class="vg-btn vg-btn--sm vg-btn--outline" onclick="Vigil.navigateTo('demo-nav-metrics')">JS: navigateTo('metrics')</button>
+          </div>
+          <div data-vg-nav-container>
+            <div id="demo-nav-overview" class="vg-nav-page is-active">
+              <div class="vg-card vg-card--muted">
+                <div class="vg-card__body">
+                  <h3 class="vg-card__title">Overview Page</h3>
+                  <p class="vg-text-muted vg-font-sm">This is the default page. It was visible on load because of the <code>is-active</code> class.</p>
+                  <div class="vg-metric-grid--3 vg-mt-3">
+                    <div class="vg-kpi vg-kpi--success"><div class="vg-kpi__label">Passed</div><div class="vg-kpi__value">412</div></div>
+                    <div class="vg-kpi vg-kpi--fail"><div class="vg-kpi__label">Failed</div><div class="vg-kpi__value">8</div></div>
+                    <div class="vg-kpi"><div class="vg-kpi__label">Pending</div><div class="vg-kpi__value">31</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="demo-nav-metrics" class="vg-nav-page" data-src="/api/binding-demo" data-poll="10" data-vg-lazy-refresh="false">
+              <div class="vg-card vg-card--accent">
+                <div class="vg-card__body">
+                  <h3 class="vg-card__title">Metrics Page (lazy, pauses when hidden)</h3>
+                  <p class="vg-text-muted vg-font-sm">This page has <code>data-src</code> with <code>data-vg-lazy-refresh="false"</code>. It was not loaded until you clicked "Metrics", and polling pauses when you navigate away.</p>
+                  <div class="vg-meta-row vg-mt-2">
+                    <span><span class="vg-meta-row__key">Title:</span> <span class="vg-meta-row__value" data-bind="title">—</span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="demo-nav-logs" class="vg-nav-page">
+              <div class="vg-card">
+                <div class="vg-card__body">
+                  <h3 class="vg-card__title">Logs Page (static)</h3>
+                  <pre class="vg-font-mono" style="font-size:11px;color:var(--vg-text-subtle);white-space:pre-wrap;">[14:30:01] Deployment started — build #847
+[14:30:12] Container image built (3.2s)
+[14:30:14] Health check passed
+[14:30:15] Traffic shifted 100%
+[14:30:15] Deployment complete ✓</pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!--  TOAST & MODAL (Phase 8b, 8c)                       -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="vg-panel vg-col-12 vg-col-lg-6">
+        <div class="vg-panel__header">
+          <h2 class="vg-panel__title">Toast & Modal</h2>
+          <span class="vg-panel__meta">Vigil.toast() · Vigil.modal()</span>
+        </div>
+        <div class="vg-panel__body vg-panel__body--padded">
+          <div class="vg-section">
+            <div class="vg-section__title">Toast Notifications</div>
+            <div class="vg-cluster vg-cluster--loose">
+              <button class="vg-btn vg-btn--sm" onclick="Vigil.toast('Pipeline passed — all 248 tests green.', {type:'success'})">✓ Success</button>
+              <button class="vg-btn vg-btn--sm" onclick="Vigil.toast('3 tests failed in auth/login suite.', {type:'fail'})">✕ Fail</button>
+              <button class="vg-btn vg-btn--sm" onclick="Vigil.toast('Runner CPU at 92% — consider scaling.', {type:'warn'})">⚠ Warn</button>
+              <button class="vg-btn vg-btn--sm" onclick="Vigil.toast('Maintenance window starts at 02:00 UTC.', {type:'info'})">ℹ Info</button>
+            </div>
+          </div>
+          <div class="vg-section">
+            <div class="vg-section__title">Modal Dialogs</div>
+            <div class="vg-cluster vg-cluster--loose">
+              <button class="vg-btn vg-btn--sm" onclick="Vigil.modal({title:'Small Modal',body:'<p>Compact dialog for confirmations.</p>',footer:'<button class=&quot;vg-btn vg-btn--sm&quot; onclick=&quot;this.closest(\\'\\'.vg-modal\\'\\').querySelector(\\'\\'.vg-modal__close\\'\\').click()&quot;>Cancel</button><button class=&quot;vg-btn vg-btn--primary vg-btn--sm&quot; onclick=&quot;this.closest(\\'\\'.vg-modal\\'\\').querySelector(\\'\\'.vg-modal__close\\'\\').click()&quot;>Confirm</button>',size:'sm'})">Open Small</button>
+              <button class="vg-btn vg-btn--sm" id="btn-modal-default">Open Default</button>
+              <button class="vg-btn vg-btn--sm" id="btn-modal-lg">Open Large</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!--  TOOLTIP & DROPDOWN (Phase 8d, 8e)                  -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="vg-panel vg-col-12 vg-col-lg-6">
+        <div class="vg-panel__header">
+          <h2 class="vg-panel__title">Tooltips</h2>
+          <span class="vg-panel__meta">data-vg-tooltip · data-vg-tooltip-pos</span>
+        </div>
+        <div class="vg-panel__body vg-panel__body--padded">
+          <div class="vg-cluster vg-cluster--loose">
+            <button class="vg-btn vg-btn--sm" data-vg-tooltip="Tooltip on top" data-vg-tooltip-pos="top">Top</button>
+            <button class="vg-btn vg-btn--sm" data-vg-tooltip="Tooltip on bottom" data-vg-tooltip-pos="bottom">Bottom</button>
+            <button class="vg-btn vg-btn--sm" data-vg-tooltip="Tooltip on left" data-vg-tooltip-pos="left">Left</button>
+            <button class="vg-btn vg-btn--sm" data-vg-tooltip="Tooltip on right" data-vg-tooltip-pos="right">Right</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="vg-panel vg-col-12 vg-col-lg-6">
+        <div class="vg-panel__header">
+          <h2 class="vg-panel__title">Dropdown</h2>
+          <span class="vg-panel__meta">data-vg-dropdown · vg-dropdown__menu</span>
+        </div>
+        <div class="vg-panel__body vg-panel__body--padded">
+          <div class="vg-dropdown">
+            <button class="vg-btn vg-btn--sm" data-vg-dropdown="demo-dropdown">Actions ▾</button>
+            <div id="demo-dropdown">
+              <button class="vg-dropdown__item">View</button>
+              <button class="vg-dropdown__item">Edit</button>
+              <div class="vg-dropdown__divider"></div>
+              <button class="vg-dropdown__item vg-dropdown__item--danger">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!--  AVATAR (Phase 8f)                                  -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="vg-panel vg-col-12 vg-col-lg-6">
+        <div class="vg-panel__header">
+          <h2 class="vg-panel__title">Avatars</h2>
+          <span class="vg-panel__meta">vg-avatar · vg-avatar--{sm,lg} · vg-avatar__status</span>
+        </div>
+        <div class="vg-panel__body vg-panel__body--padded">
+          <div class="vg-cluster vg-cluster--loose vg-items-center">
+            <div class="vg-avatar vg-avatar--sm">M</div>
+            <div class="vg-avatar">MA</div>
+            <div class="vg-avatar vg-avatar--lg">JD</div>
+            <div class="vg-avatar vg-avatar--lg vg-avatar--img"><img src="https://i.pravatar.cc/40?u=vigil" alt="User"></div>
+            <div class="vg-avatar" style="background:var(--vg-success);">AB<span class="vg-avatar__status vg-avatar__status--success"></span></div>
+            <div class="vg-avatar" style="background:var(--vg-fail);">CD<span class="vg-avatar__status vg-avatar__status--fail"></span></div>
+            <div class="vg-avatar" style="background:var(--vg-running);">EF<span class="vg-avatar__status vg-avatar__status--running"></span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!--  TIMELINE / STEPPER (Phase 8g)                      -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="vg-panel vg-col-12 vg-col-lg-6">
+        <div class="vg-panel__header">
+          <h2 class="vg-panel__title">Timeline / Stepper</h2>
+          <span class="vg-panel__meta">vg-timeline · vg-timeline__step</span>
+        </div>
+        <div class="vg-panel__body vg-panel__body--padded">
+          <div class="vg-timeline">
+            <div class="vg-timeline__step is-complete">
+              <div class="vg-timeline__icon">✓</div>
+              <div class="vg-timeline__content"><div class="vg-timeline__title">Clone</div><div class="vg-timeline__meta">Completed in 3s</div></div>
+            </div>
+            <div class="vg-timeline__step is-complete">
+              <div class="vg-timeline__icon">✓</div>
+              <div class="vg-timeline__content"><div class="vg-timeline__title">Build</div><div class="vg-timeline__meta">Completed in 42s</div></div>
+            </div>
+            <div class="vg-timeline__step is-active">
+              <div class="vg-timeline__icon">3</div>
+              <div class="vg-timeline__content"><div class="vg-timeline__title">Test</div><div class="vg-timeline__meta">Running for 1m 12s…</div></div>
+            </div>
+            <div class="vg-timeline__step is-pending">
+              <div class="vg-timeline__icon">4</div>
+              <div class="vg-timeline__content"><div class="vg-timeline__title">Deploy</div><div class="vg-timeline__meta">Waiting</div></div>
+            </div>
+            <div class="vg-timeline__step is-pending">
+              <div class="vg-timeline__icon">5</div>
+              <div class="vg-timeline__content"><div class="vg-timeline__title">Notify</div><div class="vg-timeline__meta">Waiting</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!--  TABLE FEATURES (Phase 9: search, selection, pagination) -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="vg-panel vg-col-12">
+        <div class="vg-panel__header">
+          <h2 class="vg-panel__title">Table Features</h2>
+          <span class="vg-panel__meta">data-vg-table-search · vg-table--selectable · data-vg-paginate</span>
+        </div>
+        <div class="vg-panel__body vg-panel__body--padded">
+          <div class="vg-toolbar vg-mb-3">
+            <input type="search" class="vg-input vg-input--sm" placeholder="Search table…" data-vg-table-search="feature-table" style="max-width:240px;">
+            <span class="vg-toolbar__spacer"></span>
+            <span class="vg-font-sm vg-text-subtle" id="selection-count">0 selected</span>
+          </div>
+          <div class="vg-table-wrap">
+            <table class="vg-table vg-table--selectable" id="feature-table">
+              <thead>
+                <tr>
+                  <th style="width:32px"><input type="checkbox" class="vg-table__select-all"></th>
+                  <th class="vg-col-sort">Feature</th>
+                  <th class="vg-col-sort">Suite</th>
+                  <th class="vg-col-sort">Status</th>
+                  <th class="vg-col-sort">Steps</th>
+                  <th class="vg-col-sort">Duration</th>
+                  <th class="vg-col-sort">Branch</th>
+                  <th>Started</th>
+                </tr>
+              </thead>
+              <tbody id="feature-table-body"></tbody>
+            </table>
+          </div>
+          <div class="vg-pagination vg-mt-2" data-vg-paginate="feature-table" data-vg-page-size="5"></div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!--  ROW-CLICK DETAIL                                    -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="vg-panel vg-col-12">
+        <div class="vg-panel__header">
+          <h2 class="vg-panel__title">Row-click Detail</h2>
+          <span class="vg-panel__meta">data-vg-row-detail · vg-detail-panel · data-field · data-vg-detail-close</span>
+        </div>
+        <div class="vg-panel__body vg-panel__body--padded">
+          <p class="vg-text-muted vg-font-sm vg-mb-3">Click any row to open a detail drawer below the table. Click again to dismiss.</p>
+          <div class="vg-table-wrap">
+            <table class="vg-table" data-vg-row-detail="runner-detail">
+              <thead>
+                <tr>
+                  <th>Runner</th>
+                  <th>Status</th>
+                  <th>Platform</th>
+                  <th>Jobs</th>
+                  <th>Uptime</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-vg-row-id="runner-1">
+                  <td data-field="name">runner-linux-01</td>
+                  <td data-field="status">Online</td>
+                  <td data-field="platform">Ubuntu 22.04</td>
+                  <td data-field="jobs">142</td>
+                  <td data-field="uptime">12d 4h</td>
+                </tr>
+                <tr data-vg-row-id="runner-2">
+                  <td data-field="name">runner-win-02</td>
+                  <td data-field="status">Busy</td>
+                  <td data-field="platform">Windows Server 2022</td>
+                  <td data-field="jobs">89</td>
+                  <td data-field="uptime">5d 11h</td>
+                </tr>
+                <tr data-vg-row-id="runner-3">
+                  <td data-field="name">runner-mac-03</td>
+                  <td data-field="status">Offline</td>
+                  <td data-field="platform">macOS Ventura</td>
+                  <td data-field="jobs">0</td>
+                  <td data-field="uptime">—</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div id="runner-detail" class="vg-detail-panel">
+            <div class="vg-detail-panel__header">
+              <span class="vg-detail-panel__title" data-bind="name">—</span>
+              <button class="vg-detail-panel__close" data-vg-detail-close aria-label="Close detail">&times;</button>
+            </div>
+            <div class="vg-meta-row">
+              <span><span class="vg-meta-row__key">Status:</span> <span class="vg-meta-row__value" data-bind="status">—</span></span>
+              <span><span class="vg-meta-row__key">Platform:</span> <span class="vg-meta-row__value" data-bind="platform">—</span></span>
+              <span><span class="vg-meta-row__key">Jobs:</span> <span class="vg-meta-row__value" data-bind="jobs">—</span></span>
+              <span><span class="vg-meta-row__key">Uptime:</span> <span class="vg-meta-row__value" data-bind="uptime">—</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!--  HEALTH BADGE                                        -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="vg-panel vg-col-12 vg-col-lg-6">
+        <div class="vg-panel__header">
+          <h2 class="vg-panel__title">Health Badge</h2>
+          <span class="vg-panel__meta">data-vg-health · data-vg-health-poll · data-vg-health-field</span>
+        </div>
+        <div class="vg-panel__body vg-panel__body--padded">
+          <p class="vg-text-muted vg-font-sm vg-mb-3">Polls a status endpoint and shows connected/disconnected state. The first badge polls a healthy endpoint; the second polls a failing one.</p>
+          <div class="vg-cluster">
+            <div data-vg-health="/api/health-ok" data-vg-health-poll="15" data-vg-health-field="status" data-vg-health-value="ok">
+              <span class="vg-health__text">Checking…</span> API
+            </div>
+            <div data-vg-health="/api/health-fail" data-vg-health-poll="15">
+              <span class="vg-health__text">Checking…</span> Database
+            </div>
+            <div data-vg-health="/api/health-ok" data-vg-health-poll="10">
+              <span class="vg-health__text">Checking…</span> WebSocket
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!--  ACCESSIBILITY (Phase 10b)                          -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="vg-panel vg-col-12 vg-col-lg-6">
+        <div class="vg-panel__header">
+          <h2 class="vg-panel__title">Accessibility — Focus Indicators</h2>
+          <span class="vg-panel__meta">:focus-visible styles</span>
+        </div>
+        <div class="vg-panel__body vg-panel__body--padded">
+          <p class="vg-text-muted vg-font-sm vg-mb-3">Tab through these elements to see focus ring indicators.</p>
+          <div class="vg-cluster vg-cluster--loose">
+            <button class="vg-btn vg-btn--primary">Button</button>
+            <a href="#" class="vg-nav-item" style="position:static;">Link</a>
+            <span class="vg-chip vg-chip--removable" tabindex="0">Chip</span>
+            <input type="text" class="vg-input vg-input--sm" value="Input" style="width:80px;">
+            <select class="vg-input vg-input--sm"><option>Select</option></select>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!--  SKELETON LOADING (Phase 12c)                       -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="vg-panel vg-col-12 vg-col-lg-6" data-src="/api/skeleton-demo" data-poll="0">
+        <div class="vg-panel__header">
+          <h2 class="vg-panel__title">Skeleton Loading</h2>
+          <span class="vg-panel__meta">vg-skeleton auto-applied during load</span>
+        </div>
+        <div class="vg-panel__body vg-panel__body--padded">
+          <div class="vg-kpi">
+            <div class="vg-kpi__label" data-bind="label">—</div>
+            <div class="vg-kpi__value" data-bind="value">—</div>
+            <div class="vg-kpi__sub" data-bind="sub">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
       <!--  EXISTING PRIMITIVES (quick reference)              -->
       <!-- ═══════════════════════════════════════════════════ -->
       <div class="vg-panel vg-col-12 vg-col-lg-6">
@@ -684,15 +1266,117 @@ Line two</textarea>
   </main>
 </div>
 
+<a class="vg-skip-link" href="#shell">Skip to main content</a>
 <script src="../vigil.js"></script>
 <script src="demo-mock.js"></script>
 <script>
 function showSaved(btn) {
-  const msg = btn.parentElement.querySelector('.vg-action-row__feedback');
+  var msg = btn.parentElement.querySelector('.vg-action-row__feedback');
   if (!msg) return;
   msg.classList.add('is-visible');
-  setTimeout(() => msg.classList.remove('is-visible'), 2000);
+  setTimeout(function() { msg.classList.remove('is-visible'); }, 2000);
 }
+
+// Dynamic mount / unmount demo (Phase 7)
+(function() {
+  var host = document.getElementById('dynamic-panel-host');
+  var addBtn = document.getElementById('btn-add-panel');
+  var rmBtn  = document.getElementById('btn-remove-panel');
+  if (!host || !addBtn || !rmBtn) return;
+  addBtn.addEventListener('click', function() {
+    var panel = document.createElement('div');
+    panel.className = 'vg-kpi vg-kpi--running';
+    panel.setAttribute('data-src', '/api/kpi/runs');
+    panel.setAttribute('data-poll', '5000');
+    panel.setAttribute('data-vg-role', 'kpi');
+    panel.innerHTML = '<div class="vg-kpi__label" data-bind="delta_label">—</div><div class="vg-kpi__value" data-bind="total">—</div>';
+    host.appendChild(panel);
+    Vigil.scan(host);
+    Vigil.toast('Panel mounted via Vigil.scan()', { type: 'success', duration: 2000 });
+  });
+  rmBtn.addEventListener('click', function() {
+    var last = host.lastElementChild;
+    if (!last) { Vigil.toast('No panels to remove.', { type: 'warn', duration: 2000 }); return; }
+    Vigil.unmount(last);
+    last.remove();
+    Vigil.toast('Panel unmounted and removed.', { type: 'info', duration: 2000 });
+  });
+})();
+
+// Modal buttons (Phase 8c)
+(function() {
+  var btnDef = document.getElementById('btn-modal-default');
+  var btnLg  = document.getElementById('btn-modal-lg');
+  if (btnDef) btnDef.addEventListener('click', function() {
+    Vigil.modal({
+      title: 'Default Modal',
+      body: '<p class="vg-text-muted">Standard dialog with title, body, and action footer.</p><p class="vg-text-muted">Press Escape or click backdrop to close.</p>',
+      footer: '<button class="vg-btn vg-btn--sm" onclick="this.closest(\'.vg-modal\').querySelector(\'.vg-modal__close\').click()">Cancel</button><button class="vg-btn vg-btn--primary vg-btn--sm" onclick="this.closest(\'.vg-modal\').querySelector(\'.vg-modal__close\').click()">Confirm</button>',
+    });
+  });
+  if (btnLg) btnLg.addEventListener('click', function() {
+    Vigil.modal({
+      title: 'Large Modal',
+      body: '<p class="vg-text-muted">This is a large-size dialog — useful for forms or detailed content.</p><div class="vg-form"><div class="vg-field"><div class="vg-label"><div class="vg-label__text">Example field</div></div><div class="vg-field__control"><input type="text" class="vg-input vg-input--full" value="Sample data"></div></div></div>',
+      footer: '<button class="vg-btn vg-btn--sm" onclick="this.closest(\'.vg-modal\').querySelector(\'.vg-modal__close\').click()">Close</button>',
+      size: 'lg',
+    });
+  });
+})();
+
+// Populate feature table for search/select/pagination demo (Phase 9)
+(function() {
+  var tbody = document.getElementById('feature-table-body');
+  if (!tbody) return;
+  var features = [
+    'User can log in with valid credentials','Basket updates correctly on item removal',
+    'Search returns filtered results by category','PDF report generates with correct data',
+    'Admin can deactivate user accounts','API returns 401 on expired token',
+    'Password reset flow sends email','Checkout applies discount codes',
+    'Product images load on PDP','Pagination navigates correctly',
+    'User can register a new account','Profile picture uploads correctly',
+    'Order history loads paginated','Forgot password sends reset link',
+    'Two-factor auth via SMS','Admin can export user list',
+    'Session timeout redirects to login','Cart persists across sessions',
+    'Coupon code validates against rules','Email notifications fire on events',
+  ];
+  var suites = ['auth','checkout','search','reports','admin','api'];
+  var statuses = ['passed','passed','passed','failed','running','skipped'];
+  var branches = ['main','develop','feat/login-v2','fix/basket-race'];
+  function rnd(a) { return a[Math.floor(Math.random()*a.length)]; }
+  features.forEach(function(f) {
+    var status = rnd(statuses);
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td><input type="checkbox" class="vg-table__row-select"></td>' +
+      '<td>' + f + '</td>' +
+      '<td>' + rnd(suites) + '</td>' +
+      '<td><span class="vg-badge vg-badge--' + (status === 'passed' ? 'success' : status === 'failed' ? 'fail' : status) + '">' + status + '</span></td>' +
+      '<td class="vg-col-num">' + (Math.floor(Math.random()*28)+4) + '</td>' +
+      '<td class="vg-col-num vg-col-mono">' + (Math.floor(Math.random()*40000)+800) + 'ms</td>' +
+      '<td>' + rnd(branches) + '</td>' +
+      '<td class="vg-col-mono">' + new Date(Date.now()-Math.floor(Math.random()*7200000)).toLocaleTimeString() + '</td>';
+    tbody.appendChild(tr);
+  });
+  var table = document.getElementById('feature-table');
+  if (table) {
+    table.addEventListener('vigil:selection-change', function(e) {
+      var counter = document.getElementById('selection-count');
+      if (counter) counter.textContent = e.detail.count + ' selected';
+    });
+  }
+})();
+
+// Print button (Phase 12a)
+(function() {
+  var heroToolbar = document.querySelector('.vg-hero__toolbar');
+  if (!heroToolbar) return;
+  var printBtn = document.createElement('button');
+  printBtn.className = 'vg-btn';
+  printBtn.textContent = '🖨 Print';
+  printBtn.addEventListener('click', function() { window.print(); });
+  heroToolbar.appendChild(printBtn);
+})();
 </script>
 </body>
 </html>

@@ -26,7 +26,64 @@ A lightweight framework for building live dashboards from plain HTML. Drop in tw
 - **Section blocks** — `vg-section` with `__title` and `__meta` for reusable headings
 - **Empty state** — `vg-empty` with icon, title, text, and action slot
 - **Brand block** — `vg-brand` + `vg-brand__mark` identity row
-- **~8 KB JS · ~20 KB CSS** (ungzipped)
+- **Collapsible panels** — `data-vg-collapsible` with accordion groups and localStorage persistence
+- **Tabs** — `data-vg-tabs` with keyboard navigation, ARIA roles, lazy loading, and configurable background refresh
+- **Declarative navigation** — `data-vg-nav` + `data-vg-nav-container` for single-page navigation with hash URLs and lazy scanning
+- **Row-click detail** — `data-vg-row-detail` wires table rows to a detail panel with field mapping and optional API fetch
+- **Health badge** — `data-vg-health` polls a status endpoint and shows connected/disconnected/checking dot
+- **Toast notifications** — `Vigil.toast(message, opts)` with auto-dismiss and stacking
+- **Modal dialogs** — `Vigil.modal(opts)` with focus trapping, backdrop close, Escape key
+- **Tooltips** — `data-vg-tooltip` with positional variants (top, bottom, left, right)
+- **Dropdowns** — `data-vg-dropdown` with click-outside close and Escape dismiss
+- **Avatars** — `vg-avatar` with sizes, image support, and status dots
+- **Timeline / Stepper** — `vg-timeline` with status-coloured steps and connector lines
+- **Pagination** — `data-vg-paginate` with `data-vg-page-size` page controls
+- **Table search** — `data-vg-table-search` for client-side row filtering
+- **Row selection** — `vg-table--selectable` with select-all and custom events
+- **Attribute binding** — `data-bind-attr` to set `href`, `src`, `style`, etc. from data
+- **HTML binding** — `data-bind-html` for opt-in innerHTML rendering
+- **Class binding** — `data-class` for conditional CSS class toggling
+- **Template expressions** — `data-bind-template` for `{field|format}` interpolation
+- **data-each limit** — `data-each-limit` to cap rendered list items
+- **HTTP methods** — `data-method` and `data-body` for POST/PUT/PATCH requests
+- **Unmount / scan API** — `Vigil.unmount(el)` and `Vigil.scan(rootEl)` for dynamic panels
+- **Debounced filters** — `data-vg-debounce` for throttled text input filtering
+- **Configurable retry** — `staleThreshold`, `errorThreshold`, `maxBackoff` per-panel or global
+- **Auth error hook** — `Vigil.configure({ onAuthError })` for 401/403 handling
+- **ARIA accessibility** — `aria-expanded`, `aria-controls`, `role` attributes on interactive components
+- **Focus-visible styles** — keyboard focus indicators on all interactive elements
+- **Skip navigation** — `vg-skip-link` for screen reader users
+- **Print styles** — `@media print` rules for clean printed output
+- **Sidebar sub-nav** — `vg-nav-group` collapsible sidebar sections with child items
+- **Build script** — `npm run build` produces minified `dist/` output
+- **ESM export** — `dist/vigil.esm.js` for module bundlers
+- **TypeScript declarations** — `vigil.d.ts` with full type coverage
+- **Test suite** — `npm test` with unit tests for core functions
+
+## CDN
+
+```html
+<!-- unpkg -->
+<link rel="stylesheet" href="https://unpkg.com/vigilui@latest/vigil.css">
+<script src="https://unpkg.com/vigilui@latest/vigil.js"></script>
+
+<!-- jsDelivr -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vigilui@latest/vigil.css">
+<script src="https://cdn.jsdelivr.net/npm/vigilui@latest/vigil.js"></script>
+```
+
+ESM import:
+
+```js
+import Vigil from 'https://unpkg.com/vigilui@latest/dist/vigil.esm.js';
+```
+
+## Build
+
+```bash
+npm run build    # → dist/vigil.min.js, dist/vigil.min.css, dist/vigil.esm.js
+npm test         # → runs unit test suite
+```
 
 ## Quick Start
 
@@ -79,7 +136,8 @@ The demo is a multi-page dashboard showcasing every Vigil feature:
 | **Trends** | `demo/trends.html` | 7-day run volume chart, daily breakdown table, pass rate by suite with sparklines |
 | **Failures** | `demo/failures.html` | Failure type breakdown, recent failures table, flakiest features analysis |
 | **Settings** | `demo/settings.html` | Text inputs, selects, toggles, radio groups, range slider, number inputs, textareas, form layout |
-| **Components** | `demo/components.html` | Full component library: hero, banners, cards, chips, surfaces, sections, brand, empty state, metric grid, form system |
+| **Components** | `demo/components.html` | Full component library: binding enhancements, engine features, tabs, toasts, modals, tooltips, dropdowns, avatars, timeline, table search/select/pagination, accessibility, skeleton loading, plus all existing primitives |
+| **ESM Test** | `demo/esm-test.html` | Verifies ESM module import |
 
 All pages share a mock API layer (`demo/demo-mock.js`) that patches `fetch()` and `WebSocket` in-browser. Sidebar navigation links work across all eight pages.
 
@@ -124,6 +182,41 @@ All pages share a mock API layer (`demo/demo-mock.js`) that patches `fetch()` an
 | `data-headers` | JSON object of extra HTTP headers to send with this panel's fetch. Merged with global headers. |
 | `data-response-map` | Name of a registered response map function that reshapes the raw JSON before rendering. |
 | `data-proxy` | CORS proxy URL prefix. The `data-src` path is appended to this URL. Overrides global proxy for this panel. |
+| `data-bind-attr` | Comma-separated `attr:field` pairs. Sets element attributes from data. e.g. `data-bind-attr="href:url, src:image"` |
+| `data-bind-html` | Dot-path to set `innerHTML` from data. Opt-in; use with trusted content only (XSS risk). |
+| `data-bind-template` | Template string with `{field}` and `{field\|format}` tokens. e.g. `data-bind-template="{passed} / {total} tests"` |
+| `data-class` | Comma-separated `className:field` pairs. Adds class if field is truthy, removes if falsy. |
+| `data-each-limit` | Maximum items to render from a `data-each` array. Container gets `data-each-total` with the full count. |
+| `data-method` | HTTP method for fetch requests. Default `GET`. e.g. `data-method="POST"` |
+| `data-body` | JSON body for non-GET requests. Requires `data-method`. |
+| `data-retry-stale` | Per-panel consecutive error count before `vg-panel--stale` border. Default: 2. |
+| `data-retry-error` | Per-panel consecutive error count before `vg-panel--error` border. Default: 4. |
+| `data-vg-debounce` | Debounce delay in ms for filter input controls. Default: 300ms for text, 0ms for selects. |
+| `data-vg-collapsible` | Makes a panel collapsible — click the header to toggle body visibility. |
+| `data-vg-collapsed` | Panel starts in the collapsed state. Requires `data-vg-collapsible`. |
+| `data-vg-collapse-group` | Accordion behaviour — panels in the same group auto-close when another opens. |
+| `data-vg-collapse-persist` | LocalStorage key to remember collapsed/expanded state across page loads. |
+| `data-vg-tabs` | Container for a tab group. Contains `.vg-tabs__list` and `.vg-tabs__panel` elements. |
+| `data-vg-tab-lazy` | On a `data-vg-tabs` container. Panels are not scanned/mounted until their tab is first activated. |
+| `data-vg-tab-target` | On a `.vg-tabs__tab`, the ID of the matching `.vg-tabs__panel`. |
+| `data-vg-lazy-refresh` | On a `.vg-tabs__panel` or `.vg-nav-page`. Set to `"false"` to pause polling when hidden and resume when re-activated. |
+| `data-vg-nav` | On a clickable element. Value is the `id` of a `.vg-nav-page` to navigate to. Updates URL hash and toggles `is-active`. |
+| `data-vg-nav-container` | Wrapper element containing `.vg-nav-page` children. Defines the navigation scope. |
+| `data-vg-tooltip` | Tooltip text. Shown on hover. |
+| `data-vg-tooltip-pos` | Tooltip position: `top` (default), `bottom`, `left`, `right`. |
+| `data-vg-dropdown` | ID of the dropdown menu element. Trigger toggles the menu on click. |
+| `data-vg-table-search` | ID of the target table. Input filters visible rows by text content. |
+| `data-vg-paginate` | ID of the target table. Generates page controls beneath the table. |
+| `data-vg-page-size` | Number of rows per page. Default: 10. Used with `data-vg-paginate`. |
+| `data-vg-row-detail` | On a `<table>`. Value is the ID of a `.vg-detail-panel` to show when a row is clicked. |
+| `data-field` | On a `<td>`. Names the field so its value is mapped to `data-bind` in the detail panel. |
+| `data-vg-row-id` | On a `<tr>`. Row identifier, available as `_id` in the detail data and used in `data-vg-detail-src`. |
+| `data-vg-detail-src` | On a `.vg-detail-panel`. URL template (e.g. `/api/runner/{id}`) to fetch full detail data on row click. |
+| `data-vg-detail-close` | On a button inside `.vg-detail-panel`. Closes the detail panel when clicked. |
+| `data-vg-health` | URL of a status endpoint to poll. Element gets `vg-health--connected` or `vg-health--disconnected`. |
+| `data-vg-health-poll` | Poll interval in seconds. Default: 30. |
+| `data-vg-health-field` | JSON field to check in the response (e.g. `status`). Used with `data-vg-health-value`. |
+| `data-vg-health-value` | Expected value for the health field (e.g. `ok`). If the field doesn't match, badge shows unhealthy. |
 
 ## Built-in Formatters
 
@@ -153,17 +246,26 @@ Vigil.registerFormatter("mb",  v => (v / 1048576).toFixed(1) + " MB");
 
 | Method | Description |
 |--------|-------------|
-| `Vigil.configure(opts)` | Set global config: `headers`, `proxy`. See [Connecting to Real APIs](#connecting-to-real-apis). |
+| `Vigil.configure(opts)` | Set global config: `headers`, `proxy`, `staleThreshold`, `errorThreshold`, `maxBackoff`, `onAuthError`, `observe`. |
 | `Vigil.refresh()` | Force all polled components to fetch immediately |
 | `Vigil.pause()` | Pause all polling |
 | `Vigil.resume()` | Resume all polling and immediately fetch |
 | `Vigil.mount(el, opts)` | Manually init an element as a polled component; returns controller |
+| `Vigil.unmount(el)` | Destroy a controller and stop polling for the given element |
+| `Vigil.scan(rootEl)` | Scan a subtree for new Vigil-managed elements and initialise them |
 | `Vigil.render(el, data)` | Render JSON data into an element without polling |
 | `Vigil.format(name, value)` | Apply a named formatter and return the result |
 | `Vigil.registerFormatter(name, fn)` | Register a custom formatter |
 | `Vigil.registerTransform(name, fn)` | Register a custom transform function |
 | `Vigil.registerResponseMap(name, fn)` | Register a response map that reshapes raw JSON before rendering |
 | `Vigil.sparkline(svgEl, values, opts)` | Render a sparkline into an SVG element programmatically |
+| `Vigil.collapse(el)` | Programmatically collapse a collapsible panel |
+| `Vigil.expand(el)` | Programmatically expand a collapsible panel |
+| `Vigil.toggleCollapse(el)` | Toggle a collapsible panel's state |
+| `Vigil.toast(msg, opts)` | Show a toast notification. Options: `type`, `duration`, `dismissible`. Returns `{ el, dismiss }`. |
+| `Vigil.modal(opts)` | Open a modal dialog. Options: `title`, `body`, `footer`, `size`, `onClose`. Returns `{ el, dialog, close }`. |
+| `Vigil.getSelectedRows(tableEl)` | Get array of selected `<tr>` elements from a `vg-table--selectable` table |
+| `Vigil.navigateTo(pageId)` | Programmatically navigate to a `.vg-nav-page` by ID. Updates hash and fires `vigil:navigate`. |
 
 ### Controller API
 
@@ -181,6 +283,10 @@ ctrl.destroy();   // Clear timer
 |-------|----------|------------|
 | `vigil:update` | Parsed JSON response | Every successful fetch |
 | `vigil:error` | Error object | Every failed fetch |
+| `vigil:selection-change` | `{ count, rows }` | Table row selection changes (on `vg-table--selectable`) |
+| `vigil:page-change` | `{ page, total }` | Pagination page changes |
+| `vigil:navigate` | `{ page }` | Declarative navigation changes active page |
+| `vigil:row-detail` | `{ row, data }` | Table row clicked to open detail panel |
 
 ### Data-Action Buttons
 
@@ -470,6 +576,19 @@ Also includes `vg-checkbox`, `vg-toggle`, `vg-radio-group`, `vg-input-group`, an
 ```
 
 Variants: `vg-card-grid--sm` (180px), `vg-card-grid--lg` (320px), `vg-metric-grid--2`, `--3`, `--4`.
+
+### Collapsible Panels
+
+```html
+<div class="vg-panel" data-vg-collapsible>
+  <div class="vg-panel__header">
+    <h2 class="vg-panel__title">Click to collapse</h2>
+  </div>
+  <div class="vg-panel__body vg-panel__body--padded">Content</div>
+</div>
+```
+
+Add `data-vg-collapsed` to start collapsed. Use `data-vg-collapse-group="name"` on multiple panels for accordion behaviour. Add `data-vg-collapse-persist="key"` to save state in localStorage.
 
 ### Other Primitives
 
